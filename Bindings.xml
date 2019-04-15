@@ -1,0 +1,9 @@
+<Bindings>
+  <Layer name="SI_KEYBINDINGS_CATEGORY_GENERAL">
+    <Category name="Norris">
+      <Action name="Norris_DISPLAY">
+		    <Up>Norris.AnimateText()</Up>
+      </Action>
+    </Category>
+  </Layer>
+</Bindings>
