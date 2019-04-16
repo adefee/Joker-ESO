@@ -1,6 +1,6 @@
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "1.1.0",                -- A nuisance to match to the Manifest.
+    version         = "1.1.1",                -- A nuisance to match to the Manifest.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "DDFFEE",             -- Used in menu titles and so on.
     menuName        = "Joker - Best Enjoyed with Skooma!", -- A UNIQUE identifier for menu object.
@@ -10,12 +10,10 @@ Joker = {
     },
 }
 
--- Wraps text with a color.
-function Joker.Colorize(text, color)
-    -- Default to addon's .color.
-    if not color then color = Joker.color end
-    text = "|c" .. color .. text .. "|r"
-    return text
+-- isempty()
+-- Utility; Checks if given string is empty/nil
+function Joker.isempty(s)
+  return s == nil or s == ''
 end
 
 --[[
@@ -670,17 +668,20 @@ function Joker.GetESO()
   return joke
 end
 
--- isempty()
--- Utility; Checks if given string is empty/nil
-function Joker.isempty(s)
-  return s == nil or s == ''
-end
-
 
 --[[
   ** Data Displays
   PURPOSE: These functions parse and init data display
 ]]
+
+-- Colorize()
+-- Wraps text with a color.
+function Joker.Colorize(text, color)
+  -- Default to addon's .color.
+  if not color then color = Joker.color end
+  text = "|c" .. color .. text .. "|r"
+  return text
+end
 
 -- Norris()
 -- Display; Returns Norris joke, allows for optional given <me> or <target>

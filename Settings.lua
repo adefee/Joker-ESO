@@ -36,7 +36,7 @@ function Joker.LoadSettings()
     })
     table.insert(optionsTable, {
       type = "description",
-      text = "'/eso' adds a random ESO-related joke to your chatbox",
+      text = "'/joke-eso' adds a random ESO-related joke to your chatbox",
       width = "full",	--or "half" (optional)
     })
     table.insert(optionsTable, {

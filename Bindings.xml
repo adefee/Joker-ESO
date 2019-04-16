@@ -1,8 +1,8 @@
 <Bindings>
   <Layer name="SI_KEYBINDINGS_CATEGORY_GENERAL">
-    <Category name="Norris">
-      <Action name="Norris_DISPLAY">
-		    <Up>Norris.AnimateText()</Up>
+    <Category name="Joker">
+      <Action name="Joker_DISPLAY">
+		    <Up>Joker.AnimateText()</Up>
       </Action>
     </Category>
   </Layer>
