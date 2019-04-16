@@ -2,7 +2,7 @@
 local localization_strings = {
 	SI_NEW_ADDON_MESSAGE = " c'est actif!",
 	-- Keybindings.
-	SI_BINDING_NAME_NEWADDON_DISPLAY = "Afficher le NewAddon",
+	SI_BINDING_NAME_NEWADDON_DISPLAY = "Afficher le Norris Addon",
 }
 
 for stringId, stringValue in pairs(localization_strings) do

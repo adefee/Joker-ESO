@@ -1,132 +1,76 @@
 -- Settings menu.
-function Norris.LoadSettings()
+function Joker.LoadSettings()
     local LAM = LibStub("LibAddonMenu-2.0")
 
     local panelData = {
         type = "panel",
-        name = Norris.menuName,
-        displayName = Norris.Colorize(Norris.menuName),
-        author = Norris.Colorize(Norris.author, "AAF0BB"),
-        -- version = Norris.Colorize(Norris.version, "AA00FF"),
+        name = Joker.menuName,
+        displayName = Joker.Colorize(Joker.menuName),
+        author = Joker.Colorize(Joker.author, "D66E4A"),
+        version = Joker.Colorize(Joker.version, "AA00FF"),
         slashCommand = "/norris",
         registerForRefresh = true,
         registerForDefaults = true,
     }
-    LAM:RegisterAddonPanel(Norris.menuName, panelData)
+    LAM:RegisterAddonPanel(Joker.menuName, panelData)
 
     local optionsTable = {}
 
-    -- Category. --
     table.insert(optionsTable, {
-        type = "header",
-        name = ZO_HIGHLIGHT_TEXT:Colorize("My Header"),
-        width = "full",	--or "half" (optional)
+      type = "header",
+      name = ZO_HIGHLIGHT_TEXT:Colorize("Joker Options"),
+      width = "full",	--or "half" (optional)
     })
 
+    -- General Info Note
     table.insert(optionsTable, {
-        type = "description",
-        --title = "My Title",	--(optional)
-        title = nil,	--(optional)
-        text = "My description text to display.",
-        width = "full",	--or "half" (optional)
+      type = "description",
+      title = "Customizable GUI options coming soon! Version 1 includes the following slash (/) commands:",
+      text = "'/norris' adds a random Chuck Norris joke to your chatbox, <br />'/norris me' adds a random joke to your chatbox featuring none other than you!, /n '/norris <target>' adds a random joke to your chatbox, using any text as the subject!",
+      width = "full",	--or "half" (optional)
     })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/norris me' adds a random joke to your chatbox featuring none other than you!, /n '/norris <target>' adds a random joke to your chatbox, using any text as the subject!",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/norris <target>' adds a random joke to your chatbox, using any text as the subject!",
+      width = "full",	--or "half" (optional)
+    })
+    -- table.insert(optionsTable, {
+    --     type = "dropdown",
+    --     name = "Allow explicit jokes?",
+    --     tooltip = "Should it be possible to include explicit jokes?",
+    --     choices = {"Allow Explicit", "Ignore Explicit"},
+    --     getFunc = function() return "of" end,
+    --     setFunc = function(var) print(var) end,
+    --     width = "half",	-- "half" or "full" (optional)
+    --     warning = "Will need to reload the UI.",	--(optional)
+    -- })
 
     table.insert(optionsTable, {
-        type = "dropdown",
-        name = "My Dropdown",
-        tooltip = "Dropdown's tooltip text.",
-        choices = {"table", "of", "choices"},
-        getFunc = function() return "of" end,
-        setFunc = function(var) print(var) end,
-        width = "half",	--or "half" (optional)
-        warning = "Will need to reload the UI.",	--(optional)
+      type = "header",
+      name = ZO_HIGHLIGHT_TEXT:Colorize("Author Notes"),
+      width = "full",	--or "half" (optional)
     })
 
+    -- Requests Note
     table.insert(optionsTable, {
-        type = "dropdown",
-        name = "My Dropdown",
-        tooltip = "Dropdown's tooltip text.",
-        choices = {"table", "of", "choices"},
-        getFunc = function() return "of" end,
-        setFunc = function(var) print(var) end,
-        width = "half",	--or "half" (optional)
-        warning = "Will need to reload the UI.",	--(optional)
+      type = "description",
+      title = "Want more jokes?",
+      text = "More fun-, pop-culture- and leisure-minded options (such as GoT jokes, popular memes, riddles, and more) are expected to be added in future releases. Bug reports, requests & suggestions are always enthusiastically welcomed! Whisper me ingame (NA @CallMeLent), or get in touch via esoui.com, Twitter (@adefee), or Github (@adefee).",
+      width = "full",	--or "half" (optional)
     })
 
+    -- Copyright Note
     table.insert(optionsTable, {
-        type = "slider",
-        name = "My Slider",
-        tooltip = "Slider's tooltip text.",
-        min = 0,
-        max = 20,
-        step = 1,	--(optional)
-        getFunc = function() return 3 end,
-        setFunc = function(value) d(value) end,
-        width = "half",	--or "half" (optional)
-        default = 5,	--(optional)
+      type = "description",
+      title = "Sources, Copyrights, etc",
+      text = "The current version of this addon includes 545+ jokes! I want to emphasize that the jokes contained in this addon are (for the most part) not my own, but rather are originally sourced from various public internet sources. I claim no ownership of the content, and make no money from this addon or any content therein. If there are any copyright, trademark, DMCA, or other legal issues please reach out at me@andrewdefee.com and I'll comply as quickly and accurately as I can within the scope of US law. I'm just trying to share a few laughs - after all, what good is a joke if it's not shared?",
+      width = "full",	--or "half" (optional)
     })
-
-    table.insert(optionsTable, {
-        type = "button",
-        name = "My Button",
-        tooltip = "Button's tooltip text.",
-        func = function() d("button pressed!") end,
-        width = "half",	--or "half" (optional)
-        warning = "Will need to reload the UI.",	--(optional)
-    })
-
-    table.insert(optionsTable, {
-        type = "submenu",
-        name = "Submenu Title",
-        tooltip = "My submenu tooltip",	--(optional)
-        controls = {
-            [1] = {
-                type = "checkbox",
-                name = "My Checkbox",
-                tooltip = "Checkbox's tooltip text.",
-                getFunc = function() return true end,
-                setFunc = function(value) d(value) end,
-                width = "half",	--or "half" (optional)
-                warning = "Will need to reload the UI.",	--(optional)
-            },
-            [2] = {
-                type = "colorpicker",
-                name = "My Color Picker",
-                tooltip = "Color Picker's tooltip text.",
-                getFunc = function() return 1, 0, 0, 1 end,	--(alpha is optional)
-                setFunc = function(r,g,b,a) print(r, g, b, a) end,	--(alpha is optional)
-                width = "half",	--or "half" (optional)
-                warning = "warning text",
-            },
-            [3] = {
-                type = "editbox",
-                name = "My Editbox",
-                tooltip = "Editbox's tooltip text.",
-                getFunc = function() return "this is some text" end,
-                setFunc = function(text) print(text) end,
-                isMultiline = false,	--boolean
-                width = "half",	--or "half" (optional)
-                warning = "Will need to reload the UI.",	--(optional)
-                default = "",	--(optional)
-            },
-        },
-    })
-
-    table.insert(optionsTable, {
-        type = "custom",
-        reference = "MyAddonCustomControl",	--unique name for your control to use as reference
-        refreshFunc = function(customControl) end,	--(optional) function to call when panel/controls refresh
-        width = "half",	--or "half" (optional)
-    })
-
-    table.insert(optionsTable, {
-        type = "texture",
-        image = "EsoUI\\Art\\ActionBar\\abilityframe64_up.dds",
-        imageWidth = 64,	--max of 250 for half width, 510 for full
-        imageHeight = 64,	--max of 100
-        tooltip = "Image's tooltip text.",	--(optional)
-        width = "half",	--or "half" (optional)
-    })
-
-    LAM:RegisterOptionControls(Norris.menuName, optionsTable)
+    
+    LAM:RegisterOptionControls(Joker.menuName, optionsTable)
 end

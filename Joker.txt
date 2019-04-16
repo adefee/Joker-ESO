@@ -1,17 +1,17 @@
 ## APIVersion: 100026
-## Title: Norris
-## Version: 0.1
-## Author: Lent (Git @adefee)
+## Title: Joker
+## Version: 1.0.0
+## Author: Lent (IGN @CallMeLent, Github @adefee)
 ## License: MIT
-## Description: Fetch and return single Chuck Norris joke from remote public JSON API
-## SavedVariables: NewAddonSavedVariables
+## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. Release (v1.0.0) contains only Chuck Norris jokes, but more content coming super soon!
+## SavedVariables: JokerSavedVariables
 ## OptionalDependsOn: LibAddonMenu-2.0
 
 Languages\en.lua
 Languages\$(language).lua
 
 Bindings.xml
-Norris.xml
+Joker.xml
 
 LibStub\LibStub.lua
 
@@ -32,5 +32,5 @@ LibAddonMenu-2.0\controls\texture.lua
 LibAddonMenu-2.0\controls\iconpicker.lua
 LibAddonMenu-2.0\controls\divider.lua
 
-Norris.lua
+Joker.lua
 Settings.lua
