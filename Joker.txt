@@ -1,6 +1,6 @@
 ## APIVersion: 100026
 ## Title: Joker
-## Version: 1.0.0
+## Version: 100000
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
 ## License: MIT
 ## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. Release (v1.0.0) contains only Chuck Norris jokes, but more content coming super soon!
