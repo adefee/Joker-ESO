@@ -1,14 +1,20 @@
-## APIVersion: 100026
 ## Title: Joker
-## Version: 100000
+## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel.
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
-## License: MIT
-## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. Release (v1.0.0) contains only Chuck Norris jokes, but more content coming super soon!
+
+## Version: 1.0.0
+## AddOnVersion: 100000
+## APIVersion: 100026 100027
+
+## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 
+## The Elder Scrolls® and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the 
+## United States and/or other countries. All rights reserved.
+
 ## SavedVariables: JokerSavedVariables
 ## OptionalDependsOn: LibAddonMenu-2.0
 
-Languages\en.lua
-Languages\$(language).lua
+i18n\en.lua
+i18n\$(language).lua
 
 Bindings.xml
 Joker.xml

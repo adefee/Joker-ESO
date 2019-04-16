@@ -1,6 +1,6 @@
 # Joker-ESO
 A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
-
+#### Current Release: **v1.0.0** (10000)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
 
