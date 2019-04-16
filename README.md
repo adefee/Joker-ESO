@@ -7,7 +7,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
 
-> Latest release (v1.0.0) contains Norris jokes (as a test & proof-of-concept; this is my first ESO addon), but more content coming super soon!
+> Latest release (v1.1.0) contains Norris & ESO jokes (as a test & proof-of-concept; this is my first ESO addon), but more content coming super soon!
 
 ## Table of Contents
 
@@ -16,6 +16,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 - [Commands](#commands)
 - [Update Roadmap](#update-roadmap)
 - [Contributing](#contributing)
+- [Sourcing](#sourcing)
 - [License](#license)
 
 ## Purpose
@@ -27,6 +28,9 @@ The following libraries are presently required for Joker to function properly. O
 - `LibStub`
 
 ## Commands
+- **/joker**: Shows Joker settings & help.
+- **/joke**: Picks a random joke and adds to your active chatbox.
+- **/eso**: Adds a random ESO-related joke to your active chatbox
 - **/norris**: Add a random Chuck Norris joke to your active chatbox.
 - **/norris me**: Add a random joke to your chatbox, with *you* as the subject!
 - **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
@@ -60,6 +64,11 @@ PRs accepted.
 
 - [@Phuein](https://www.esoui.com/forums/member.php?action=getinfo&userid=38690): NewAddon boilerplate made it super-easy to get started in minutes :)
 - [@Dolgubon](https://www.esoui.com/forums/member.php?action=getinfo&userid=23366): Early help, tips, cleanup :)
+
+## Sourcing
+Jokes, riddles, memes, etc were (other than my own content) sourced from the below sources:
+- ESO Jokes: https://github.com/esoui/lexicon/blob/master/lexicon/joke/joke.go
+- Norris Jokes: http://www.icndb.com/api/
 
 ## License
 
