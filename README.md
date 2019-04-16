@@ -19,7 +19,9 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 Includes 545+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
 
 ## Dependencies
-`LibAddonMenu-2.0` and `LibStub` are bundled in this release, and I'm presently unsure if users need to install them independently (need to test; both are presently installed on my machine)
+The following libraries are required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO, including (probably) the upcoming Elsweyr chapter.
+- `LibAddonMenu-2.0`
+- `LibStub`
 
 ## Commands
 - **/norris**: Add a random Chuck Norris joke to your active chatbox.
