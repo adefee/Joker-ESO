@@ -1,6 +1,6 @@
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "1.1.2",                -- A nuisance to match to the Manifest.
+    version         = "1.1.3",                -- A nuisance to match to the Manifest.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "DDFFEE",             -- Used in menu titles and so on.
     menuName        = "Joker - Best Enjoyed with Skooma!", -- A UNIQUE identifier for menu object.
@@ -14,6 +14,25 @@ Joker = {
 -- Utility; Checks if given string is empty/nil
 function Joker.isempty(s)
   return s == nil or s == ''
+end
+
+-- split()
+-- Utility; Splits given string after X chars
+function Joker.split(str, max_line_length)
+  local lines = {}
+  local line
+  str:gsub('(%s*)(%S+)', 
+     function(spc, word) 
+        if not line or #line + #spc + #word > max_line_length then
+           table.insert(lines, line)
+           line = word
+        else
+           line = line..spc..word
+        end
+     end
+  )
+  table.insert(lines, line)
+  return lines
 end
 
 --[[
@@ -686,7 +705,14 @@ end
 -- Norris()
 -- Display; Returns Norris joke, allows for optional given <me> or <target>
 function Joker.Norris(target)
-  local joke = Joker.GetNorris()
+  local joke = ""
+
+   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+   repeat
+    joke = Joker.GetNorris()
+    jokeLength = string.len(joke)
+    -- d('Got joke with ' .. jokeLength .. 'chars...')
+  until (jokeLength < 350)
 
   if target == 'me' then
     joke = string.gsub(joke, "Chuck Norris", GetUnitName("player"))
@@ -701,9 +727,25 @@ end
 -- ESO()
 -- Display; Returns ESO joke. For now, no optionals handled
 function Joker.ESO()
-  local joke = Joker.GetESO()
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
 
-  -- d(joke) -- Echo out debug during dev
+  -- Split every 300 chars, then paste to chatbox. Leaving for reference in future.
+  -- joke = Joker.split(joke, 300)
+  -- d(joke)
+  -- for _, line in ipairs(joke) do
+  --   if not Joker.isempty(line) then
+  --     zo_callLater(function() StartChatInput(line, CHAT_CHANNEL) end, 1000)
+  --   end
+  -- end
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetESO()
+    jokeLength = string.len(joke)
+    -- d('Got joke with ' .. jokeLength .. 'chars...')
+  until (jokeLength < 350)
+
   StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
 end
 
