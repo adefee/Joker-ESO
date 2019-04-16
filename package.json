@@ -3,6 +3,9 @@
   "description": "Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. Release (v1.0.0) contains only Chuck Norris jokes, but more content coming super soon!",
   "version": "v1.0.0",
   "private": false,
+  "contributors": [
+    "Andrew Defee (@adefee)"
+  ],
   "dependencies": {
   },
   "scripts": {
