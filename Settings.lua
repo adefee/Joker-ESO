@@ -8,7 +8,7 @@ function Joker.LoadSettings()
         displayName = Joker.Colorize(Joker.menuName),
         author = Joker.Colorize(Joker.author, "D66E4A"),
         version = Joker.Colorize(Joker.version, "AA00FF"),
-        slashCommand = "/norris",
+        slashCommand = "/joker",
         registerForRefresh = true,
         registerForDefaults = true,
     }
@@ -39,16 +39,6 @@ function Joker.LoadSettings()
       text = "'/norris <target>' adds a random joke to your chatbox, using any text as the subject!",
       width = "full",	--or "half" (optional)
     })
-    -- table.insert(optionsTable, {
-    --     type = "dropdown",
-    --     name = "Allow explicit jokes?",
-    --     tooltip = "Should it be possible to include explicit jokes?",
-    --     choices = {"Allow Explicit", "Ignore Explicit"},
-    --     getFunc = function() return "of" end,
-    --     setFunc = function(var) print(var) end,
-    --     width = "half",	-- "half" or "full" (optional)
-    --     warning = "Will need to reload the UI.",	--(optional)
-    -- })
 
     table.insert(optionsTable, {
       type = "header",

@@ -1,5 +1,8 @@
 # Joker-ESO
 A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
+
+### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
+
 #### Current Release: **v1.0.0** (10000)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
@@ -50,7 +53,8 @@ PRs accepted.
 
 ### Big thanks to:
 
-- [@Phuein](https://www.esoui.com/forums/member.php?action=getinfo&userid=38690): NewAddon boilerplate made it super-easy to get started in minutes :) 
+- [@Phuein](https://www.esoui.com/forums/member.php?action=getinfo&userid=38690): NewAddon boilerplate made it super-easy to get started in minutes :)
+- [@Dolgubon](https://www.esoui.com/forums/member.php?action=getinfo&userid=23366): Early help, tips, cleanup :)
 
 ## License
 

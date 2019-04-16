@@ -1,6 +1,6 @@
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "1.0.0",                -- A nuisance to match to the Manifest.
+    version         = "1.0.1",                -- A nuisance to match to the Manifest.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "DDFFEE",             -- Used in menu titles and so on.
     menuName        = "Joker - Best Enjoyed with Skooma!", -- A UNIQUE identifier for menu object.
