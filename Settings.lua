@@ -25,8 +25,23 @@ function Joker.LoadSettings()
     -- General Info Note
     table.insert(optionsTable, {
       type = "description",
-      title = "Customizable GUI options coming soon! Version 1 includes the following slash (/) commands:",
-      text = "'/norris' adds a random Chuck Norris joke to your chatbox, <br />'/norris me' adds a random joke to your chatbox featuring none other than you!, /n '/norris <target>' adds a random joke to your chatbox, using any text as the subject!",
+      title = "GUI options soon! Version 1 includes the following slash (/) commands:",
+      text = "'/joker' shows this window!",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/joke' adds a random joke to your chatbox",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/eso' adds a random ESO-related joke to your chatbox",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/norris' adds a random Chuck Norris joke to your chatbox",
       width = "full",	--or "half" (optional)
     })
     table.insert(optionsTable, {
