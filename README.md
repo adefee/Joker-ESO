@@ -32,6 +32,11 @@ The following libraries are presently required for Joker to function properly. O
 - **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
 - More soon!
 
+## Build
+v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json that semi-automate the build packaging. You should create a /dist dir in main dir, then run one of the below:
+- `build` Zips up the whole repo (excluding .git/, dist/, & .vscode/) into the appropriately versioned folder in /dist/ (based on version in package.json). The resulting Joker.zip is ready to upload to esoui.
+- `build-new` creates a new folder in /dist/ matching the version number in package.json, then zips up the whole repo (excluding .git/, dist/, & .vscode/). The resulting Joker.zip is ready to upload to esoui.
+
 
 ## Update Roadmap
 Always accepting requests, suggestions, etc. Here are a few things currently on the roadmap:
