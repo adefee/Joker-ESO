@@ -7,7 +7,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
 
-> Latest release contains Norris & ESO jokes (as a test & proof-of-concept; this is my first ESO addon), but more content coming super soon!
+> Latest release contains an assortment of Chuck Norris, ESO-related, Dad, and Edgy jokes (plus some sarcastic tidbits of wisdom), with more content coming super soon!
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 - [License](#license)
 
 ## Purpose
-Includes 600+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
+Includes 700+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
 
 ## Dependencies
 The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO, including (probably) the upcoming Elsweyr chapter. Both are packaged within. 
