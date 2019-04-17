@@ -3,7 +3,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Release: **v1.1.3** (101030)
+#### Current Release: **v1.2.0** (102000)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
 
@@ -20,7 +20,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 - [License](#license)
 
 ## Purpose
-Includes 545+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
+Includes 600+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
 
 ## Dependencies
 The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO, including (probably) the upcoming Elsweyr chapter. Both are packaged within. 
@@ -29,9 +29,12 @@ The following libraries are presently required for Joker to function properly. O
 
 ## Commands
 - **/joker**: Shows Joker settings & help.
-- **/joke**: Picks a random joke and adds to your active chatbox.
+- **/joke**: Picks a random joke and adds to your active chatbox. Random pool does not include Edgy jokes or pickup lines.
 - **/joke-eso**: Adds a random ESO-related joke to your active chatbox
-- **/norris**: Add a random Chuck Norris joke to your active chatbox.
+- **/joke-dad** (or **/dad**): Adds a random Dad joke to your active chatbox
+- **/joke-wisdom** (or **/wisdom**): Adds a random tidbit of wisdom (though sometimes a bit sarcastic) your active chatbox
+- **/joke-edgy**: adds a random edgy joke to your chatbox (added by popular request). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.
+- **/joke-norris** (or **/norris**): Add a random Chuck Norris joke to your active chatbox.
 - **/norris me**: Add a random joke to your chatbox, with *you* as the subject!
 - **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
 - More soon!

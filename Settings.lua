@@ -31,17 +31,32 @@ function Joker.LoadSettings()
     })
     table.insert(optionsTable, {
       type = "description",
-      text = "'/joke' adds a random joke to your chatbox",
+      text = "'/joke' adds a random joke to your chatbox. Random pool does not include Edgy jokes or pickup lines",
       width = "full",	--or "half" (optional)
     })
     table.insert(optionsTable, {
       type = "description",
-      text = "'/joke-eso' adds a random ESO-related joke to your chatbox",
+      text = "'/joke-eso' adds a random ESO-related joke to your chatbox.",
       width = "full",	--or "half" (optional)
     })
     table.insert(optionsTable, {
       type = "description",
-      text = "'/norris' adds a random Chuck Norris joke to your chatbox",
+      text = "'/joke-dad' (or '/dad') adds a random Dad joke to your chatbox.",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/joke-wisdom' (or '/wisdom') adds a random tidbit of wisdom (though sometimes a bit sarcastic) to your chatbox.",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/joke-edgy' adds a random edgy joke to your chatbox (added by popular request!). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/joke-norris' (or '/norris') adds a random Chuck Norris joke to your chatbox.",
       width = "full",	--or "half" (optional)
     })
     table.insert(optionsTable, {

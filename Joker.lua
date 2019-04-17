@@ -1,13 +1,16 @@
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "1.1.3",                -- A nuisance to match to the Manifest.
+    version         = "1.2.0",                -- A nuisance to match to the Manifest.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "DDFFEE",             -- Used in menu titles and so on.
     menuName        = "Joker - Best Enjoyed with Skooma!", -- A UNIQUE identifier for menu object.
     -- Default settings.
     savedVariables = {
-        FirstLoad = true      -- First time the addon is loaded ever.
-    },
+      FirstLoad = true,      -- First time the addon is loaded ever.
+      FirstEdgy = true,      -- First time an edgy joke has been requested, show warning
+      FirstDad = true,       -- First Dad joke, show info
+      FirstNorris = true    -- First Norris joke, show info
+    }
 }
 
 -- isempty()
@@ -39,6 +42,275 @@ end
   ** Data Grabs
   PURPOSE: These functions just return data
 ]]
+
+-- GetDadl()
+-- Data; Returns random, dad joke
+function Joker.GetDad()
+  local dadJokes = {
+    "I used to just crastinate, but then I was so good I became pro at it. -- @manavortex",
+    "Employee of the month is a good example of how somebody can be both a winner and a loser at the same time. -- Demetri Martin",
+    "It’s not that I’m afraid to die, I just don’t want to be there when it happens. -- Woody Allen",
+    "When I was a boy, I laid in my twin sized bed and wondered where my brother was. -- Mitch Hedberg",
+    "My drug test came back negative. My dealer sure has some explaining to do.",
+    "I think it’s wrong that only one company makes the game Monopoly. -- Steven Wright",
+    "The worst time to have a heart attack is during a game of charades. -- Demetri Martin",
+    "I have the world's largest collection of seashells, you may have seen it, I keep it scattered on beaches all over.",
+    "I want to die peacefully in my sleep, like my grandfather.. Not screaming and yelling like the passengers in his car.",
+    "When life gives you melons, you might be dyslexic.",
+    "I don’t want to be part of a club that would have me as a member. -- Groucho Marx",
+    "Last night, I played poker with Tarot cards … got a full house and 4 people died. -- Steven Wright",
+    "My father has schizophrenia, but he’s good people. -- Stewart Francis",
+    "Does my wife think I'm a control freak? I haven't decided yet. -- Stewart Francis",
+    "I'm on a whisky diet... I've lost three days already! -- Tommmy Cooper",
+    "Honesty may be the best policy, but it’s important to remember that apparently, by elimination, dishonesty is the second-best policy. -- George Carlin",
+    "Starbucks says they are going to start putting religious quotes on cups. The very first one will say, 'Jesus! This cup is expensive!' -- Conan O'Brien",
+    "I had a wonderful childhood, which is tough because it's hard to adjust to a miserable adulthood -- Larry David",
+    "Did you hear about the crook who stole a calendar? He got twelve months.",
+    "R.I.P boiled water. You will be mist.",
+    "What's the difference between a northern fairytale and a southern fairytale? A northern fairytale begins 'Once upon a time ...' A southern fairytale begins 'Y'all ain't gonna believe this shit ...'",
+    "Nurse: 'Doctor, there's a patient on line 1 that says he's invisible'. Doctor: 'Well, tell him I can't see him right now.'",
+    "Intelligence is like underwear. It is important that you have it, but not necessary that you show it off.",
+    "The older I get, the earlier it gets late.",
+    "My girlfriend is always stealing my t-shirts and sweaters... But if I take one of her dresses, suddenly 'we need to talk'.",
+    "Last night in my dream I was peeing in bed. Dreams do come true, I realized in the morning.",
+    "Smoking will kill you... Bacon will kill you... But,smoking bacon will cure it.",
+    "Thanks for explaining the word 'many' to me, it means a lot.",
+    "Moses had the first tablet that could connect to the cloud.",
+    "About a month before he died, my uncle had his back covered in lard. After that, he went down hill fast.",
+    "The first computer dates back to Adam and Eve. It was an Apple with limited memory, just one byte. And then everything crashed.",
+    "I'm not saying your perfume is too strong. I'm just saying the canary was alive before you got here.",
+    "I grew a beard thinking it would say 'Distinguished Gentleman.' Instead, turns out it says, 'Senior Discount, Please!'",
+    "At what age is it appropriate to tell my dog that he's adopted?",
+    "I tried to explain to my 4-year-old son that it's perfectly normal to accidentally poop your pants, but he's still making fun of me.",
+    "I like having conversations with kids. Grownups never ask me what my third favorite reptile is.",
+    "Today a man knocked on my door and asked for a small donation towards the local swimming pool. I gave him a glass of water.",
+    "I just read that 5,677,145 people got married last year, not to cause any trouble but shouldn't that be an even number?",
+    "I think my neighbor is stalking me as she's been googling my name on her computer. I saw it through my telescope last night.",
+    "Feeling pretty proud of myself. The Sesame Street puzzle I bought said 3-5 years, but I finished it in 18 months.",
+    "My mom said that if I don't get off my computer and do my homework she'll slam my head on the keyboard, but I think she's jokinfjreoiwjrtwe4to8rkljreun8f4ny84c8y4",
+    "Before I criticize a man, I like to walk a mile in his shoes. That way, when I do criticize him, I'm a mile away and I have his shoes.",
+    "My wife just found out I replaced our bed with a trampoline; she hit the roof.",
+    "I just asked my husband if he remembers what today is... Scaring men is easy.",
+    "The question isn't at what age I want to retire, it's at what income.",
+    "eBay is so useless. I tried to look up lighters and all they had was 13,749 matches.",
+    "My dad died when we couldn't remember his blood type. As he died, he kept insisting for us to 'be positive,' but it's hard without him.",
+    "I started out with nothing, and I still have most of it.",
+    "I always feel better when my doctor says something is normal for my age but then think dying will also be normal for my age at some point.",
+    "I would request a last meal of soda and pop rocks so I could die on my own terms.",
+    "She wanted a puppy. But I didn't want a puppy. So we compromised and got a puppy.",
+    "Did you know that dolphins are so smart that within a few weeks of captivity, they can train people to stand on the very edge of the pool and throw them fish?",
+    "People used to laugh at me when I would say 'I want to be a comedian', well nobody's laughing now.",
+    "I changed my password to 'incorrect'. So whenever I forget what it is the computer will say 'Your password is incorrect'.",
+    "To this day, the boy that used to bully me at school still takes my lunch money. On the plus side, he makes great Subway sandwiches.",
+    "When I told the doctor about my loss of memory, he made me pay in advance.",
+    "Artificial intelligence is no match for natural stupidity.",
+    "TRUE FRIENDSHIP: Walking into a persons house and your wifi connects automatically.",
+    "A computer once beat me at chess, but it was no match for me at kick boxing.",
+    "I think we should get rid of democracy. All in favor: raise your hand.",
+    "That awkward moment when you leave a store without buying anything and all you can think is 'act natural, you're innocent'.",
+    "If you're not supposed to eat at night, why is there a light bulb in the refrigerator?",
+    "Math Teacher: 'If I have 5 bottles in one hand and 6 in the other hand, what do I have?' Student: 'A drinking problem.'",
+    "Light travels faster than sound. This is why some people appear bright until you hear them speak.",
+    "I hate people who use big words just to make themselves look perspicacious.",
+    "I named my dog 6 miles so I can tell people that I walk 6 miles every single day.",
+    "I used to think I was indecisive, but now I'm not too sure.",
+    "We just got a fax. At work. We didn't know we had a fax machine. The entire department just stared at it. I poked it with a stick.",
+    "One day you're the best thing since sliced bread. The next, you're toast.",
+    "Just burned 2,000 calories. That's the last time I leave brownies in the oven while I nap.",
+    "I didn't say it was your fault, I said I was blaming you.",
+    "Don't you hate it when someone answers their own questions? I do.",
+    "I won $3 million on the lottery this weekend so I decided to donate a quarter of it to charity. Now I have $2,999,999.75.",
+    "Scientists say the universe is made up of Protons, Neutrons, and Electrons. They forgot to mention Morons.",
+    "My email password has been hacked. That's the third time I've had to rename the cat.",
+    "I didn't fight my way to the top of the food chain to be a vegetarian.",
+    "Life is all about perspective. The sinking of the Titanic was a miracle to the lobsters in the ship's kitchen.",
+    "You can make a water-bed more bouncy by using spring water.",
+    "Team work is important; it helps to put the blame on someone else.",
+    "The man who created autocorrect has died. Resturant in Peacce.",
+    "Don't trust atoms, they make up everything.",
+    "Did you hear about the semi-colon that broke the law? He was given two consecutive sentences.",
+    "To the mathematicians who thought of the idea of zero, thanks for nothing!",
+    "Claustrophobic people are more productive thinking out of the box.",
+    "Spoiler alert! The milk has been in the fridge for three weeks.",
+    "What do you get when you cross a joke with a rhetorical question?",
+    "A pun, a play on words, and a limerick walk into a bar. No joke.",
+    "Did you hear about the mathematician who's afraid of negative numbers? He will stop at nothing to avoid them!",
+    "Why did Beethoven get rid of all his chickens? All they said was 'Bach, Bach Bach'!",
+    "C, E-flat, and G walk into a bar. The bartender shows them the door, saying 'Sorry, we don't serve minors!'",
+    "A sign at a music shop: 'Gone Chopin, be Back in a minuet!'",
+    "What was Beethoven's favorite fruit? Ba-na-na-naaaaaaa!",
+    "A photon is going through security. The TSA agent asks if he has any luggage. The photo cooly replies, 'No, I'm traveling light!'",
+    "The bartender says 'Sorry, we don't server time travelers here'. A time traveler walks into a bar.",
+    "What did the Buddhist say to the hot dog vendor? 'Make me one with everything.'",
+    "If you jumped off the bridge in Paris, you'd be in Seine.",
+    "A German walks into a bar and asks for a martini. The bartender asks, 'Dry?' The German replies, 'Nein, just one.'",
+    "Did you hear about the weekly poker game with Vasco da Gama, Columbus, Erikson, & Pizzaro? They can never seem to beat the straights of Magellan.",
+    "If you're American when you go in the bathroom and American when you come out, what are you in the bathroom? European.",
+    "What do you call a fish with no eyes? A fsh.",
+    "What do you call a can opener that doesn't work? A can't opener!",
+    "There are three types of people in the world: those who can count, and those who can't.",
+    "Did you hear about the Italian chef who died? He pasta-way.",
+    "I sold my vacuum the other day. All it was doing was collecting dust.",
+    "What is Forrest Gump's email password? 1forrest1",
+    "Two windmills are standing in a wind farm. One asks, 'What's your favorite music genre?' The other replies, 'I'm a big metal fan.'",
+    "Did you hear about the guy who invented the knock knock joke? He won the no-bell prize.",
+    "I like elephants. Everythign else is irrelephant.",
+    "What's red and bad for your teeth? A brick.",
+    "Why does Snoop Dogg use an umbrella? For drizzle.",
+    "The astronaut was claustrophobic; he just needed some space.",
+    "Noses can't be more than 11 inches long, because then they'd be a foot.",
+    "My wedding was so beautiful, even the cake was in tiers!",
+    "A dyslexic man walks into a bra...",
+    "What do you call a fly with no wings? A walk.",
+    "What did the janitor yell when he jumped out of the closet? 'Supplies!'",
+    "It's not appropriate to make a 'dad joke' if you are not a dad. It's a faux pa.",
+    "What's the most terrifying word in nuclear physics? 'Oops!'",
+    "I'm writing a horror screenplay. It starts off with a ringing phone. The person answers, and it's their relative saying 'I have a computer question.'",
+    "The other day, my wife asked me to pass her lipstick but I accidentally passed her a glue stick. She still isn't talking to me.",
+    "It’s important to have a good vocabulary. If I had known the difference between the words 'antidote' and 'anecdote,' one of my good friends would still be alive.",
+    "When ordering food at a restaurant, I asked the waiter how they prepare their chicken. 'Nothing special,' he explained. 'We just tell them they're going to die.'",
+    "What's the last thing to go through a fly's head as it hits the windshield of a car going 70mph? Its butt."
+  }
+  local random = math.random() * #dadJokes
+  local index = 1 + math.floor(random)
+  local joke = dadJokes[index]
+
+  return joke
+end
+
+-- GetEdgy()
+-- Data; Returns random, edgy/explicit joke
+-- NOTE: These are *NOT* included in the random pool and must be explicitly requested via /joke-edgy
+function Joker.GetEdgy()
+  local edgyJokes = {
+    "What is worse than ants in your pants? Uncles!",
+    "It's sad that a family can be torn apart by something as simple as wild dogs. -- Jack Handey",
+    "The problem isn't that obesity runs in your family. The problem is no one runs in your family.",
+    "I tried to change my password to penis but they said it was too short.",
+    "There’s no such thing as addiction, there’s only things that you enjoy doing more than life. -- Doug Stanhope",
+    "I had to stop drinking, cause I got tired of waking up in my car driving 90. -- Richard Pryor",
+    "I asked my North Korean friend how it was there, he said he couldn't complain.",
+    "A doctor tells a woman she can no longer touch anything alcoholic. So she gets a divorce.",
+    "Life without women would be a pain in the ass, literally.",
+    "Alcohol is a perfect solvent: It dissolves marriages, families and careers.",
+    "Anal intercourse is for assholes.",
+    "I find it ironic that the colors red, white, and blue stand for freedom until they are flashing behind you.",
+    "The reason a dog has so many friends is that he wags his tail instead of his tongue.",
+    "An old teacher asked her student, 'If I say, 'I am beautiful,' which tense is that?' The student replied, 'It is obviously past.'",
+    "A little boy asked his father, 'Daddy, how much does it cost to get married?' Father replied, 'I don't know son, I'm still paying.'",
+    "A Mexican magician was doing a magic trick. He said, Uno, Dose, and then disappeared without a trace.",
+    "You have two parts of brain, 'left' and 'right'. In the left side, there's nothing right. In the right side, there's nothing left.",
+    "A recent finding by statisticians shows the average human has one breast and one testicle.",
+    "What do you call a psychic little person who has escaped from prison? A small medium at large!",
+    "Three fish are in a tank. One asks the others, 'How do you drive this thing?'",
+    "Did you know the first French fries weren't actually cooked in France? They were cooked in Greece.",
+    "Me: 'How do I look?' Partner: 'With your eyes.'",
+    "What's the best part about living in Switzerland? I don't know, but the flag is a big plus!",
+    "Have you heard that rumor about butter? Erm, never mind, I shouldn't be spreading it.",
+    "Whenever someone calls me ugly, I get super sad and hug them, because I know how tough life is for the visually impaired.",
+    "What do you call a black guy who flies a plane? A pilot, you fucking racist.",
+    "Where do you send jewish kids with ADD? Concentration camp.",
+    "What's better than winning a gold medal at the special olympics? Not being retarded!",
+    "What's the best way to get a Jewish girl's number? Pull up her sleeve...",
+    "What's the best thing about fucking 21 year olds? There's twenty of them!",
+    "How many emo kids does it take to change a lightbulb? None. They just sit in the dark and cry.",
+    "I wish my lawn were emo, so that it'd cut itself.",
+    "What you do call a musician who doesn't have a girlfriend? Homeless.",
+    "What's the difference between Jesus and a painting of Jesus? It only takes one nail to hang the painting.",
+    "What do you get when you cross a bunny and a Rottweiler? Just the Rottweiler",
+    "Give a man a match, and he’ll be warm for a few hours. Set a man on fire, and he will be warm for the rest of his life.",
+    "I asked a pretty, young homeless woman if I could take her home. She smiled at me and said yes. The look on her face soon changed, however, when I walked off with her cardboard box.",
+    "My elderly relatives liked to tease me at weddings, saying, 'You’ll be next!' They soon stopped though, once I started doing the same to them at funerals.",
+    "A blind woman tells her boyfriend that she’s seeing someone. It’s either really terrible news or really great news.",
+    "I was digging in our garden when I found a chest full of gold coins. I was about to run straight home to tell my husband about it, but then I remembered why I was digging in our garden.",
+    "Even people who are good for nothing have the capacity to bring a smile to your face. For instance, when you push them down the stairs.",
+    "One man’s trash is another man’s treasure. Wonderful saying, horrible way to find out you were adopted.",
+    "I visited my friend at his new house. He told me to make myself at home. So I threw him out. I hate having visitors.",
+    "My son, who’s into astronomy, asked me how stars die. 'Usually an overdose, son,' I told him.",
+    "What did Kermit the frog say at Jim Henson’s funeral? Nothing.",
+    "My girlfriend’s dog died, so I tried to cheer her up by getting her an identical one. It just made her more upset. She screamed at me, 'What am I supposed to do with two dead dogs?'",
+    "What’s yellow and can’t swim? A bus full of children.",
+    "I'll never forget my Granddad’s last words to me just before he died: 'Are you still holding the ladder?'",
+    "It turns out a major new study recently found that humans eat more bananas than monkeys. It’s true. I can’t remember the last time I ate a monkey.",
+    "Today was a terrible day. My ex got hit by a bus, AND I lost my job as a bus driver!",
+    "What was David Bowie's last hit? Probably heroin.",
+    "What do you call a deaf gynecologist? A lip reader.",
+    "What did the elephant say to the naked man? 'How do you breathe through that tiny thing?'",
+    "Why are orphans unable to play baseball? They've never known what home is."
+  }
+
+  local random = math.random() * #edgyJokes
+  local index = 1 + math.floor(random)
+  local joke = edgyJokes[index]
+
+  return joke
+end
+
+-- GetWisdom()
+-- Data; Returns random gem of wisdom
+function Joker.GetWisdom()
+  local wisdom = {
+    "Temples are free to enter but still empty. Pubs charge to enter, but are full. People ignore inner peace & choose to pay for self destruction.",
+    "Plan ahead - It wasn't raining when Noah built the ark.",
+    "If you're still looking for that one person who will change your life take a look in the mirror.",
+    "A diplomat is a man who always remembers a woman's birthday but never remembers her age.",
+    "Learn from yesterday, live for today and have hope for tomorrow.",
+    "Being an adult is just walking around wondering what you're forgetting.",
+    "The road to success is always under construction.",
+    "An optimist believes that we live in the best world. A pessimist is afraid that it might be true.",
+    "Improve your memory by doing unforgettable things.",
+    "Never laugh at your partner's choices... you're one of them.",
+    "Sometimes we expect more from others because we would be willing to do that much more for them.",
+    "Dont be afraid to stand for what you believe in, even if that means standing alone.",
+    "A friend is like a book: you don't need to read all of them, just pick the best ones.",
+    "Your life doesn't get better by chance. It gets better by choice.",
+    "Can I borrow a kiss? I promise I'll give it back.",
+    "Everything always ends well. If not – it's probably not the end.",
+    "It's just a bad day, not a bad life.",
+    "Failure is not falling down, it is not getting up again.",
+    "Keep the dream alive: Hit the snooze button.",
+    "The only knowledge that can hurt you is the knowledge you don't have.",
+    "Whatever you do always give 100%. Unless you are donating blood.",
+    "Nothing is fool proof to a sufficiently talented fool.",
+    "Your Facebookfriends lead much richer and more fulfilling lives than you.",
+    "Mannequins don't think you're creepy.",
+    "You take it the wrong way when someone says 'Don't take this the wrong way..'",
+    "The GPS lady doesn't really care if you're lost.",
+    "You have no gloves in your glove compartment.",
+    "A wise man once said something.",
+    "To avoid criticism, do nothing, say nothing, be nothing.",
+    "Love thy neighbor, just don't get caught!",
+    "Start everyday off with a smile. Atleast it's a good start!",
+    "Don't pursue happiness - create it!",
+    "Don't be pushed by your problems. Be led by your dreams.",
+    "Be careful. Straight trees often have crooked roots.",
+    "Always forgive your enemies. Nothing annoys them so much.",
+    "No snowflake in an avalanche ever feels responsible.",
+    "A ship in a harbour is safe, but that's not why ships are built."
+  }
+
+  local random = math.random() * #wisdom
+  local index = 1 + math.floor(random)
+  local joke = wisdom[index]
+
+  return joke
+end
+
+-- GetPickupLines()
+-- Data; Returns random pickup line
+function Joker.GetPickupLines()
+
+  local pickups = {
+    "Can I have your picture so I can show Santa what I want for Christmas?"
+  }
+
+  local random = math.random() * #pickups
+  local index = 1 + math.floor(random)
+  local joke = pickups[index]
+
+  return joke
+
+end
 
 -- GetNorris()
 -- Data; Returns random Norris joke
@@ -665,7 +937,7 @@ function Joker.GetESO()
     "Why did the Bosmer fall out of the tree? Because he was dead.",
     "Two Bosmer try chicken for the first time. Says the one: 'Tastes like human.'",
     "What do you call a Nord with two brain cells? Pregnant.",
-    "Why did Dwemers disappear? Because they were so deep on one could understand them.",
+    "Why did Dwemers disappear? Because they were so deep no one could understand them.",
     "I once met an aquaphobic Argonian.",
     "A Nord is taking his family to Ebonheart. As they travel down the road, they reach a sign that says 'Ebonheart: Left', so the Nord turned his family around and went back home.",
     "How does the Dragonborn like to view his photos? Thu'umnails",
@@ -720,6 +992,11 @@ function Joker.Norris(target)
     joke = string.gsub(joke, "Chuck Norris", target)
   end
 
+  if Joker.savedVariables.FirstNorris then
+    Joker.savedVariables.FirstNorris = false
+    d('NOTE: Roundhouse kick! Like these types of jokes? Get more with /joke-norris or just /norris! This message only displays on your first usage.')
+  end
+
   -- d(joke) -- Echo out debug during dev
   StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
 end
@@ -749,26 +1026,105 @@ function Joker.ESO()
   StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
 end
 
+-- Dad()
+-- Display; Returns Dad joke. For now, no optionals handled
+function Joker.Dad()
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetDad()
+    jokeLength = string.len(joke)
+  until (jokeLength < 350)
+
+  if Joker.savedVariables.FirstDad then
+    Joker.savedVariables.FirstDad = false
+    d('NOTE: Hi, Dad! Like these types of jokes? Get more with /joke-dad or just /dad! This message only displays on your first usage.')
+  end
+
+  StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
+end
+
+-- Wisdom()
+-- Display; Returns Wisdom tidbit. For now, no optionals handled
+function Joker.Wisdom()
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetWisdom()
+    jokeLength = string.len(joke)
+  until (jokeLength < 350)
+
+  StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
+end
+
+-- Edgy()
+-- Display; Returns Edgy/Explicit joke. For now, no optionals handled
+function Joker.Edgy()
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetEdgy()
+    jokeLength = string.len(joke)
+  until (jokeLength < 350)
+
+  if Joker.savedVariables.FirstEdgy then
+    Joker.savedVariables.FirstEdgy = false
+    d('NOTE: Edgy jokes have been flagged as particularly inappropriate, edgy, or explicit and may not be suitable for all audiences. Please be considerate in your usage. This message only displays on your first usage.')
+  end
+
+  
+
+  StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
+end
+
+-- PickupLines()
+-- Display; Returns cheesy pickup line. For now, no optionals handled
+function Joker.PickupLines()
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetPickupLines()
+    jokeLength = string.len(joke)
+  until (jokeLength < 350)
+
+  StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
+end
+
+-- --------------
 -- AnyJoke()
 -- Display; Randomly chooses a type of joke, returns. Optionals passed along as needed.
 function Joker.AnyJoke(target)
-  local jokeSources = {
+  local jokeSources = { -- Includes most, but not all, topics. Edgy/explicit not included
     "Norris",
-    "ESO"
+    "ESO",
+    "Dad",
+    "Wisdom"
   }
-  local random = math.random() * #jokeSources
-  local index = 1 + math.floor(random)
-  local jokeSource = jokeSources[index]
+  local random = math.random(0, 500)
 
-  if jokeSource == 'Norris' then
+  if random < 180 then
     local joke = Joker.Norris(target)
-  elseif jokeSource == 'ESO' then
+  elseif random >= 180 and random < 300 then
     local joke = Joker.ESO()
+  elseif random >= 300 and random < 450 then
+    local joke = Joker.Dad()
+  elseif random >= 450 and random <=  500 then
+    local joke = Joker.Wisdom()
   end
 
   -- d(joke) -- Echo out debug during dev
   StartChatInput(joke, CHAT_CHANNEL)
 end
+
+-- --------------
 
 -- Only show the loading message on first load ever. Displays a random message
 function Joker.Activated(e)
@@ -800,11 +1156,16 @@ function Joker.OnAddOnLoaded(event, addonName)
     Joker.LoadSettings()
 
     -- NOTE: Slash commands must be lowercase!
-    SLASH_COMMANDS["/norris"] = Joker.Norris
-    SLASH_COMMANDS["/joke"] = Joker.AnyJoke
+    SLASH_COMMANDS["/joke"] = Joker.AnyJoke -- Does not include edgy or pickup lines!
+    SLASH_COMMANDS["/joke-norris"] = Joker.Norris
     SLASH_COMMANDS["/joke-eso"] = Joker.ESO
-    -- SLASH_COMMANDS["/riddle"] = d('Riddles coming soon! Thanks for using Joker!')
-    -- SLASH_COMMANDS["/got"] = d('Game of Thrones jokes coming soon! Thanks for using Joker!')
+    SLASH_COMMANDS["/joke-dad"] = Joker.Dad
+    SLASH_COMMANDS["/joke-edgy"] = Joker.Edgy
+    SLASH_COMMANDS["/joke-wisdom"] = Joker.Wisdom
+    -- Other command aliases:
+    SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
+    SLASH_COMMANDS["/dad"] = Joker.Dad
+    SLASH_COMMANDS["/norris"] = Joker.Norris
 
     -- Reset autocomplete cache to update it.
     SLASH_COMMAND_AUTO_COMPLETE:InvalidateSlashCommandCache()
