@@ -3,11 +3,11 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Release: **v1.2.1** (102010)
+#### Current Release: **v1.2.2** (102020)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
 
-> Latest release contains an assortment of Chuck Norris, ESO-related, Dad, and Edgy jokes (plus some sarcastic tidbits of wisdom), with more content coming super soon!
+> Latest release contains a growing assortment of Chuck Norris, ESO-related, Dad, and Edgy jokes (plus some sarcastic tidbits of wisdom), with more content coming super soon!
 
 ## Table of Contents
 
@@ -38,6 +38,7 @@ The following libraries are presently required for Joker to function properly. O
 - **/norris me**: Add a random joke to your chatbox, with *you* as the subject!
 - **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
 - **/8ball**: Undecided? Get advice from the sage 8ball.
+- **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 
 ## Build
 v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json that semi-automate the build packaging. You should create a /dist dir in main dir, then run one of the below:

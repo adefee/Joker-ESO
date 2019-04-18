@@ -69,6 +69,16 @@ function Joker.LoadSettings()
       text = "'/norris <target>' adds a random joke to your chatbox, using any text as the subject!",
       width = "full",	--or "half" (optional)
     })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/8ball <question>': Undecided? Get quality life advice from the magic 8ball!",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = "'/catfact': Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!",
+      width = "full",	--or "half" (optional)
+    })
 
     table.insert(optionsTable, {
       type = "header",
