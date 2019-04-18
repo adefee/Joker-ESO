@@ -37,7 +37,7 @@ The following libraries are presently required for Joker to function properly. O
 - **/joke-norris** (or **/norris**): Add a random Chuck Norris joke to your active chatbox.
 - **/norris me**: Add a random joke to your chatbox, with *you* as the subject!
 - **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
-- More soon!
+- **/8ball**: Undecided? Get advice from the sage 8ball.
 
 ## Build
 v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json that semi-automate the build packaging. You should create a /dist dir in main dir, then run one of the below:
@@ -49,7 +49,7 @@ v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json 
 Always accepting requests, suggestions, etc. Here are a few things currently on the roadmap:
 
 - **[In Progress, Coming Soon!]**: Optionally hide jokes you've already seen,
-- **[In Progress, Coming Soon!]**: Magic 8 Ball,
+- **[Added v1.2.1]**: Magic 8 Ball,
 - **[In Progress, Coming Soon!]**: Fun & customizable burns,
 - **[In Progress, Coming Soon!]**: Cheesy, customizable pickup lines,
 - **[In Progress]**: Add GUI options in Addon settings
