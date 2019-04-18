@@ -32,7 +32,7 @@ The following libraries are presently required for Joker to function properly. O
 - **/joke**: Picks a random joke and adds to your active chatbox. Random pool does not include Edgy jokes or pickup lines.
 - **/joke-eso**: Adds a random ESO-related joke to your active chatbox
 - **/joke-dad** (or **/dad**): Adds a random Dad joke to your active chatbox
-- **/joke-wisdom** (or **/wisdom**): Adds a random tidbit of wisdom (though sometimes a bit sarcastic) your active chatbox
+- **/joke-wisdom** (or **/wisdom**): Adds a random tidbit of wisdom (though sometimes a bit sarcastic) to your active chatbox
 - **/joke-edgy**: adds a random edgy joke to your chatbox (added by popular request). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.
 - **/joke-norris** (or **/norris**): Add a random Chuck Norris joke to your active chatbox.
 - **/norris me**: Add a random joke to your chatbox, with *you* as the subject!
@@ -48,9 +48,19 @@ v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json 
 ## Update Roadmap
 Always accepting requests, suggestions, etc. Here are a few things currently on the roadmap:
 
-- Popular TV show references & jokes (GoT, Billions, The Walking Dead, Grey's Anatomy, etc etc etc),
-- Fun riddles and mindtwisters,
-- Add GUI options in Addon settings to enable/disable 
+- **[In Progress, Coming Soon!]**: Optionally hide jokes you've already seen,
+- **[In Progress, Coming Soon!]**: Fun & customizable burns,
+- **[In Progress, Coming Soon!]**: Cheesy, customizable pickup lines,
+- **[In Progress]**: Add GUI options in Addon settings
+- **[In Progress]**: Add filters to /joke (e.g. '/joke argonian' to pull a random joke about an Argonian)
+- **[Added v1.1.0]**: ESO jokes, quotes, & canon references (more always being added)
+- Add your own jokes (locally),
+- Automated submission of jokes to be included in the addon for everyone,
+- Popular TV show references & jokes (GoT, Billions, The Walking Dead, Grey's Anatomy, etc - always taking requests),
+- Fun riddles and mindtwisters (including interactive)
+- Other fun (and maybe a little useful) utility commands,
+- ... and lots of other stuff even further in the future (plus any requests from users)
+
 
 ## Contributing
 
