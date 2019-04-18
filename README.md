@@ -20,7 +20,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 - [License](#license)
 
 ## Purpose
-Includes 700+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
+Includes 1350+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
 
 ## Dependencies
 The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO, including (probably) the upcoming Elsweyr chapter. Both are packaged within. 
