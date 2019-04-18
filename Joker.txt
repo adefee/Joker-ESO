@@ -2,8 +2,8 @@
 ## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel.
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
 
-## Version: 1.2.0
-## AddOnVersion: 102000
+## Version: 1.2.1
+## AddOnVersion: 102010
 ## APIVersion: 100026 100027
 
 ## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 

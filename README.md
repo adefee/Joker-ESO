@@ -3,7 +3,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Release: **v1.2.0** (102000)
+#### Current Release: **v1.2.1** (102010)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
 
@@ -49,6 +49,7 @@ v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json 
 Always accepting requests, suggestions, etc. Here are a few things currently on the roadmap:
 
 - **[In Progress, Coming Soon!]**: Optionally hide jokes you've already seen,
+- **[In Progress, Coming Soon!]**: Magic 8 Ball,
 - **[In Progress, Coming Soon!]**: Fun & customizable burns,
 - **[In Progress, Coming Soon!]**: Cheesy, customizable pickup lines,
 - **[In Progress]**: Add GUI options in Addon settings
@@ -56,6 +57,7 @@ Always accepting requests, suggestions, etc. Here are a few things currently on 
 - **[Added v1.1.0]**: ESO jokes, quotes, & canon references (more always being added)
 - Add your own jokes (locally),
 - Automated submission of jokes to be included in the addon for everyone,
+- Raffle: Randomly pick from pool of users,
 - Popular TV show references & jokes (GoT, Billions, The Walking Dead, Grey's Anatomy, etc - always taking requests),
 - Fun riddles and mindtwisters (including interactive)
 - Other fun (and maybe a little useful) utility commands,
@@ -79,9 +81,16 @@ PRs accepted.
 - [@Dolgubon](https://www.esoui.com/forums/member.php?action=getinfo&userid=23366): Early help, tips, cleanup :)
 
 ## Sourcing
-Jokes, riddles, memes, etc were (other than my own content) sourced from the below sources:
+Jokes, riddles, memes, etc were (other than my own content or content received directly from users/contributors) obtained from the below sources:
 - ESO Jokes: https://github.com/esoui/lexicon/blob/master/lexicon/joke/joke.go
-- Norris Jokes: http://www.icndb.com/api/
+- Norris Jokes: http://www.icndb.com/api/, Reddit
+- Dad Jokes: https://icanhazdadjoke.com, Github@15Dkatz/official_joke_api, Reddit Search, Reader's Digest
+- Edgy/Explicit Jokes: Reddit Search
+- Wisdom: Reader's Digest, Pinterest Search, Github@sarah256/fortune-api
+- Other, General: Reddit Search, Google Search
+
+
+If you own the intellectual property over any of the above brands, web properties, or any jokes/content included in this addon, please contact me via Github, or directly via email (me@andrewdefee.com) with your name, company and country of incorporation (if applicable), a clearly defined list of infringing content, and proof of ownership (or rights to claim on behalf of owner). I'll immediately comply with all such requests, and remove infringing content from any future updates to the Addon.
 
 ## License
 

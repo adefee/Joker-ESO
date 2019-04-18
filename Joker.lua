@@ -1,6 +1,6 @@
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "1.2.0",                -- A nuisance to match to the Manifest.
+    version         = "1.2.1",                -- A nuisance to match to the Manifest.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "DDFFEE",             -- Used in menu titles and so on.
     menuName        = "Joker - Best Enjoyed with Skooma!", -- A UNIQUE identifier for menu object.
@@ -1624,6 +1624,71 @@ function Joker.PickupLines()
   StartChatInput(joke, CHAT_CHANNEL) -- Paste into chatbox
 end
 
+-- eightBall()
+-- Display; Show a yes, no, neutral status
+function Joker.eightBall(question)
+  local yesAnswers = {
+    "Signs point to yes!",
+    "The outlook is good!",
+    "Don't count on it!",
+    "Yes!",
+    "It is certain.",
+    "Without a doubt!",
+    "Duh!",
+    "Mhm.",
+    "Fk yeah! ('Murica)",
+    "It is decidedly so.",
+  }
+
+  local noAnswers = {
+    "My sources say 'no'.",
+    "As I see it, no.",
+    "You aren't going to like this, but ... no.",
+    "Very doubtful.",
+    "What?!? No! Are you crazy?",
+    "Awwwww, hell naw!",
+    "Nah.",
+    "Unlikely.",
+  }
+
+  local neutAnswers = {
+    "I'm neutral, try again.",
+    "I dunno.",
+    "Ask later.",
+    "Reply is a bit hazy, try again!",
+    "Hmm, better not tell you now...",
+    "Can't predict that right now, sorry. Try again.",
+  }
+
+  -- Decide how to answer
+  local random = math.random(0, 2)
+  local random2 = math.random() * #yesAnswers
+  local index = 1 + math.floor(random2)
+  local answer = yesAnswers[index]
+
+  if random == 0 then
+    answerType = "yes"
+  elseif random == 1 then
+    answerType = "no"
+    random2 = math.random() * #noAnswers
+    index = 1 + math.floor(random2)
+    answer = noAnswers[index]
+  elseif random == 2 then
+    answerType = "neut"
+    random2 = math.random() * #neutAnswers
+    index = 1 + math.floor(random2)
+    answer = neutAnswers[index]
+  end
+  local prefix = "8ball says: "
+
+  if not Joker.isempty(question) then
+    d('You asked: "' .. question ..'" ...')
+  end
+
+  d(prefix .. answer)
+
+end
+
 -- --------------
 -- AnyJoke()
 -- Display; Randomly chooses a type of joke, returns. Optionals passed along as needed.
@@ -1688,10 +1753,11 @@ function Joker.OnAddOnLoaded(event, addonName)
     SLASH_COMMANDS["/joke-dad"] = Joker.Dad
     SLASH_COMMANDS["/joke-edgy"] = Joker.Edgy
     SLASH_COMMANDS["/joke-wisdom"] = Joker.Wisdom
-    -- Other command aliases:
+    -- Other joke command aliases:
     SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
     SLASH_COMMANDS["/dad"] = Joker.Dad
     SLASH_COMMANDS["/norris"] = Joker.Norris
+    SLASH_COMMANDS["/8ball"] = Joker.eightBall
 
     -- Reset autocomplete cache to update it.
     SLASH_COMMAND_AUTO_COMPLETE:InvalidateSlashCommandCache()
