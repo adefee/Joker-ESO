@@ -31,7 +31,8 @@ Joker = {
         Norris = true,
         ESO = true,
         Burn = true,
-        Cat = true
+        Cat = true,
+        Ready = true
       },
       SeenJokes = {
         Dad = {},
@@ -41,7 +42,8 @@ Joker = {
         Norris = {},
         ESO = {},
         Burn = {},
-        Cat = {}
+        Cat = {},
+        Ready = {}
       },
       CountJokes = {
         Dad = 0,
@@ -51,7 +53,8 @@ Joker = {
         Norris = 0,
         ESO = 0,
         Burn = 0,
-        Cat = 0
+        Cat = 0,
+        Ready = 0
       },
       CountSeenJokes = {
         Dad = 0,
@@ -61,7 +64,8 @@ Joker = {
         Norris = 0,
         ESO = 0,
         Burn = 0,
-        Cat = 0
+        Cat = 0,
+        Ready = 0
       }
     }
 }
@@ -282,6 +286,12 @@ function Joker.accumulateTypes(arrayOfTypes, count)
   return total
 end
 
+-- string.starts()
+-- Utility; bool if string starts with string
+function string.starts(String,Start)
+  return string.sub(String,1,string.len(Start))==Start
+end
+
 --[[
   ** Data Grabs
   PURPOSE: These functions just return data
@@ -308,6 +318,7 @@ function Joker.GetJoke(givenJokeType, returnAll)
   local esoJokes = JokerData.ESO
   local burnJokes = {}
   local catFacts = JokerData.CatFacts
+  local readyChecks = JokerData.ReadyChecks
 
   -- Resolve joketype
   if jokeType == 'Dad' then
@@ -326,6 +337,8 @@ function Joker.GetJoke(givenJokeType, returnAll)
     jokes = burnJokes
   elseif jokeType == 'Cat' then
     jokes = catFacts
+  elseif jokeType == 'Ready' then
+    jokes = readyChecks
   end
 
   -- If @param "all" was passed, return all jokes
@@ -705,6 +718,59 @@ function Joker.AnyJokeToLog(target)
   end
 end
 
+-- readyCheck()
+-- Display; Randomly choose a ready-check message, then trigger ready check. Optionals: <target: any prompt>
+function Joker.readyCheck(target)
+
+  --[[
+    checkType:
+    0: SimpleMajority [51%],
+    1: SuperMajority [67%],
+    2: Unanimous [100%],
+  ]]
+  local checkType = 2
+  local explicitCheckType = false
+  local checkPrompts = JokerData.ReadyChecks
+  local checkPrompt = "Are you ready?"
+
+
+  if not Joker.isempty(target) then
+    -- Custom ready check prompt.
+
+    -- Check for explicit election type
+    if string.starts(target, 'unan ') then
+      checkType = 2
+      checkPrompt = target:gsub('unan ', '')
+    elseif string.starts(target, 'simple ') then
+      checkType = 0
+      checkPrompt = target:gsub('simple ', '')
+    elseif string.starts(target, 'super ') then
+      checkType = 1
+      checkPrompt = target:gsub('super ', '')
+    else
+      checkType = 2
+      checkPrompt = target
+    end
+
+  else
+    -- Choose random prompt
+    repeat
+      checkPrompt = Joker.GetJoke('Ready')
+      local promptLength = string.len(checkPrompt)
+    until (promptLength < 350)
+  
+    -- First-Usage: Display intro message
+    if Joker.savedVariables.FirstJokes.Ready then
+      Joker.savedVariables.FirstJokes.Ready = false
+    end
+    
+  end
+
+  d('Ready checking with: ' .. checkPrompt)
+  BeginGroupElection(checkType, checkPrompt)
+
+end
+
 
 --[[
   ** Addon Instantiation
@@ -742,6 +808,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Norris'] = Joker.GetJoke('Norris', true)
   allJokes['ESO'] = Joker.GetJoke('ESO', true)
   allJokes['Cat'] = Joker.GetJoke('Cat', true)
+  allJokes['Ready'] = Joker.GetJoke('Ready', true)
   -- allJokes['Burn'] = Joker.GetJoke('Burn', true) -- TODO: GetBurn() needs to be built out...
   
 
@@ -786,6 +853,8 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/norris"] = Joker.Norris
   SLASH_COMMANDS["/8ball"] = Joker.eightBall
   SLASH_COMMANDS["/catfact"] = Joker.Cat
+  -- Other fun commands:
+  SLASH_COMMANDS["/ready"] = Joker.readyCheck
   -- Settings and Mgmt commands:
   SLASH_COMMANDS["/joke-auto"] = Joker.togglePeriodicJokes
   -- Other misc & utility commands:

@@ -91,6 +91,11 @@ function Joker.LoadSettings()
     })
     table.insert(optionsTable, {
       type = "description",
+      text = Joker.Colorize('/ready') .. ": Ready checks, but funnier & faster to type! Get a random, witty ready check or ptionally include your own custom prompt with '/ready <yourtext>'",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
       title = "Show me jokes periodically? " .. Joker.Colorize(Joker.savedVariables.PeriodicJokes),
       text = Joker.Colorize('/joke-auto') .. ": Joker can periodically post a joke to your chat window! Run this command to toggle on/off. Note: toggling takes immediate affect, but may require UI reload to update the status you see here.",
       width = "full",	--or "half" (optional)

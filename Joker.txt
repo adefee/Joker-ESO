@@ -1,5 +1,5 @@
 ## Title: Joker
-## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel.
+## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
 
 ## Version: 2.0.0
@@ -46,6 +46,7 @@ jokes\ESO.lua
 jokes\Norris.lua
 jokes\PickupLines.lua
 jokes\Wisdom.lua
+jokes\ReadyChecks.lua
 
 ## Core
 Joker.lua

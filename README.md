@@ -5,13 +5,12 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 #### Current Release: **v2.0.0** (200000)
 
-> Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel. 
+> Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
 
 > Latest release contains a growing assortment of Chuck Norris, ESO-related, Dad, and Edgy jokes (plus some sarcastic tidbits of wisdom), with more content coming super soon!
 
 ## Table of Contents
 
-- [Purpose](#purpose)
 - [Dependencies](#dependencies)
 - [Commands](#commands)
 - [Update Roadmap](#update-roadmap)
@@ -19,8 +18,6 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 - [Sourcing](#sourcing)
 - [License](#license)
 
-## Purpose
-Includes 1350+ jokes and pop-culture references, instantly available ingame for your leisurely chatting pleasure!
 
 ## Dependencies
 The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO, including (probably) the upcoming Elsweyr chapter. Both are packaged within. 
@@ -39,6 +36,9 @@ The following libraries are presently required for Joker to function properly. O
 - **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
 - **/8ball**: Undecided? Get advice from the sage 8ball.
 - **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
+- **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
+- And other helpful utilities, like:
+  - **/rl**: Shorthand for /reloadui
 
 ## Build
 v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json that semi-automate the build packaging. You should create a /dist dir in main dir, then run one of the below:
@@ -49,13 +49,14 @@ v1.0.1: If you have WinRAR & Windows, there are now two scripts in package.json 
 ## Update Roadmap
 Always accepting requests, suggestions, etc. Here are a few things currently on the roadmap:
 
-- **[In Progress, Coming Soon!]**: Optionally hide jokes you've already seen,
+- **[Added v2.0.0]**: Hide jokes you've already seen,
+- **[Added v2.0.0]**: Custom ready checks,
 - **[Added v1.2.1]**: Magic 8 Ball,
 - **[In Progress, Coming Soon!]**: Fun & customizable burns,
 - **[In Progress, Coming Soon!]**: Cheesy, customizable pickup lines,
 - **[In Progress]**: Add GUI options in Addon settings
 - **[In Progress]**: Add filters to /joke (e.g. '/joke argonian' to pull a random joke about an Argonian)
-- **[Added v1.1.0]**: ESO jokes, quotes, & canon references (more always being added)
+- MOAR ESO jokes, quotes, & canon references (more always being added)
 - Add your own jokes (locally),
 - Automated submission of jokes to be included in the addon for everyone,
 - Raffle: Randomly pick from pool of users,
@@ -80,6 +81,7 @@ PRs accepted.
 
 - [@Phuein](https://www.esoui.com/forums/member.php?action=getinfo&userid=38690): NewAddon boilerplate made it super-easy to get started in minutes :)
 - [@Dolgubon](https://www.esoui.com/forums/member.php?action=getinfo&userid=23366): Early help, tips, cleanup :)
+- [@A'Merri and @Harvspecial]: QA & Testing, thanks bunches <3
 
 ## Sourcing
 Jokes, riddles, memes, etc were (other than my own content or content received directly from users/contributors) obtained from the below sources:
