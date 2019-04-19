@@ -2,8 +2,8 @@
 ## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, & other amusing pop-culture references both in and out of Tamriel.
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
 
-## Version: 1.2.2
-## AddOnVersion: 102020
+## Version: 2.0.0
+## AddOnVersion: 200000
 ## APIVersion: 100026 100027
 
 ## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 
@@ -13,12 +13,14 @@
 ## SavedVariables: JokerSavedVariables
 ## OptionalDependsOn: LibAddonMenu-2.0
 
+## Internationalization
 i18n\en.lua
 i18n\$(language).lua
 
 Bindings.xml
 Joker.xml
 
+## Lib Dependencies
 libs\LibStub\LibStub.lua
 libs\LibAddonMenu-2.0\LibAddonMenu-2.0.lua
 libs\LibAddonMenu-2.0\controls\panel.lua
@@ -36,5 +38,17 @@ libs\LibAddonMenu-2.0\controls\texture.lua
 libs\LibAddonMenu-2.0\controls\iconpicker.lua
 libs\LibAddonMenu-2.0\controls\divider.lua
 
+## Jokes
+jokes\CatFacts.lua
+jokes\Dad.lua
+jokes\Edgy.lua
+jokes\ESO.lua
+jokes\Norris.lua
+jokes\PickupLines.lua
+jokes\Wisdom.lua
+
+## Core
 Joker.lua
+
+## Addon Settings Window
 Settings.lua
