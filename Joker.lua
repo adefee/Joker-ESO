@@ -22,6 +22,7 @@ Joker = {
       CountJokesTotal = 0,
       CountSeenJokesTotal = 0,
       PeriodicJokes = "Enabled", -- Periodically show jokes to user in console (chat)
+      PeriodSince = 0,
       FirstJokes = {
         Dad = true,
         Edgy = true,
@@ -222,10 +223,64 @@ function Joker.togglePeriodicJokes()
     Joker.savedVariables.PeriodicJokes = "Enabled"
     d('Joker will periodically send jokes to you!')
   end
-  
 end
 
+-- checkPeriodicDue()
+-- Utility; Determines if we're due for a periodic joke.
+function Joker.checkPeriodicDue()
+  
+  --[[
+    PeriodSince saves number of zones/reloads since we last displayed a joke,
+    with increasing chance to show a joke each load
+  ]]
 
+  local showJoke = false
+
+  if Joker.savedVariables.PeriodSince < 2 then
+    if (math.random(0,15)) < 3 then
+      showJoke = true
+    end
+  elseif Joker.savedVariables.PeriodSince == 3 then
+    if (math.random(0,12)) < 3 then
+      showJoke = true
+    end
+  elseif Joker.savedVariables.PeriodSince == 4 then
+    if (math.random(0,8)) < 3 then
+      showJoke = true
+    end
+  elseif Joker.savedVariables.PeriodSince == 5 then
+    if (math.random(0,5)) < 3 then
+      showJoke = true
+    end
+  elseif Joker.savedVariables.PeriodSince > 5 then
+    showJoke = true
+  end
+
+  if showJoke then
+    Joker.savedVariables.PeriodSince = 0
+    return true
+  else
+    Joker.savedVariables.PeriodSince = Joker.savedVariables.PeriodSince + 1
+    return false
+  end
+
+end
+
+-- accumulateTypes()
+-- Utility; Count total jokes across array of given types, e.g. {'Dad', 'Wisdom'}. Count determines how many of the elements to count
+function Joker.accumulateTypes(arrayOfTypes, count)
+  local total = 0
+  local loops = 1
+  count = count or 1
+
+  repeat
+    local jokeType = arrayOfTypes[loops]
+    total = total + Joker.savedVariables.CountJokes[jokeType]
+    loops = loops + 1
+  until (loops >= count)
+
+  return total
+end
 
 --[[
   ** Data Grabs
@@ -602,17 +657,16 @@ function Joker.AnyJoke(target)
     Weighted as a true democracy - each joke gets a vote!
     TODO: Maybe bias towards newer categories (or newer jokes after updates)
   ]]
-  if random < Joker.savedVariables.CountJokes.Norris then
-    local joke = Joker.Norris(target)
-  elseif random >= Joker.savedVariables.CountJokes.Norris and random < Joker.savedVariables.CountJokes.ESO then
+  if random < Joker.accumulateTypes(jokeSources, 1) then
+    local joke = Joker.Norris()
+  elseif random >= Joker.accumulateTypes(jokeSources, 1) and random < Joker.accumulateTypes(jokeSources, 2) then
     local joke = Joker.ESO()
-  elseif random >= Joker.savedVariables.CountJokes.ESO and random < Joker.savedVariables.CountJokes.Dad then
+  elseif random >= Joker.accumulateTypes(jokeSources, 2) and random < Joker.accumulateTypes(jokeSources, 3) then
     local joke = Joker.Dad()
-  elseif random >= Joker.savedVariables.CountJokes.Dad and random <= Joker.savedVariables.CountJokes.Wisdom then
+  elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
     local joke = Joker.Wisdom()
   else
-    d('AnyJoke compare')
-    local joke = Joker.Dad()
+    local joke = Joker.Dad() -- This should never happen, but better to show Dad than nothing.
   end
 
   -- Send
@@ -638,14 +692,16 @@ function Joker.AnyJokeToLog(target)
     Weighted as a true democracy - each joke gets a vote!
     TODO: Maybe bias towards newer categories (or newer jokes after updates)
   ]]
-  if random < Joker.savedVariables.CountJokes.Norris then
-    local joke = Joker.Norris(target, "log")
-  elseif random >= Joker.savedVariables.CountJokes.Norris and random < Joker.savedVariables.CountJokes.ESO then
+  if random < Joker.accumulateTypes(jokeSources, 1) then
+    local joke = Joker.Norris('', "log")
+  elseif random >= Joker.accumulateTypes(jokeSources, 1) and random < Joker.accumulateTypes(jokeSources, 2) then
     local joke = Joker.ESO("log")
-  elseif random >= Joker.savedVariables.CountJokes.ESO and random < Joker.savedVariables.CountJokes.Dad then
+  elseif random >= Joker.accumulateTypes(jokeSources, 2) and random < Joker.accumulateTypes(jokeSources, 3) then
     local joke = Joker.Dad("log")
-  elseif random >= Joker.savedVariables.CountJokes.Dad and random <= Joker.savedVariables.CountJokes.Wisdom then
+  elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
     local joke = Joker.Wisdom("log")
+  else
+    local joke = Joker.Dad("log") -- This should never happen, but better to show Dad than nothing.
   end
 end
 
@@ -699,6 +755,7 @@ function Joker.OnAddOnLoaded(event, addonName)
       Joker.savedVariables.CountJokes[jokeType] = Joker.savedVariables.CountJokes[jokeType] + 1
       Joker.savedVariables.CountJokesTotal = Joker.savedVariables.CountJokesTotal + 1
     end
+    -- d(jokeType .. ': loaded ' .. Joker.savedVariables.CountJokes[jokeType] .. ' jokes.') -- load debugging
   end
 
   -- Iterate over seenJokes
@@ -729,15 +786,17 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/norris"] = Joker.Norris
   SLASH_COMMANDS["/8ball"] = Joker.eightBall
   SLASH_COMMANDS["/catfact"] = Joker.Cat
-  -- Other mgmt commands:
+  -- Settings and Mgmt commands:
   SLASH_COMMANDS["/joke-auto"] = Joker.togglePeriodicJokes
+  -- Other misc & utility commands:
+  SLASH_COMMANDS["/rl"] = function() ReloadUI("ingame") end
 
   -- Reset autocomplete cache to update it.
   SLASH_COMMAND_AUTO_COMPLETE:InvalidateSlashCommandCache()
 
   -- If the user hasn't disabled periodic jokes in console, show it.
   -- TODO: Allow user to disable, or change frequency (time-based or # of addon loads in between)
-  if Joker.savedVariables.PeriodicJokes == "Enabled" then
+  if Joker.savedVariables.PeriodicJokes == "Enabled" and Joker.checkPeriodicDue then
     zo_callLater(Joker.AnyJokeToLog, 3000)
   end
 end
