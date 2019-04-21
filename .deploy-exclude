@@ -1,0 +1,7 @@
+dist
+.gitignore
+.vscode
+.git
+images
+node_modules
+deploy-exclude.txt

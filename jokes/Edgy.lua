@@ -1,7 +1,7 @@
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
 	----------------------------------------------------------
-  * COMPILATION: Edgy/Explicit jokes 
+  * COMPILATION: Edgy/Explicit jokes (user is warned prior to first use)
 	*
 	* SOURCES:
   * Reddit Search, 
@@ -38,7 +38,6 @@ JokerData.Edgy = {
   "Have you heard that rumor about butter? Erm, never mind, I shouldn't be spreading it.",
   "Whenever someone calls me ugly, I get super sad and hug them, because I know how tough life is for the visually impaired.",
   "What do you call a black guy who flies a plane? A pilot, you fucking racist.",
-  "Where do you send jewish kids with ADD? Concentration camp.",
   "What's better than winning a gold medal at the special olympics? Not being retarded!",
   "What's the best way to get a Jewish girl's number? Pull up her sleeve...",
   "What's the best thing about fucking 21 year olds? There's twenty of them!",
@@ -67,4 +66,21 @@ JokerData.Edgy = {
   "What did the elephant say to the naked man? 'How do you breathe through that tiny thing?'",
   "Why are orphans unable to play baseball? They've never known what home is.",
   "I tried to add Paul Walker on Xbox, but he's always in the dashboard.",
+  "What is cold and stands under a street lamp? A frostitute.",
+  "Problems sleeping? Cut the legs of your bed. You'll sleep deeper.",
+  "Why does Santa Claus have such a big sack? He only comes once a year.",
+  "What’s the difference between a hooker and a drug dealer? A hooker can wash her crack and resell it.",
+  "What does the sign on an out-of-business brothel say? Beat it, we're close.",
+  "What’s the difference between a G-spot and a golf ball? Men will actually search for a golf ball.",
+  "What do the Mafia and pussies have in common? One slip of the tongue, and you’re in deep shit.",
+  "What did the banana say to the vibrator? Why are *you* shaking? She’s gonna *eat* me!",
+  "Why does Dr. Pepper come in a bottle? Because his wife died.",
+  "What’s the difference between a Catholic priest and a zit? A zit will wait until you’re twelve before it comes on your face.",
+  "What’s the best part about gardening? Getting down and dirty with your hoes.",
+  "What do you call the useless piece of skin on a dick? The man.",
+  "Why do vegetarians give good head? Because they’re used to eating nuts.",
+  "How does Jesus make his coffee? Hebrews it.",
+  "How do you find Will Smith in the snow? You look for the fresh prints.",
+  "Why is there air conditioning in hospitals? To keep the vegetables cool and fresh.",
+  "'Racecar' backwards is 'racecar'. 'Racecar' sideways is how Paul Walker died."
 }

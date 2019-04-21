@@ -11,7 +11,7 @@ JokerData = JokerData or {}
 
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "2.0.0",           -- Joker internal versioning: Release.Major.Minor
+    version         = "2.0.2",           -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "D66E4A",          -- Used in menu titles and so on.
@@ -32,7 +32,9 @@ Joker = {
         ESO = true,
         Burn = true,
         Cat = true,
-        Ready = true
+        Ready = true,
+        Tongue = true,
+        Riddle = true
       },
       SeenJokes = {
         Dad = {},
@@ -43,7 +45,9 @@ Joker = {
         ESO = {},
         Burn = {},
         Cat = {},
-        Ready = {}
+        Ready = {},
+        Tongue = {},
+        Riddle = {}
       },
       CountJokes = {
         Dad = 0,
@@ -54,7 +58,9 @@ Joker = {
         ESO = 0,
         Burn = 0,
         Cat = 0,
-        Ready = 0
+        Ready = 0,
+        Tongue = 0,
+        Riddle = 0
       },
       CountSeenJokes = {
         Dad = 0,
@@ -65,7 +71,9 @@ Joker = {
         ESO = 0,
         Burn = 0,
         Cat = 0,
-        Ready = 0
+        Ready = 0,
+        Tongue = 0,
+        Riddle = 0
       }
     }
 }
@@ -197,10 +205,9 @@ end
 -- resetSeen()
 -- Utility; Rests seen object & count for given jokeType
 function Joker.resetSeen(jokeType)
-  d('Resetting seenJokes for ' .. jokeType)
+  d("Nice! You've seen everything in the ".. jokeType .. " category! We're always adding more content, but in the meantime - we've reset this category. You may see a few duplicates, but make sure to check every day for updates - new content is added almost daily!")
   Joker.savedVariables.CountSeenJokes[jokeType] = 0
   Joker.savedVariables.SeenJokes[jokeType] = {}
-  d('Done. New value (should be 0): ' .. Joker.savedVariables.CountSeenJokes[jokeType])
   return true
 end
 
