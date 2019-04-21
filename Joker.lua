@@ -11,7 +11,7 @@ JokerData = JokerData or {}
 
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "2.0.2",           -- Joker internal versioning: Release.Major.Minor
+    version         = "2.0.3",           -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "D66E4A",          -- Used in menu titles and so on.
@@ -39,7 +39,7 @@ Joker = {
         Burn = true,
         Cat = true,
         Ready = true,
-        Tongue = true,
+        Twister = true,
         Riddle = true
       },
       SeenJokes = {
@@ -54,7 +54,7 @@ Joker = {
         Burn = {},
         Cat = {},
         Ready = {},
-        Tongue = {},
+        Twister = {},
         Riddle = {}
       },
       CountJokes = {
@@ -69,7 +69,7 @@ Joker = {
         Burn = 0,
         Cat = 0,
         Ready = 0,
-        Tongue = 0,
+        Twister = 0,
         Riddle = 0
       },
       CountSeenJokes = {
@@ -84,7 +84,7 @@ Joker = {
         Burn = 0,
         Cat = 0,
         Ready = 0,
-        Tongue = 0,
+        Twister = 0,
         Riddle = 0
       }
     }
@@ -147,6 +147,18 @@ function Joker.isSeen(jokeType, jokeIndex)
     if setContains(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"') then
       return true
     end
+  elseif jokeType == 'PickupXXX' then
+    if setContains(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'PickupHP' then
+    if setContains(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Twister' then
+    if setContains(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"') then
+      return true
+    end
   end
 
   return nil
@@ -173,6 +185,12 @@ function Joker.addSeen(jokeType, jokeIndex)
     addToSet(Joker.savedVariables.SeenJokes.Cat, '"' .. jokeIndex .. '"')
   elseif jokeType == 'Wisdom' then
     addToSet(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'PickupXXX' then
+    addToSet(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'PickupHP' then
+    addToSet(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Twister' then
+    addToSet(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"')
   end
 
   Joker.savedVariables.CountSeenJokes[jokeType] = Joker.savedVariables.CountSeenJokes[jokeType] + 1
@@ -470,6 +488,32 @@ function Joker.ESO(useConsole)
   end
 end
 
+-- Twister()
+-- Display; Returns random tongue twister
+function Joker.Twister(useConsole)
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('Twister')
+    jokeLength = string.len(joke)
+  until (jokeLength < 350)
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.Twister then
+    Joker.savedVariables.FirstJokes.Twister = false
+    d('Like tongue twisters? Get more with /twister!')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
 -- Dad()
 -- Display; Returns Dad joke. Optionals: <useConsole: displays in d()>
 function Joker.Dad(useConsole)
@@ -747,7 +791,8 @@ function Joker.AnyJoke(target)
     "Norris",
     "ESO",
     "Dad",
-    "Wisdom"
+    "Wisdom",
+    "Twister"
   }
   local random = math.random(0, Joker.savedVariables.CountJokesTotal)
 
@@ -764,6 +809,8 @@ function Joker.AnyJoke(target)
     local joke = Joker.Dad()
   elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
     local joke = Joker.Wisdom()
+  elseif random >= Joker.accumulateTypes(jokeSources, 4) and random <= Joker.accumulateTypes(jokeSources, 5) then
+    local joke = Joker.Twister()
   else
     local joke = Joker.Dad() -- This should never happen, but better to show Dad than nothing.
   end
@@ -893,6 +940,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Dad'] = Joker.GetJoke('Dad', true)
   allJokes['Edgy'] = Joker.GetJoke('Edgy', true)
   allJokes['Wisdom'] = Joker.GetJoke('Wisdom', true)
+  allJokes['Twister'] = Joker.GetJoke('Twister', true)
   allJokes['Pickup'] = Joker.GetJoke('Pickup', true)
   allJokes['PickupXXX'] = Joker.GetJoke('PickupXXX', true)
   allJokes['PickupHP'] = Joker.GetJoke('PickupHP', true)
@@ -939,6 +987,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/joke-edgy"] = Joker.Edgy
   SLASH_COMMANDS["/joke-wisdom"] = Joker.Wisdom
   SLASH_COMMANDS["/joke-pickup"] = Joker.Pickup
+  SLASH_COMMANDS["/joke-twister"] = Joker.Twister
   -- Other joke command aliases:
   SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
   SLASH_COMMANDS["/dad"] = Joker.Dad
@@ -948,6 +997,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/pickup"] = Joker.Pickup
   SLASH_COMMANDS["/pickup-xxx"] = Joker.PickupXXX
   SLASH_COMMANDS["/pickup-hp"] = Joker.PickupHP
+  SLASH_COMMANDS["/twister"] = Joker.Twister
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.readyCheck
   -- Settings and Mgmt commands:
