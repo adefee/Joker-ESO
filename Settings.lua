@@ -86,6 +86,16 @@ function Joker.LoadSettings()
     })
     table.insert(optionsTable, {
       type = "description",
+      text = Joker.Colorize('/pickup-xxx <target>') .. " adds a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. If you include a name (target), it will address it to them for you!",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
+      text = Joker.Colorize('/pickup-hp <target>') .. " adds a random Harry Potter pickup line to your chatbox. If you include a name (target), it will address it to them for you!",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
       text = Joker.Colorize('/8ball <question>') .. ": Undecided? Get quality life advice from the magic 8ball! Asking the question is optional :)",
       width = "full",	--or "half" (optional)
     })

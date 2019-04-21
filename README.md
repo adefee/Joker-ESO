@@ -34,6 +34,9 @@ The following libraries are presently required for Joker to function properly. O
 - **/joke-norris** (or **/norris**): Add a random Chuck Norris joke to your active chatbox.
 - **/norris me**: Add a random joke to your chatbox, with *you* as the subject!
 - **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
+- **/joke-pickup *target*** (or /pickup): Add a random cheesy/cute pickup line to your chatbox. If you include a name (target), it will address it to them for you!
+- **/pickup-hp *target***: Add a random Harry Potter pickup line to your chatbox. If you include a name (target), it will address it to them for you!
+- **/pickup-xxx *target***: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. If you include a name (target), it will address it to them for you!
 - **/8ball**: Undecided? Get advice from the sage 8ball.
 - **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 - **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
