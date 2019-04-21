@@ -53,10 +53,7 @@ jokes\Wisdom.lua
 
 ## Core
 Joker.lua
-
-## Keybinds
-keybinds\main.xml
-keybinds\main.lua
+bindings.xml
 
 ## Addon Settings Window
 Settings.lua

@@ -23,11 +23,20 @@ Joker = {
       CountSeenJokesTotal = 0,
       PeriodicJokes = "Enabled", -- Periodically show jokes to user in console (chat)
       PeriodSince = 0,
+      targetPrefixes = {
+        "Hey, -target-, ",
+        "Yo, -target-! ",
+        "Psst, -target-! ",
+        "Hmmm ... -target-, ",
+        "-target-! "
+      },
       FirstJokes = {
         Dad = true,
         Edgy = true,
         Wisdom = true,
         Pickup = true,
+        PickupXXX = true,
+        PickupHP = true,
         Norris = true,
         ESO = true,
         Burn = true,
@@ -41,6 +50,8 @@ Joker = {
         Edgy = {},
         Wisdom = {},
         Pickup = {},
+        PickupXXX = {},
+        PickupHP = {},
         Norris = {},
         ESO = {},
         Burn = {},
@@ -54,6 +65,8 @@ Joker = {
         Edgy = 0,
         Wisdom = 0,
         Pickup = 0,
+        PickupXXX = 0,
+        PickupHP = 0,
         Norris = 0,
         ESO = 0,
         Burn = 0,
@@ -67,6 +80,8 @@ Joker = {
         Edgy = 0,
         Wisdom = 0,
         Pickup = 0,
+        PickupXXX = 0,
+        PickupHP = 0,
         Norris = 0,
         ESO = 0,
         Burn = 0,
@@ -88,28 +103,6 @@ Joker = {
 function Joker.isempty(s)
   return s == nil or s == ''
 end
-
--- split()
--- Utility; Splits given string after X chars
--- NOTE: Inactive as of v1.1. Github: issue#1
---[[
-function Joker.split(str, max_line_length)
-  local lines = {}
-  local line
-  str:gsub('(%s*)(%S+)', 
-     function(spc, word) 
-        if not line or #line + #spc + #word > max_line_length then
-           table.insert(lines, line)
-           line = word
-        else
-           line = line..spc..word
-        end
-     end
-  )
-  table.insert(lines, line)
-  return lines
-end
-]]
 
 -- addToSet()
 -- Utility; Add to set
@@ -321,11 +314,15 @@ function Joker.GetJoke(givenJokeType, returnAll)
   local edgyJokes = JokerData.Edgy
   local wisdomJokes = JokerData.Wisdom
   local pickupJokes = JokerData.PickupLines
+  local pickupJokesXXX = JokerData.PickupLinesXXX -- XXX pickups
+  local pickupJokesHP = JokerData.PickupLinesHP -- Harry Potter pickups
   local norrisJokes = JokerData.Norris
   local esoJokes = JokerData.ESO
-  local burnJokes = {}
+  local burnJokes = JokerData.Burns
+  local twisterJokes = JokerData.TongueTwisters
   local catFacts = JokerData.CatFacts
   local readyChecks = JokerData.ReadyChecks
+  local riddles = JokerData.Riddles
 
   -- Resolve joketype
   if jokeType == 'Dad' then
@@ -336,6 +333,10 @@ function Joker.GetJoke(givenJokeType, returnAll)
     jokes = wisdomJokes
   elseif jokeType == 'Pickup' then
     jokes = pickupJokes
+  elseif jokeType == 'PickupXXX' then
+    jokes = pickupJokesXXX
+  elseif jokeType == 'PickupHP' then
+    jokes = pickupJokesHP
   elseif jokeType == 'Norris' then
     jokes = norrisJokes
   elseif jokeType == 'ESO' then
@@ -346,6 +347,10 @@ function Joker.GetJoke(givenJokeType, returnAll)
     jokes = catFacts
   elseif jokeType == 'Ready' then
     jokes = readyChecks
+  elseif jokeType == 'Twister' then
+    jokes = twisterJokes
+  elseif jokeType == 'Riddle' then
+    jokes = riddles
   end
 
   -- If @param "all" was passed, return all jokes
@@ -372,6 +377,16 @@ function Joker.GetJoke(givenJokeType, returnAll)
 
   -- Finally, return joke
   return joke
+end
+
+-- getPrefix()
+-- Data; Retrieve random prefix for customizing jokes (burn, pickups, etc)
+function Joker.getPrefix()
+  local random = math.random() * #Joker.targetPrefixes
+  loops = loops + 1
+  index = 1 + math.floor(random)
+  prefix = Joker.targetPrefixes[index]
+  return prefix
 end
 
 
@@ -566,7 +581,7 @@ function Joker.Cat(useConsole)
   end
 end
 
--- PickupLines()
+-- Pickup()
 -- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
 function Joker.Pickup(target, useConsole)
   local joke = ""
@@ -578,10 +593,16 @@ function Joker.Pickup(target, useConsole)
     jokeLength = string.len(joke)
   until (jokeLength < 350)
 
+  -- Optional target
+  if not Joker.isempty(target) then
+    -- Prepend prefix, replace target with target if given
+    joke = string.gsub(prefix, "-target-", target) .. joke:gsub("^%l", string.lower)
+  end
+
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.Pickup then
     Joker.savedVariables.FirstJokes.Pickup = false
-    d('Need a date? Get more like this with /pickup!')
+    d('Need a date? Get more like this with /pickup, /pickup-xxx (for adults!), and /pickup-hp (Harry Potter!)...')
   end
 
   -- Send
@@ -591,6 +612,71 @@ function Joker.Pickup(target, useConsole)
     StartChatInput(joke, CHAT_CHANNEL)
   end
 end
+
+-- PickupXXX()
+-- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
+function Joker.PickupXXX(target, useConsole)
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('PickupXXX')
+    jokeLength = string.len(joke)
+  until (jokeLength < 350)
+
+  -- Optional target
+  if not Joker.isempty(target) then
+    -- Prepend prefix, replace target with target if given
+    joke = string.gsub(prefix, "-target-", target) .. joke:gsub("^%l", string.lower)
+  end
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.Pickup then
+    Joker.savedVariables.FirstJokes.Pickup = false
+    d('Need a date? Get more like this with /pickup, /pickup-xxx (for adults!), and /pickup-hp (Harry Potter!)...')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
+-- PickupHP()
+-- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
+function Joker.PickupHP(target, useConsole)
+  local joke = ""
+  local jokeLength = 350 -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('PickupHP')
+    jokeLength = string.len(joke)
+  until (jokeLength < 350)
+
+  -- Optional target
+  if not Joker.isempty(target) then
+    -- Prepend prefix, replace target with target if given
+    joke = string.gsub(prefix, "-target-", target) .. joke:gsub("^%l", string.lower)
+  end
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.Pickup then
+    Joker.savedVariables.FirstJokes.Pickup = false
+    d('Need a date? Get more like this with /pickup, /pickup-xxx (for adults!), and /pickup-hp (Harry Potter!)...')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
 
 -- eightBall()
 -- Display; Show a yes, no, neutral status. Optionals: <question>
@@ -802,6 +888,9 @@ function Joker.OnAddOnLoaded(event, addonName)
   if addonName ~= Joker.name then return end
   EVENT_MANAGER:UnregisterForEvent(Joker.name, EVENT_ADD_ON_LOADED)
 
+  -- Keybinds
+  ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', 'Random Ready Check')
+
   Joker.savedVariables = ZO_SavedVars:NewAccountWide("JokerSavedVariables", Joker.versionMajor, nil, Joker.savedVariables)
 
   --[[
@@ -812,6 +901,8 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Edgy'] = Joker.GetJoke('Edgy', true)
   allJokes['Wisdom'] = Joker.GetJoke('Wisdom', true)
   allJokes['Pickup'] = Joker.GetJoke('Pickup', true)
+  allJokes['Pickup'] = Joker.GetJoke('PickupXXX', true)
+  allJokes['Pickup'] = Joker.GetJoke('PickupHP', true)
   allJokes['Norris'] = Joker.GetJoke('Norris', true)
   allJokes['ESO'] = Joker.GetJoke('ESO', true)
   allJokes['Cat'] = Joker.GetJoke('Cat', true)
@@ -854,12 +945,16 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/joke-dad"] = Joker.Dad
   SLASH_COMMANDS["/joke-edgy"] = Joker.Edgy
   SLASH_COMMANDS["/joke-wisdom"] = Joker.Wisdom
+  SLASH_COMMANDS["/joke-pickup"] = Joker.Pickup
   -- Other joke command aliases:
   SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
   SLASH_COMMANDS["/dad"] = Joker.Dad
   SLASH_COMMANDS["/norris"] = Joker.Norris
   SLASH_COMMANDS["/8ball"] = Joker.eightBall
   SLASH_COMMANDS["/catfact"] = Joker.Cat
+  SLASH_COMMANDS["/pickup"] = Joker.Pickup
+  SLASH_COMMANDS["/pickup-xxx"] = Joker.PickupXXX
+  SLASH_COMMANDS["/pickup-hp"] = Joker.PickupHP
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.readyCheck
   -- Settings and Mgmt commands:
