@@ -38,6 +38,7 @@ The following libraries are presently required for Joker to function properly. O
 - **/pickup-hp *target***: Add a random Harry Potter pickup line to your chatbox. If you include a name (target), it will address it to them for you!
 - **/pickup-xxx *target***: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. If you include a name (target), it will address it to them for you!
 - **/8ball**: Undecided? Get advice from the sage 8ball.
+- **/twister**: Get a random tongue twister! Can you say it 3 times fast?
 - **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 - **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
 - And other helpful utilities, like:
@@ -56,7 +57,7 @@ Always accepting requests, suggestions, etc. Here are a few things currently on 
 - **[Added v2.0.0]**: Custom ready checks,
 - **[Added v1.2.1]**: Magic 8 Ball,
 - **[In Progress, Coming Soon!]**: Fun & customizable burns,
-- **[In Progress, Coming Soon!]**: Cheesy, customizable pickup lines,
+- **[Added v2.0.3]**: Cheesy, customizable pickup lines,
 - **[In Progress]**: Add GUI options in Addon settings
 - **[In Progress]**: Add filters to /joke (e.g. '/joke argonian' to pull a random joke about an Argonian)
 - MOAR ESO jokes, quotes, & canon references (more always being added)
@@ -64,7 +65,7 @@ Always accepting requests, suggestions, etc. Here are a few things currently on 
 - Automated submission of jokes to be included in the addon for everyone,
 - Raffle: Randomly pick from pool of users,
 - Popular TV show references & jokes (GoT, Billions, The Walking Dead, Grey's Anatomy, etc - always taking requests),
-- Fun riddles and mindtwisters (including interactive)
+- **[In Progress, Partially Added v2.0.3]**: Fun riddles and mindtwisters (including interactive)
 - Other fun (and maybe a little useful) utility commands,
 - ... and lots of other stuff even further in the future (plus any requests from users)
 
