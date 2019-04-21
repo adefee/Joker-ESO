@@ -23,12 +23,9 @@ Joker = {
       CountSeenJokesTotal = 0,
       PeriodicJokes = "Enabled", -- Periodically show jokes to user in console (chat)
       PeriodSince = 0,
-      targetPrefixes = {
-        "Hey, -target-, ",
-        "Yo, -target-! ",
-        "Psst, -target-! ",
-        "Hmmm ... -target-, ",
-        "-target-! "
+      pickupPrefixes = {
+        "Hey, jTarget, ",
+        "Yo, jTarget, ",
       },
       FirstJokes = {
         Dad = true,
@@ -382,11 +379,7 @@ end
 -- getPrefix()
 -- Data; Retrieve random prefix for customizing jokes (burn, pickups, etc)
 function Joker.getPrefix()
-  local random = math.random() * #Joker.targetPrefixes
-  loops = loops + 1
-  index = 1 + math.floor(random)
-  prefix = Joker.targetPrefixes[index]
-  return prefix
+  return Joker.savedVariables.pickupPrefixes[(1 + math.floor((math.random() * #Joker.savedVariables.pickupPrefixes)))]
 end
 
 
@@ -596,7 +589,7 @@ function Joker.Pickup(target, useConsole)
   -- Optional target
   if not Joker.isempty(target) then
     -- Prepend prefix, replace target with target if given
-    joke = string.gsub(prefix, "-target-", target) .. joke:gsub("^%l", string.lower)
+    joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
 
   -- First-Usage: Display intro message
@@ -628,7 +621,7 @@ function Joker.PickupXXX(target, useConsole)
   -- Optional target
   if not Joker.isempty(target) then
     -- Prepend prefix, replace target with target if given
-    joke = string.gsub(prefix, "-target-", target) .. joke:gsub("^%l", string.lower)
+    joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
 
   -- First-Usage: Display intro message
@@ -660,7 +653,7 @@ function Joker.PickupHP(target, useConsole)
   -- Optional target
   if not Joker.isempty(target) then
     -- Prepend prefix, replace target with target if given
-    joke = string.gsub(prefix, "-target-", target) .. joke:gsub("^%l", string.lower)
+    joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
 
   -- First-Usage: Display intro message
@@ -901,8 +894,8 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Edgy'] = Joker.GetJoke('Edgy', true)
   allJokes['Wisdom'] = Joker.GetJoke('Wisdom', true)
   allJokes['Pickup'] = Joker.GetJoke('Pickup', true)
-  allJokes['Pickup'] = Joker.GetJoke('PickupXXX', true)
-  allJokes['Pickup'] = Joker.GetJoke('PickupHP', true)
+  allJokes['PickupXXX'] = Joker.GetJoke('PickupXXX', true)
+  allJokes['PickupHP'] = Joker.GetJoke('PickupHP', true)
   allJokes['Norris'] = Joker.GetJoke('Norris', true)
   allJokes['ESO'] = Joker.GetJoke('ESO', true)
   allJokes['Cat'] = Joker.GetJoke('Cat', true)

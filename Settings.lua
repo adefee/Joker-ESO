@@ -81,6 +81,11 @@ function Joker.LoadSettings()
     })
     table.insert(optionsTable, {
       type = "description",
+      text = Joker.Colorize('/joke-pickup or /pickup <target>') .. " adds a random cheesy/cute pickup line to your chatbox. If you include a name (target), it will address it to them for you!",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
       text = Joker.Colorize('/8ball <question>') .. ": Undecided? Get quality life advice from the magic 8ball! Asking the question is optional :)",
       width = "full",	--or "half" (optional)
     })
