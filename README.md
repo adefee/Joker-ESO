@@ -3,7 +3,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Release: **v2.0.4** (200040)
+#### Current Release: **v2.0.5** (200050)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
 
@@ -57,7 +57,7 @@ Always accepting requests, suggestions, etc. Here are a few things currently on 
 - **[Added v2.0.0]**: Hide jokes you've already seen,
 - **[Added v2.0.0]**: Custom ready checks,
 - **[Added v1.2.1]**: Magic 8 Ball,
-- **[In Progress, Coming Soon!]**: Fun & customizable burns,
+- **[Added v2.0.4]**: Fun & customizable burns,
 - **[Added v2.0.3]**: Cheesy, customizable pickup lines,
 - **[In Progress]**: Add GUI options in Addon settings
 - **[In Progress]**: Add filters to /joke (e.g. '/joke argonian' to pull a random joke about an Argonian)

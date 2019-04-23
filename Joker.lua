@@ -597,13 +597,13 @@ end
 -- Display; Returns random cat fact. Optionals: <useConsole: displays in d()>
 function Joker.Cat(useConsole)
   local fact = ""
-  local factLength = 350 -- Max length for a chat message
+  local factLength = jokeLengthMax -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     fact = Joker.GetJoke('Cat')
     factLength = string.len(fact)
-  until (factLength < 350)
+  until (factLength < jokeLengthMax)
 
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.Cat then
@@ -613,9 +613,9 @@ function Joker.Cat(useConsole)
 
   -- Send
   if useConsole == "log" then
-    d('Joker: ' .. joke)
+    d('Joker: ' .. fact)
   else
-    StartChatInput(joke, CHAT_CHANNEL)
+    StartChatInput(fact, CHAT_CHANNEL)
   end
 end
 

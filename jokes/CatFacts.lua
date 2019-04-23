@@ -237,7 +237,7 @@ JokerData.CatFacts = {
   "Siamese kittens are born white because of the heat inside the mother's uterus before birth. This heat keeps the kittens' hair from darkening on the points.",
   "Cats respond most readily to names that end in an 'ee' sound.",
   "Has your cat ever brought its prey to your door? Cats do that because they regard their owners as their 'kittens.' The cats are teaching their 'kittens' how to hunt by bringing them food. Most people aren't too delighted when a pet brings in their kill. Instead of punishing your cat, praise it for its efforts, accept the prey, and then secretly throw it away.",
-  "Normal body temperature for a cat is 102 degrees F.",
+  "Normal body temperature for a cat is 102 degrees Fahrenheit.",
   "123123.",
   "Purring does not always indicate that a cat is happy. Cats will also purr loudly when they are distressed or in pain.",
   "Both humans and cats have identical regions in the brain responsible for emotion.",
