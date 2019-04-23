@@ -90,6 +90,7 @@ Joker = {
     }
 }
 
+local jokeLengthMax = 325 -- Set max joke length
 
 --[[
   ** Utilities
@@ -428,7 +429,7 @@ function Joker.Norris(target, useConsole)
   repeat
     joke = Joker.GetJoke('Norris')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- Optional target
   if target == 'me' then
@@ -455,7 +456,7 @@ end
 -- Display; Returns ESO joke. Optionals: <useConsole: displays in d()>
 function Joker.ESO(useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- Split every 300 chars, then paste to chatbox. Leaving for reference in future.
   --[[
@@ -472,7 +473,7 @@ function Joker.ESO(useConsole)
   repeat
     joke = Joker.GetJoke('ESO')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.ESO then
@@ -492,13 +493,13 @@ end
 -- Display; Returns random tongue twister
 function Joker.Twister(useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     joke = Joker.GetJoke('Twister')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.Twister then
@@ -518,13 +519,13 @@ end
 -- Display; Returns Dad joke. Optionals: <useConsole: displays in d()>
 function Joker.Dad(useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     joke = Joker.GetJoke('Dad')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.Dad then
@@ -544,13 +545,13 @@ end
 -- Display; Returns Wisdom tidbit. Optionals: <useConsole: displays in d()>
 function Joker.Wisdom(useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     joke = Joker.GetJoke('Wisdom')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.Wisdom then
@@ -570,13 +571,13 @@ end
 -- Display; Returns Edgy/Explicit joke. Optionals: <useConsole: displays in d()>
 function Joker.Edgy(useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     joke = Joker.GetJoke('Edgy')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.Edgy then
@@ -622,13 +623,13 @@ end
 -- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
 function Joker.Pickup(target, useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     joke = Joker.GetJoke('Pickup')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- Optional target
   if not Joker.isempty(target) then
@@ -650,17 +651,49 @@ function Joker.Pickup(target, useConsole)
   end
 end
 
+-- Burn()
+-- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
+function Joker.Burn(target, useConsole)
+  local joke = ""
+  local jokeLength = jokeLengthMax 
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('Burn')
+    jokeLength = string.len(joke)
+  until (jokeLength < jokeLengthMax)
+
+  -- Optional target
+  if not Joker.isempty(target) then
+    -- Prepend prefix, replace target with target if given
+    joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
+  end
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.Burn then
+    Joker.savedVariables.FirstJokes.Burn = false
+    d('Obssessed with fire? Get more burns with /pickup-burn or /burn...')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
 -- PickupXXX()
 -- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
 function Joker.PickupXXX(target, useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     joke = Joker.GetJoke('PickupXXX')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- Optional target
   if not Joker.isempty(target) then
@@ -686,13 +719,13 @@ end
 -- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
 function Joker.PickupHP(target, useConsole)
   local joke = ""
-  local jokeLength = 350 -- Max length for a chat message
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
     joke = Joker.GetJoke('PickupHP')
     jokeLength = string.len(joke)
-  until (jokeLength < 350)
+  until (jokeLength < jokeLengthMax)
 
   -- Optional target
   if not Joker.isempty(target) then
@@ -948,6 +981,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['ESO'] = Joker.GetJoke('ESO', true)
   allJokes['Cat'] = Joker.GetJoke('Cat', true)
   allJokes['Ready'] = Joker.GetJoke('Ready', true)
+  allJokes['Burn'] = Joker.GetJoke('Burn', true)
   -- allJokes['Burn'] = Joker.GetJoke('Burn', true) -- TODO: GetBurn() needs to be built out...
   
 
@@ -988,6 +1022,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/joke-wisdom"] = Joker.Wisdom
   SLASH_COMMANDS["/joke-pickup"] = Joker.Pickup
   SLASH_COMMANDS["/joke-twister"] = Joker.Twister
+  SLASH_COMMANDS["/joke-burn"] = Joker.Burn
   -- Other joke command aliases:
   SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
   SLASH_COMMANDS["/dad"] = Joker.Dad
@@ -998,6 +1033,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/pickup-xxx"] = Joker.PickupXXX
   SLASH_COMMANDS["/pickup-hp"] = Joker.PickupHP
   SLASH_COMMANDS["/twister"] = Joker.Twister
+  SLASH_COMMANDS["/burn"] = Joker.Burn
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.readyCheck
   -- Settings and Mgmt commands:

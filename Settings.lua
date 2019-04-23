@@ -56,6 +56,11 @@ function Joker.LoadSettings()
     })
     table.insert(optionsTable, {
       type = "description",
+      text = Joker.Colorize('/joke-burn or /burn') .. " adds a random burn to your chatbox. If you include a name (target), it will address it to them for you!",
+      width = "full",	--or "half" (optional)
+    })
+    table.insert(optionsTable, {
+      type = "description",
       text = Joker.Colorize('/joke-wisdom or /wisdom') .. " adds a random tidbit of wisdom (though sometimes a bit sarcastic) to your chatbox.",
       width = "full",	--or "half" (optional)
     })

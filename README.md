@@ -3,7 +3,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Release: **v2.0.3** (200030)
+#### Current Release: **v2.0.4** (200040)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
 
@@ -37,6 +37,7 @@ The following libraries are presently required for Joker to function properly. O
 - **/joke-pickup *target*** (or /pickup): Add a random cheesy/cute pickup line to your chatbox. If you include a name (target), it will address it to them for you!
 - **/pickup-hp *target***: Add a random Harry Potter pickup line to your chatbox. If you include a name (target), it will address it to them for you!
 - **/pickup-xxx *target***: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. If you include a name (target), it will address it to them for you!
+- **/joke-burn *target*** (or **/burn**): Add a random burn to your chatbox. If you include a name (target), it will address it to them for you!
 - **/8ball**: Undecided? Get advice from the sage 8ball.
 - **/twister**: Get a random tongue twister! Can you say it 3 times fast?
 - **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
