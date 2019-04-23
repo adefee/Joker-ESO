@@ -11,7 +11,7 @@ JokerData = JokerData or {}
 
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "2.0.3",           -- Joker internal versioning: Release.Major.Minor
+    version         = "2.0.6",           -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "D66E4A",          -- Used in menu titles and so on.
@@ -40,7 +40,8 @@ Joker = {
         Cat = true,
         Ready = true,
         Twister = true,
-        Riddle = true
+        Riddle = true,
+        GoT = true
       },
       SeenJokes = {
         Dad = {},
@@ -55,7 +56,8 @@ Joker = {
         Cat = {},
         Ready = {},
         Twister = {},
-        Riddle = {}
+        Riddle = {},
+        GoT = {}
       },
       CountJokes = {
         Dad = 0,
@@ -70,7 +72,8 @@ Joker = {
         Cat = 0,
         Ready = 0,
         Twister = 0,
-        Riddle = 0
+        Riddle = 0,
+        GoT = 0
       },
       CountSeenJokes = {
         Dad = 0,
@@ -85,7 +88,8 @@ Joker = {
         Cat = 0,
         Ready = 0,
         Twister = 0,
-        Riddle = 0
+        Riddle = 0,
+        GoT = 0
       }
     }
 }
@@ -339,6 +343,7 @@ function Joker.GetJoke(givenJokeType, returnAll)
   local catFacts = JokerData.CatFacts
   local readyChecks = JokerData.ReadyChecks
   local riddles = JokerData.Riddles
+  local gotJokes = JokerData.GoT
 
   -- Resolve joketype
   if jokeType == 'Dad' then
@@ -367,6 +372,8 @@ function Joker.GetJoke(givenJokeType, returnAll)
     jokes = twisterJokes
   elseif jokeType == 'Riddle' then
     jokes = riddles
+  elseif jokeType == 'GoT' then
+    jokes = gotJokes
   end
 
   -- If @param "all" was passed, return all jokes
@@ -531,6 +538,32 @@ function Joker.Dad(useConsole)
   if Joker.savedVariables.FirstJokes.Dad then
     Joker.savedVariables.FirstJokes.Dad = false
     d('Hi, Dad! Like these types of jokes? Get more with /dad!')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
+-- GoT()
+-- Display; Returns Game of Thrones joke. Optionals: <useConsole: displays in d()>
+function Joker.GoT(useConsole)
+  local joke = ""
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('GoT')
+    jokeLength = string.len(joke)
+  until (jokeLength < jokeLengthMax)
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.GoT then
+    Joker.savedVariables.FirstJokes.GoT = false
+    d('Want more Game of Thrones jokes? Get more with /joke-got!')
   end
 
   -- Send
@@ -982,6 +1015,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Cat'] = Joker.GetJoke('Cat', true)
   allJokes['Ready'] = Joker.GetJoke('Ready', true)
   allJokes['Burn'] = Joker.GetJoke('Burn', true)
+  allJokes['GoT'] = Joker.GetJoke('Got', true)
   -- allJokes['Burn'] = Joker.GetJoke('Burn', true) -- TODO: GetBurn() needs to be built out...
   
 
@@ -1023,6 +1057,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/joke-pickup"] = Joker.Pickup
   SLASH_COMMANDS["/joke-twister"] = Joker.Twister
   SLASH_COMMANDS["/joke-burn"] = Joker.Burn
+  SLASH_COMMANDS["/joke-got"] = Joker.GoT
   -- Other joke command aliases:
   SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
   SLASH_COMMANDS["/dad"] = Joker.Dad

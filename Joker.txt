@@ -2,8 +2,8 @@
 ## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
 
-## Version: 2.0.5
-## AddOnVersion: 200050
+## Version: 2.0.6
+## AddOnVersion: 200060
 ## APIVersion: 100026 100027
 
 ## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 
@@ -43,6 +43,7 @@ jokes\CatFacts.lua
 jokes\Dad.lua
 jokes\Edgy.lua
 jokes\ESO.lua
+jokes\GameOfThrones.lua
 jokes\HarryPotter.lua
 jokes\Norris.lua
 jokes\PickupLines.lua
