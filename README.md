@@ -58,7 +58,7 @@ Always accepting requests, suggestions, etc. Here are a few things currently on 
 - **[Added v2.0.0]**: Hide jokes you've already seen,
 - **[Added v2.0.0]**: Custom ready checks,
 - **[Added v1.2.1]**: Magic 8 Ball,
-- **[Added v2.0.4]**: Fun & customizable burns,
+- **[Added v2.0.5]**: Fun & customizable burns,
 - **[Added v2.0.3]**: Cheesy, customizable pickup lines,
 - **[In Progress]**: Add GUI options in Addon settings
 - **[In Progress]**: Add filters to /joke (e.g. '/joke argonian' to pull a random joke about an Argonian)
