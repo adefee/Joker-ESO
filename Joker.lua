@@ -27,7 +27,7 @@ Joker = {
         "Hey, jTarget, ",
         "Yo, jTarget, ",
         "jTarget, ",
-        "jTarget! ",
+        "jTarget! "
       },
       FirstJokes = {
         Dad = true,
@@ -96,7 +96,7 @@ Joker = {
     }
 }
 
-local jokeLengthMax = 325 -- Set max joke length
+local jokeLengthMax = 325 -- Set max joke length. Max chatbox length is 350 chars. Set a little less so we can prepend prefixes if needed.
 
 --[[
   ** Utilities
@@ -124,48 +124,8 @@ end
 -- Utility; Determines if a specific joke has already been seen
 function Joker.isSeen(jokeType, jokeIndex)
 
-  -- d('Checking seen for type: ' .. jokeType .. ', index: ' .. jokeIndex)
-
-  if jokeType == 'Dad' then
-    if setContains(Joker.savedVariables.SeenJokes.Dad, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Edgy' then
-    if setContains(Joker.savedVariables.SeenJokes.Edgy, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Pickup' then
-    if setContains(Joker.savedVariables.SeenJokes.Pickup, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Burn' then
-    if setContains(Joker.savedVariables.SeenJokes.Burn, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Norris' then
-    if setContains(Joker.savedVariables.SeenJokes.Norris, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Cat' then
-    if setContains(Joker.savedVariables.SeenJokes.Cat, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Wisdom' then
-    if setContains(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'PickupXXX' then
-    if setContains(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'PickupHP' then
-    if setContains(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Twister' then
-    if setContains(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"') then
-      return true
-    end
+  if setContains(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"') then
+    return true
   end
 
   return nil
@@ -177,30 +137,7 @@ end
 function Joker.addSeen(jokeType, jokeIndex)
 
   -- Quotes encompass jokeIndex so that the key is a string instead of looking for an actual index
-
-  if jokeType == 'Dad' then
-    addToSet(Joker.savedVariables.SeenJokes.Dad, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Edgy' then
-    addToSet(Joker.savedVariables.SeenJokes.Edgy, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Pickup' then
-    addToSet(Joker.savedVariables.SeenJokes.Pickup, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Burn' then
-    addToSet(Joker.savedVariables.SeenJokes.Burn, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Norris' then
-    addToSet(Joker.savedVariables.SeenJokes.Norris, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Cat' then
-    addToSet(Joker.savedVariables.SeenJokes.Cat, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Wisdom' then
-    addToSet(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'PickupXXX' then
-    addToSet(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'PickupHP' then
-    addToSet(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Twister' then
-    addToSet(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'GoT' then
-    addToSet(Joker.savedVariables.SeenJokes.GoT, '"' .. jokeIndex .. '"')
-  end
+  addToSet(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"')
 
   Joker.savedVariables.CountSeenJokes[jokeType] = Joker.savedVariables.CountSeenJokes[jokeType] + 1
   Joker.savedVariables.CountSeenJokesTotal = Joker.savedVariables.CountSeenJokesTotal + 1
@@ -208,21 +145,10 @@ function Joker.addSeen(jokeType, jokeIndex)
 
 end
 
--- compareSeen()
--- Utility; Checks to see if all of given jokeType have been seen. If so, resets corresponding seen object & count
-function Joker.compareSeen(jokeType)
-
-  -- TODO: Add contents here.
-
-
-  return true
-
-end
-
 -- resetSeen()
 -- Utility; Rests seen object & count for given jokeType
 function Joker.resetSeen(jokeType)
-  d("Nice! You've seen everything in the ".. jokeType .. " category! We're always adding more content, but in the meantime - we've reset this category. You may see a few duplicates, but make sure to check every day for updates - new content is added almost daily!")
+  -- d("Nice! You've seen everything in the ".. jokeType .. " category! We're always adding more content, but in the meantime - we've reset this category. You may see a few duplicates, but make sure to check every day for updates - new content is added almost daily!")
   Joker.savedVariables.CountSeenJokes[jokeType] = 0
   Joker.savedVariables.SeenJokes[jokeType] = {}
   return true
@@ -349,7 +275,7 @@ function Joker.GetJoke(givenJokeType, returnAll)
   local riddles = JokerData.Riddles
   local gotJokes = JokerData.GoT
 
-  -- Resolve joketype
+  -- jokeType Definitions
   if jokeType == 'Dad' then
     jokes = dadJokes
   elseif jokeType == 'Edgy' then
@@ -862,7 +788,8 @@ function Joker.AnyJoke(target)
     "ESO",
     "Dad",
     "Wisdom",
-    "Twister"
+    "Twister",
+    "GoT"
   }
   local random = math.random(0, Joker.savedVariables.CountJokesTotal)
 
@@ -881,6 +808,8 @@ function Joker.AnyJoke(target)
     local joke = Joker.Wisdom()
   elseif random >= Joker.accumulateTypes(jokeSources, 4) and random <= Joker.accumulateTypes(jokeSources, 5) then
     local joke = Joker.Twister()
+  elseif random >= Joker.accumulateTypes(jokeSources, 5) and random <= Joker.accumulateTypes(jokeSources, 6) then
+    local joke = Joker.GoT()
   else
     local joke = Joker.Dad() -- This should never happen, but better to show Dad than nothing.
   end
@@ -899,7 +828,9 @@ function Joker.AnyJokeToLog(target)
     "Norris",
     "ESO",
     "Dad",
-    "Wisdom"
+    "Wisdom",
+    "Twister",
+    "GoT"
   }
   local random = math.random(0, Joker.savedVariables.CountJokesTotal)
 
@@ -916,6 +847,10 @@ function Joker.AnyJokeToLog(target)
     local joke = Joker.Dad("log")
   elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
     local joke = Joker.Wisdom("log")
+  elseif random >= Joker.accumulateTypes(jokeSources, 4) and random <= Joker.accumulateTypes(jokeSources, 5) then
+    local joke = Joker.Twister("log")
+  elseif random >= Joker.accumulateTypes(jokeSources, 5) and random <= Joker.accumulateTypes(jokeSources, 6) then
+    local joke = Joker.GoT("log")
   else
     local joke = Joker.Dad("log") -- This should never happen, but better to show Dad than nothing.
   end
