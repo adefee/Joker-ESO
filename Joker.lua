@@ -11,7 +11,7 @@ JokerData = JokerData or {}
 
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "2.0.6",           -- Joker internal versioning: Release.Major.Minor
+    version         = "2.0.7",           -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "D66E4A",          -- Used in menu titles and so on.
