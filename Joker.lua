@@ -26,6 +26,8 @@ Joker = {
       pickupPrefixes = {
         "Hey, jTarget, ",
         "Yo, jTarget, ",
+        "jTarget, ",
+        "jTarget! ",
       },
       FirstJokes = {
         Dad = true,
@@ -196,6 +198,8 @@ function Joker.addSeen(jokeType, jokeIndex)
     addToSet(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"')
   elseif jokeType == 'Twister' then
     addToSet(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'GoT' then
+    addToSet(Joker.savedVariables.SeenJokes.GoT, '"' .. jokeIndex .. '"')
   end
 
   Joker.savedVariables.CountSeenJokes[jokeType] = Joker.savedVariables.CountSeenJokes[jokeType] + 1
