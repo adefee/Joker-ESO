@@ -955,7 +955,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Ready'] = Joker.GetJoke('Ready', true)
   allJokes['Burn'] = Joker.GetJoke('Burn', true)
   allJokes['GoT'] = Joker.GetJoke('Got', true)
-  -- allJokes['Burn'] = Joker.GetJoke('Burn', true) -- TODO: GetBurn() needs to be built out...
+  allJokes['Burn'] = Joker.GetJoke('Burn', true) -- TODO: GetBurn() needs to be built out...
   
 
   -- Iterate over jokes
