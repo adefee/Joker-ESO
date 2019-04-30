@@ -3,7 +3,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Release: **v2.0.7** (200070)
+#### Current Release: **v2.0.8** (200080)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
 
@@ -30,7 +30,7 @@ The following libraries are presently required for Joker to function properly. O
 - **/joke-eso**: Adds a random ESO-related joke to your active chatbox
 - **/joke-dad** (or **/dad**): Adds a random Dad joke to your active chatbox
 - **/joke-got**: Adds a random Game of Thrones joke to your active chatbox
-- **/joke-wisdom** (or **/wisdom**): Adds a random tidbit of wisdom (though sometimes a bit sarcastic) to your active chatbox
+- **/joke-wisdom** (or **/wisdom**): Adds a random wisdom tidbit or shower thought to your active chatbox
 - **/joke-edgy**: adds a random edgy joke to your chatbox (added by popular request). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.
 - **/joke-norris** (or **/norris**): Add a random Chuck Norris joke to your active chatbox.
 - **/norris me**: Add a random joke to your chatbox, with *you* as the subject!

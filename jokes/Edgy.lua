@@ -82,5 +82,6 @@ JokerData.Edgy = {
   "How does Jesus make his coffee? Hebrews it.",
   "How do you find Will Smith in the snow? You look for the fresh prints.",
   "Why is there air conditioning in hospitals? To keep the vegetables cool and fresh.",
-  "'Racecar' backwards is 'racecar'. 'Racecar' sideways is how Paul Walker died."
+  "'Racecar' backwards is 'racecar'. 'Racecar' sideways is how Paul Walker died.",
+  "Having sex without a condom is like using your phone without a case, much better experience but it’s risky!",
 }

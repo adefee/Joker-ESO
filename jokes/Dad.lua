@@ -685,5 +685,10 @@ JokerData.Dad = {
   "Justice is a dish best served cold, if it were served warm it would be justwater.",
   "The fattest knight at King Arthur’s round table was Sir Cumference. He acquired his size from too much pi.",
   "Why can't you hear a pterodactyl go to the bathroom? Because the pee is silent.",
-  "What does a zombie vegetarian eat? 'GRRRAAAAAIIIINNNNS!'"
+  "What does a zombie vegetarian eat? 'GRRRAAAAAIIIINNNNS!'",
+  "Due to the method by which most vampires are depicted sucking the blood of their victims, you could say they are also neck romancers.",
+  "If all you’re getting out of a relationship is sex you’re getting screwed.",
+  "Game of Thrones is going to definitively answer the question whether it's better to have a bad ending (the show) or no ending at all (the books).",
+  "If IKEA sold cars, imagine the size of the assembly manual - not to mention driving on a bumpy road in a car assembled with wooden dowels.",
+  "Witches have black cats because if they had white cats, they would have white cat hair all over their clothes.",
 }
