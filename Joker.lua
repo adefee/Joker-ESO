@@ -11,7 +11,7 @@ JokerData = JokerData or {}
 
 Joker = {
     name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "2.0.7",           -- Joker internal versioning: Release.Major.Minor
+    version         = "2.0.9",           -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (@CallMeLent, Github @adefee)",
     color           = "D66E4A",          -- Used in menu titles and so on.
@@ -124,8 +124,67 @@ end
 -- Utility; Determines if a specific joke has already been seen
 function Joker.isSeen(jokeType, jokeIndex)
 
-  if setContains(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"') then
-    return true
+  -- if setContains(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"') then
+  --   return true
+  -- end
+
+  if jokeType == 'Dad' then
+    if setContains(Joker.savedVariables.SeenJokes.Dad, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Edgy' then
+    if setContains(Joker.savedVariables.SeenJokes.Edgy, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Wisdom' then
+    if setContains(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Pickup' then
+    if setContains(Joker.savedVariables.SeenJokes.Pickup, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'PickupXXX' then
+    if setContains(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"') then
+      d('Set contains!')
+      return true
+    end
+  elseif jokeType == 'PickupHP' then
+    if setContains(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Norris' then
+    if setContains(Joker.savedVariables.SeenJokes.Norris, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'ESO' then
+    if setContains(Joker.savedVariables.SeenJokes.ESO, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Burn' then
+    if setContains(Joker.savedVariables.SeenJokes.Burn, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Cat' then
+    if setContains(Joker.savedVariables.SeenJokes.Cat, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Ready' then
+    if setContains(Joker.savedVariables.SeenJokes.Ready, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Twister' then
+    if setContains(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'Riddle' then
+    if setContains(Joker.savedVariables.SeenJokes.Riddle, '"' .. jokeIndex .. '"') then
+      return true
+    end
+  elseif jokeType == 'GoT' then
+    if setContains(Joker.savedVariables.SeenJokes.GoT, '"' .. jokeIndex .. '"') then
+      return true
+    end
   end
 
   return nil
@@ -137,7 +196,40 @@ end
 function Joker.addSeen(jokeType, jokeIndex)
 
   -- Quotes encompass jokeIndex so that the key is a string instead of looking for an actual index
-  addToSet(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"')
+  -- TODO: Was previously using `addToSet(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"')`, but that seems to not work as intended.
+
+  if jokeType == 'Dad' then
+    addToSet(Joker.savedVariables.SeenJokes.Dad, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Edgy' then
+    addToSet(Joker.savedVariables.SeenJokes.Edgy, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Wisdom' then
+    addToSet(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Pickup' then
+    addToSet(Joker.savedVariables.SeenJokes.Pickup, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'PickupXXX' then
+    addToSet(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'PickupHP' then
+    addToSet(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Norris' then
+    addToSet(Joker.savedVariables.SeenJokes.Norris, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'ESO' then
+    addToSet(Joker.savedVariables.SeenJokes.ESO, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Burn' then
+    addToSet(Joker.savedVariables.SeenJokes.Burn, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Cat' then
+    addToSet(Joker.savedVariables.SeenJokes.Cat, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Ready' then
+    addToSet(Joker.savedVariables.SeenJokes.Ready, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Twister' then
+    addToSet(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'Riddle' then
+    addToSet(Joker.savedVariables.SeenJokes.Riddle, '"' .. jokeIndex .. '"')
+  elseif jokeType == 'GoT' then
+    addToSet(Joker.savedVariables.SeenJokes.GoT, '"' .. jokeIndex .. '"')
+    d('Added ' .. jokeIndex .. ' to seen...')
+  end
+
+  -- Prevously: addToSet(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"')
 
   Joker.savedVariables.CountSeenJokes[jokeType] = Joker.savedVariables.CountSeenJokes[jokeType] + 1
   Joker.savedVariables.CountSeenJokesTotal = Joker.savedVariables.CountSeenJokesTotal + 1
@@ -954,7 +1046,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Cat'] = Joker.GetJoke('Cat', true)
   allJokes['Ready'] = Joker.GetJoke('Ready', true)
   allJokes['Burn'] = Joker.GetJoke('Burn', true)
-  allJokes['GoT'] = Joker.GetJoke('Got', true)
+  allJokes['GoT'] = Joker.GetJoke('GoT', true)
   allJokes['Burn'] = Joker.GetJoke('Burn', true) -- TODO: GetBurn() needs to be built out...
   
 
