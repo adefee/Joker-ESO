@@ -8,20 +8,20 @@
 	*
 ]]--
 JokerData = JokerData or {}
+JokerL = JokerL or {}
 
 Joker = {
-    name            = "Joker",           -- Matches folder and Manifest file names.
-    version         = "2.0.9",           -- Joker internal versioning: Release.Major.Minor
-    versionMajor    = 2,                -- Will increment variable versioning, only occurs on major updates.
+    name            = "Joker",                                -- Matches folder and Manifest file names.
+    version         = "2.1.0",                                -- Joker internal versioning: Release.Major.Minor
+    versionMajor    = 2,                                      -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (@CallMeLent, Github @adefee)",
-    color           = "D66E4A",          -- Used in menu titles and so on.
-    menuName        = "Joker - Best Enjoyed with Skooma!", -- A UNIQUE identifier for menu object.
+    color           = "D66E4A",                               -- Primary addon color
     -- Default settings:
     savedVariables = {
       FirstLoad = true,      
       CountJokesTotal = 0,
       CountSeenJokesTotal = 0,
-      PeriodicJokes = "Enabled", -- Periodically show jokes to user in console (chat)
+      PeriodicJokes = true, -- Periodically show jokes to user in console (chat)
       PeriodSince = 0,
       pickupPrefixes = {
         "Hey, jTarget, ",
@@ -93,9 +93,11 @@ Joker = {
         Riddle = 0,
         GoT = 0
       }
-    }
+    },
+    locale = JokerL:GetLanguage()                            -- Import locale from JokerL container
 }
 
+local L = Joker.locale
 local jokeLengthMax = 325 -- Set max joke length. Max chatbox length is 350 chars. Set a little less so we can prepend prefixes if needed.
 
 --[[
@@ -124,67 +126,8 @@ end
 -- Utility; Determines if a specific joke has already been seen
 function Joker.isSeen(jokeType, jokeIndex)
 
-  -- if setContains(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"') then
-  --   return true
-  -- end
-
-  if jokeType == 'Dad' then
-    if setContains(Joker.savedVariables.SeenJokes.Dad, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Edgy' then
-    if setContains(Joker.savedVariables.SeenJokes.Edgy, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Wisdom' then
-    if setContains(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Pickup' then
-    if setContains(Joker.savedVariables.SeenJokes.Pickup, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'PickupXXX' then
-    if setContains(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"') then
-      d('Set contains!')
-      return true
-    end
-  elseif jokeType == 'PickupHP' then
-    if setContains(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Norris' then
-    if setContains(Joker.savedVariables.SeenJokes.Norris, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'ESO' then
-    if setContains(Joker.savedVariables.SeenJokes.ESO, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Burn' then
-    if setContains(Joker.savedVariables.SeenJokes.Burn, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Cat' then
-    if setContains(Joker.savedVariables.SeenJokes.Cat, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Ready' then
-    if setContains(Joker.savedVariables.SeenJokes.Ready, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Twister' then
-    if setContains(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'Riddle' then
-    if setContains(Joker.savedVariables.SeenJokes.Riddle, '"' .. jokeIndex .. '"') then
-      return true
-    end
-  elseif jokeType == 'GoT' then
-    if setContains(Joker.savedVariables.SeenJokes.GoT, '"' .. jokeIndex .. '"') then
-      return true
-    end
+  if setContains(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"') then
+    return true
   end
 
   return nil
@@ -198,38 +141,7 @@ function Joker.addSeen(jokeType, jokeIndex)
   -- Quotes encompass jokeIndex so that the key is a string instead of looking for an actual index
   -- TODO: Was previously using `addToSet(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"')`, but that seems to not work as intended.
 
-  if jokeType == 'Dad' then
-    addToSet(Joker.savedVariables.SeenJokes.Dad, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Edgy' then
-    addToSet(Joker.savedVariables.SeenJokes.Edgy, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Wisdom' then
-    addToSet(Joker.savedVariables.SeenJokes.Wisdom, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Pickup' then
-    addToSet(Joker.savedVariables.SeenJokes.Pickup, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'PickupXXX' then
-    addToSet(Joker.savedVariables.SeenJokes.PickupXXX, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'PickupHP' then
-    addToSet(Joker.savedVariables.SeenJokes.PickupHP, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Norris' then
-    addToSet(Joker.savedVariables.SeenJokes.Norris, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'ESO' then
-    addToSet(Joker.savedVariables.SeenJokes.ESO, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Burn' then
-    addToSet(Joker.savedVariables.SeenJokes.Burn, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Cat' then
-    addToSet(Joker.savedVariables.SeenJokes.Cat, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Ready' then
-    addToSet(Joker.savedVariables.SeenJokes.Ready, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Twister' then
-    addToSet(Joker.savedVariables.SeenJokes.Twister, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'Riddle' then
-    addToSet(Joker.savedVariables.SeenJokes.Riddle, '"' .. jokeIndex .. '"')
-  elseif jokeType == 'GoT' then
-    addToSet(Joker.savedVariables.SeenJokes.GoT, '"' .. jokeIndex .. '"')
-    d('Added ' .. jokeIndex .. ' to seen...')
-  end
-
-  -- Prevously: addToSet(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"')
+  addToSet(Joker.savedVariables.SeenJokes[jokeType], '"' .. jokeIndex .. '"')
 
   Joker.savedVariables.CountSeenJokes[jokeType] = Joker.savedVariables.CountSeenJokes[jokeType] + 1
   Joker.savedVariables.CountSeenJokesTotal = Joker.savedVariables.CountSeenJokesTotal + 1
@@ -261,12 +173,13 @@ end
 
 -- togglePeriodicJokes()
 -- Utility; Toggles whether or not jokes are periodically shown to the user in console (d()). Using string instead of bool so we can easily display status in addon settings.
-function Joker.togglePeriodicJokes()
-  if Joker.savedVariables.PeriodicJokes == "Enabled" then
-    Joker.savedVariables.PeriodicJokes = "Disabled"
-    d('Joker will no longer send jokes to you.')
+function Joker.togglePeriodicJokes(value)
+
+  Joker.savedVariables.PeriodicJokes = value
+
+  if Joker.savedVariables.PeriodicJokes then
+    d('Joker will no longer share jokes with you. He is very sad.')
   else
-    Joker.savedVariables.PeriodicJokes = "Enabled"
     d('Joker will periodically send jokes to you!')
   end
 end
@@ -301,6 +214,7 @@ function Joker.checkPeriodicDue()
   elseif Joker.savedVariables.PeriodSince > 5 then
     showJoke = true
   end
+  
 
   if showJoke then
     Joker.savedVariables.PeriodSince = 0
@@ -1075,6 +989,13 @@ function Joker.OnAddOnLoaded(event, addonName)
     end
   end
 
+  -- Legacy: Update Periodic Jokes
+  if (Joker.savedVariables.PeriodicJokes == 'Enabled') then
+    Joker.savedVariables.PeriodicJokes = true
+  elseif (Joker.savedVariables.PeriodicJokes == 'Disabled') then
+    Joker.savedVariables.PeriodicJokes = false
+  end
+
   -- Settings menu in Settings.lua.
   Joker.LoadSettings()
 
@@ -1112,7 +1033,7 @@ function Joker.OnAddOnLoaded(event, addonName)
 
   -- If the user hasn't disabled periodic jokes in console, show it.
   -- TODO: Allow user to disable, or change frequency (time-based or # of addon loads in between)
-  if Joker.savedVariables.PeriodicJokes == "Enabled" and Joker.checkPeriodicDue then
+  if Joker.savedVariables.PeriodicJokes and Joker.checkPeriodicDue then
     zo_callLater(Joker.AnyJokeToLog, 3000)
   end
 end

@@ -2,7 +2,7 @@ JokerL = JokerL or {}
 local L = {}
 
 --------------------------------------------------------------------------------------------------------------------
--- Locale: Deutsch
+-- Locale: Italiano
 -- All strings currently need translated, any help welcome!
 --------------------------------------------------------------------------------------------------------------------
 
@@ -11,9 +11,9 @@ L.Joker_Title			= "Joker - Best Enjoyed with Skooma!"
 
 ------------------------------------------------------------------------------------------------------------------
 
-if (GetCVar('language.2') == 'de') then -- overwrite GetLanguage for new language
+if (GetCVar('language.2') == 'it') then -- Overwrite GetLanguage for new language
 	for k,v in pairs(JokerL:GetLanguage()) do
-		if (not L[k]) then -- no translation for this string, use default
+		if (not L[k]) then -- No translation for this string, use default
 			L[k] = v
 		end
 	end

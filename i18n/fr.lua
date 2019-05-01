@@ -1,11 +1,23 @@
--- Every variable must start with this addon's unique ID, as each is a global.
-local localization_strings = {
-  SI_JOKER_ACTIVE_MESSAGE = " c'est actif!",
-  -- Keybindings.
-  SI_BINDING_NAME_JOKER_SETTINGS = "Afficher le Joker Addon",
-}
+JokerL = JokerL or {}
+local L = {}
 
-for stringId, stringValue in pairs(localization_strings) do
-	ZO_CreateStringId(stringId, stringValue)
-	SafeAddVersion(stringId, 1)
+--------------------------------------------------------------------------------------------------------------------
+-- Locale: Francais
+-- All strings currently need translated, any help welcome!
+--------------------------------------------------------------------------------------------------------------------
+
+-- General Strings
+L.Joker_Title			= "Joker - Best Enjoyed with Skooma!"
+
+------------------------------------------------------------------------------------------------------------------
+
+if (GetCVar('language.2') == 'fr') then -- Overwrite GetLanguage for new language
+	for k,v in pairs(JokerL:GetLanguage()) do
+		if (not L[k]) then -- No translation for this string, use default
+			L[k] = v
+		end
+	end
+	function JokerL:GetLanguage() -- set new language return
+		return L
+	end
 end

@@ -2,8 +2,8 @@
 ## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
 
-## Version: 2.0.9
-## AddOnVersion: 200090
+## Version: 2.1.0
+## AddOnVersion: 201000
 ## APIVersion: 100026 100027
 
 ## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 
@@ -13,11 +13,17 @@
 ## SavedVariables: JokerSavedVariables
 ## OptionalDependsOn: LibAddonMenu-2.0
 
-## Internationalization
-i18n\en.lua
-i18n\$(language).lua
 
+# Start Loading Joker Components
 Joker.xml
+
+
+## I18n & Locales (default: en)
+i18n\en.lua
+i18n\de.lua
+i18n\es.lua
+i18n\fr.lua
+
 
 ## Lib Dependencies
 libs\LibStub\LibStub.lua
