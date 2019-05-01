@@ -20,9 +20,7 @@ Joker.xml
 
 ## I18n & Locales (default: en)
 i18n\en.lua
-i18n\de.lua
-i18n\es.lua
-i18n\fr.lua
+i18n\$(language).lua
 
 
 ## Lib Dependencies
