@@ -826,7 +826,7 @@ function Joker.AnyJoke(target)
     "Twister",
     "GoT"
   }
-  local jokeSources2 = Joker.fromCSV(Joker.savedVariables.RandomPool)
+  -- local jokeSources2 = Joker.fromCSV(Joker.savedVariables.RandomPool)
   local random = math.random(0, Joker.savedVariables.CountJokesTotal)
 
   --[[
