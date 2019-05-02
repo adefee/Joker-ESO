@@ -12,7 +12,7 @@ JokerL = JokerL or {}
 
 Joker = {
     name            = "Joker",                                -- Matches folder and Manifest file names.
-    version         = "2.1.0",                                -- Joker internal versioning: Release.Major.Minor
+    version         = "2.1.1",                                -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                                      -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (IGN @CallMeLent, Github @adefee)",
     color           = "D66E4A",                               -- Primary addon color
@@ -24,8 +24,8 @@ Joker = {
       PeriodicJokes = true, -- Periodically show jokes to user in console (chat)
       PeriodicFrequency = 10,
       PeriodSince = 0,
-      RandomPool = "Dad, Wisdom, Norris, ESO, Cat, Twister",
-      RandomPool_Default = "Dad, Wisdom, Norris, ESO, Cat, Twister", -- Default pool sets
+      RandomPool = "Cat, Dad, ESO, Norris, Twister, Wisdom",
+      RandomPool_Default = "Cat, Dad, ESO, Norris, Twister, Wisdom", -- Default pool sets
       pickupPrefixes = {
         "Hey, jTarget, ",
         "Yo, jTarget, ",
