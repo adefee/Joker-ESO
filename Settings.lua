@@ -59,7 +59,33 @@ function Joker.LoadSettings()
           width			  = "full",
           default			= Joker.savedVariables.PeriodicFrequency,
           disabled    = function() return not Joker.savedVariables.PeriodicJokes end,
-      },
+        },
+        [3] = {
+          type = "divider",
+        },
+        [4] = {
+          type			  = "editbox",
+          name			  = optionIndent .. L.Joker_Options_RandomPool,
+          tooltip			= L.Joker_Options_RandomPool_Tip,
+          getFunc     = function() return Joker.savedVariables.RandomPool end,
+          setFunc     = function(value) d(value); Joker.savedVariables.RandomPool = value end,
+          warning     = Joker.savedVariables.RandomPool_Warning,
+          default     = Joker.savedVariables.RandomPool_Default,
+          disabled    = function() return true end
+        },
+        [5] = {
+          type			  = "description",
+          title       = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types .. ":"),
+        },
+        [6] = {
+          type			  = "description",
+          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Default .. ": ", "AA00FF") .. Joker.savedVariables.RandomPool_Default,
+        },
+        [7] = {
+          type			  = "description",
+          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Available .. ": ") .. "Edgy, Pickup, PickupXXX, PickupHP, Burn, GoT",
+          tooltip     = L.Joker_Options_RandomPool_Types_Available_Tip
+        }
       }
     })
 
@@ -70,82 +96,93 @@ function Joker.LoadSettings()
       tooltip	= "",
       controls		= {
         [1] = {
-          type = "description",
-          text = optionIndent .. Joker.Colorize('/joker') .. " shows this window!"
+          type = "header",
+          name = optionIndent .. L.Joker_Quick_Btn_Joke_Slash, 
         },
         [2] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke') .. " adds a random joke to your chatbox. Random pool does not include Edgy jokes or pickup lines"
+          text = optionIndent .. Joker.Colorize('/joker ') .. L.Joker_Quick_Btn_Joker
         },
         [3] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-eso') .. " adds a random ESO-related joke to your chatbox."
+          text = optionIndent .. Joker.Colorize('/joke ') .. L.Joker_Quick_Btn_Joke_Tip
         },
         [4] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-dad ' .. L.Joker_Or ..' /dad') .. " adds a random Dad joke to your chatbox."
+          text = optionIndent .. Joker.Colorize('/joke-eso ') .. L.Joker_Quick_Btn_JokeESO_Tip
         },
         [5] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-got') .. " adds a random Game of Thrones joke to your chatbox."
+          text = optionIndent .. Joker.Colorize('/joke-dad ' .. L.Joker_Or ..' /dad ') .. L.Joker_Quick_Btn_JokeDad_Tip
         },
         [6] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-burn ' .. L.Joker_Or ..' /burn') .. " adds a random burn to your chatbox. If you include a name (target), it will address it to them for you!"
+          text = optionIndent .. Joker.Colorize('/joke-got ') .. L.Joker_Quick_Btn_JokeGoT_Tip
         },
         [7] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-wisdom ' .. L.Joker_Or ..' /wisdom') .. " adds a random tidbit of wisdom (though sometimes a bit sarcastic) to your chatbox."
+          text = optionIndent .. Joker.Colorize('/joke-burn ' .. L.Joker_Or ..' /burn <target>') .. L.Joker_Quick_Btn_JokeBurn_Tip_Advanced
         },
         [8] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-edgy') .. " adds a random edgy/explicit joke to your chatbox (added by popular request!). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage."
+          text = optionIndent .. Joker.Colorize('/joke-wisdom ' .. L.Joker_Or ..' /wisdom ') .. L.Joker_Quick_Btn_JokeWisdom_Tip
         },
         [9] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-norris ' .. L.Joker_Or ..' /norris') .. " adds a random Chuck Norris joke to your chatbox."
+          text = optionIndent .. Joker.Colorize('/joke-edgy ') .. L.Joker_Quick_Btn_JokeEdgy_Tip
         },
         [10] = {
-          type = "divider",
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/joke-norris ' .. L.Joker_Or ..' /norris ') .. L.Joker_Quick_Btn_JokeNorris_Tip
         },
         [11] = {
-          type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-pickup ' .. L.Joker_Or ..' /pickup <target>') .. " adds a random cheesy/cute pickup line to your chatbox. If you include a name (target), it will address it to them for you!",
+          type = "header",
+          name = optionIndent .. L.Joker_Quick_Btn_JokePickup_Slash, 
         },
         [12] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/pickup-xxx <target>') .. " adds a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. If you include a name (target), it will address it to them for you!",
+          text = optionIndent .. Joker.Colorize('/joke-pickup ' .. L.Joker_Or ..' /pickup <target> ') .. L.Joker_Quick_Btn_JokePickup_Tip_Advanced,
         },
         [13] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/pickup-hp <target>') .. " adds a random Harry Potter pickup line to your chatbox. If you include a name (target), it will address it to them for you!",
+          text = optionIndent .. Joker.Colorize('/pickup-xxx <target> ') .. L.Joker_Quick_Btn_JokePickupXXX_Tip_Advanced,
         },
         [14] = {
-          type = "divider",
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/pickup-hp <target> ') .. L.Joker_Quick_Btn_JokePickupHP_Tip_Advanced,
         },
         [15] = {
-          type = "description",
-          text = optionIndent .. Joker.Colorize('/8ball <question>') .. ": Undecided? Get quality life advice from the magic 8ball! Asking the question is optional :)",
+          type = "header",
+          name = optionIndent .. L.Joker_Quick_Btn_Other_Slash, 
         },
         [16] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/catfact') .. ": Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!",
+          text = optionIndent .. Joker.Colorize('/8ball <question> ') .. L.Joker_Quick_Btn_Joke8Ball_Tip,
         },
         [17] = {
-          type = "divider",
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/catfact ') .. L.Joker_Quick_Btn_JokeCatFact_Tip,
         },
         [18] = {
-          type = "description",
-          text = optionIndent .. Joker.Colorize('/ready') .. ": Ready checks, but funnier & faster to type! Ready checks your group with a random, witty message or meme! Leeerrrooyyyyy Jeeenkins!'",
+          type = "header",
+          name = optionIndent .. L.Joker_Quick_Btn_JokeReady_Slash, 
         },
         [19] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/ready <message>') .. ": Inside joke, or funnier than Joker? Ready check your group with your own custom message!",
+          text = optionIndent .. Joker.Colorize('/ready ') .. L.Joker_Quick_Btn_JokeReady_Tip,
         },
         [20] = {
-          type = "divider",
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/ready <message> ') .. L.Joker_Quick_Btn_JokeReady_Tip_Advanced,
         },
         [21] = {
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/ready <voteType> <message> ') .. L.Joker_Quick_Btn_JokeReady_Tip_Advanced_Vote,
+        },
+        [22] = {
+          type = "divider",
+        },
+        [23] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('More tomfoolery coming soon!'),
         }
@@ -292,6 +329,19 @@ function Joker.LoadSettings()
       width			  = "half",
     })
 
+    -- Want more jokes?
+    table.insert(panelOptions, {
+      type = "divider",
+    })
+    table.insert(panelOptions, {
+      type = "description",
+      text = L.Joker_More_Desc,
+      title = Joker.Colorize(L.Joker_More_Title),
+    })
+
+    table.insert(panelOptions, {
+      type = "divider",
+    })
 
     -- Legal
     table.insert(panelOptions, {
@@ -300,51 +350,11 @@ function Joker.LoadSettings()
       tooltip	= "",
       controls		= {
         [1] = {
-          type			  = "button",
-          name			  = optionIndent_Button .. L.Joker_Options_Periodic, -- Random /joke
-          tooltip			= L.Joker_Options_Periodic_Tip,
-          getFunc			= function() return Joker.savedVariables.PeriodicJokes end,
-          setFunc			= function(value) Joker.togglePeriodicJokes(value) end,
-          width			  = "full",
-          default			= Joker.savedVariables.PeriodicJokes,
-        },
-        [2] = {
-          type			  = "slider",
-          name			  = optionIndent .. L.Joker_Options_PeriodicFrequency,
-          tooltip			= L.Joker_Options_PeriodicFrequency_Tip,
-          min         = 1,
-          max         = 25,
-          step        = 5,
-          getFunc			= function() return Joker.savedVariables.PeriodicFrequency end,
-          setFunc			= function(value) Joker.savedVariables.PeriodicFrequency = value end,
-          width			  = "full",
-          default			= Joker.savedVariables.PeriodicFrequency,
-          disabled    = function() return not Joker.savedVariables.PeriodicJokes end,
-      },
+          type			  = "description",
+          text			  = L.Joker_Legal_Desc
+        }
       }
     })
-
-    -- table.insert(optionsTable, {
-    --   type = "header",
-    --   name = ZO_HIGHLIGHT_TEXT:Colorize("Author Notes"),
-    --   width = "full",	--or "half" (optional)
-    -- })
-
-    -- -- Requests Note
-    -- table.insert(optionsTable, {
-    --   type = "description",
-    --   title = Joker.Colorize("Want more jokes?"),
-    --   text = "More fun-, pop-culture- and leisure-minded options (such as GoT jokes, popular memes, riddles, and more) are expected to be added in future releases. Bug reports, requests & suggestions are always enthusiastically welcomed! Whisper me ingame (NA @CallMeLent), or get in touch via esoui.com, Twitter (@adefee), or Github (@adefee).",
-    --   width = "full",	--or "half" (optional)
-    -- })
-
-    -- -- Copyright Note
-    -- table.insert(optionsTable, {
-    --   type = "description",
-    --   title = Joker.Colorize("Sources, Copyrights, etc"),
-    --   text = "I want to emphasize that the jokes contained in this addon are (for the most part) not my own, but rather are originally sourced from various public internet sources. I claim no ownership of the content, and make no profit from this addon or any content therein. If there are any copyright, trademark, DMCA, or other legal issues please reach out at me@andrewdefee.com and I'll comply as quickly and accurately as I can within the scope of US law. I'm just trying to share a few laughs - after all, what good is a joke if it's not shared?",
-    --   width = "full",	--or "half" (optional)
-    -- })
     
     LAM:RegisterAddonPanel("Joker_Panel", panelData)
     LAM:RegisterOptionControls("Joker_Panel", panelOptions)

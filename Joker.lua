@@ -24,6 +24,8 @@ Joker = {
       PeriodicJokes = true, -- Periodically show jokes to user in console (chat)
       PeriodicFrequency = 10,
       PeriodSince = 0,
+      RandomPool = "Dad, Wisdom, Norris, ESO, Cat, Twister",
+      RandomPool_Default = "Dad, Wisdom, Norris, ESO, Cat, Twister", -- Default pool sets
       pickupPrefixes = {
         "Hey, jTarget, ",
         "Yo, jTarget, ",
@@ -109,6 +111,40 @@ local jokeLengthMax = 325 -- Set max joke length. Max chatbox length is 350 char
 -- Utility; Checks if given string is empty/nil
 function Joker.isempty(s)
   return s == nil or s == ''
+end
+
+-- trim()
+-- Utility; Trims extraneous whitespace from string
+function Joker.trim(s)
+  return s:match "^%s*(.-)%s*$"
+end
+
+-- fromCSV()
+-- Utility; Converts given comma-delimited list to table
+function Joker.fromCSV(s)
+  s = s .. ','        -- ending comma
+  local t = {}        -- table to collect fields
+  local fieldstart = 1
+  repeat
+    -- next field is quoted? (start with `"'?)
+    if string.find(s, '^"', fieldstart) then
+      local a, c
+      local i  = fieldstart
+      repeat
+        -- find closing quote
+        a, i, c = string.find(s, '"("?)', i+1)
+      until c ~= '"'    -- quote not followed by quote?
+      if not i then error('unmatched "') end
+      local f = trim(string.sub(s, fieldstart+1, i-1))
+      table.insert(t, (string.gsub(f, '""', '"')))
+      fieldstart = string.find(s, ',', i) + 1
+    else                -- unquoted; find next comma
+      local nexti = trim(string.find(s, ',', fieldstart))
+      table.insert(t, string.sub(s, fieldstart, nexti-1))
+      fieldstart = nexti + 1
+    end
+  until fieldstart > string.len(s)
+  return t
 end
 
 -- addToSet()
@@ -790,6 +826,7 @@ function Joker.AnyJoke(target)
     "Twister",
     "GoT"
   }
+  local jokeSources2 = Joker.fromCSV(Joker.savedVariables.RandomPool)
   local random = math.random(0, Joker.savedVariables.CountJokesTotal)
 
   --[[
@@ -954,7 +991,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Ready'] = Joker.GetJoke('Ready', true)
   allJokes['Burn'] = Joker.GetJoke('Burn', true)
   allJokes['GoT'] = Joker.GetJoke('GoT', true)
-  allJokes['Burn'] = Joker.GetJoke('Burn', true) -- TODO: GetBurn() needs to be built out...
+  allJokes['Burn'] = Joker.GetJoke('Burn', true)
   
 
   -- Iterate over jokes
