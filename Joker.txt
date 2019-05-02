@@ -5,6 +5,7 @@
 ## Version: 2.1.0
 ## AddOnVersion: 201000
 ## APIVersion: 100026 100027
+## ## ADDING2.3.0_DependsOn: LibAddonMenu-2.0
 
 ## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 
 ## The Elder Scrolls® and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the 

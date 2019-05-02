@@ -6,8 +6,11 @@ local L = {}
 -- All strings currently need translated, any help welcome!
 --------------------------------------------------------------------------------------------------------------------
 
--- General Strings
-L.Joker_Title			= "Joker - Best Enjoyed with Skooma!"
+-- Basic / General
+L.Joker_Or = "oder"
+L.Joker_And = "und"
+L.Joker_Of = "von"
+L.Joker_With = "mit"
 
 ------------------------------------------------------------------------------------------------------------------
 

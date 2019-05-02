@@ -14,7 +14,7 @@ Joker = {
     name            = "Joker",                                -- Matches folder and Manifest file names.
     version         = "2.1.0",                                -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                                      -- Will increment variable versioning, only occurs on major updates.
-    author          = "Lent (@CallMeLent, Github @adefee)",
+    author          = "Lent (IGN @CallMeLent, Github @adefee)",
     color           = "D66E4A",                               -- Primary addon color
     -- Default settings:
     savedVariables = {
@@ -22,6 +22,7 @@ Joker = {
       CountJokesTotal = 0,
       CountSeenJokesTotal = 0,
       PeriodicJokes = true, -- Periodically show jokes to user in console (chat)
+      PeriodicFrequency = 10,
       PeriodSince = 0,
       pickupPrefixes = {
         "Hey, jTarget, ",
@@ -177,7 +178,7 @@ function Joker.togglePeriodicJokes(value)
 
   Joker.savedVariables.PeriodicJokes = value
 
-  if Joker.savedVariables.PeriodicJokes then
+  if not Joker.savedVariables.PeriodicJokes then
     d('Joker will no longer share jokes with you. He is very sad.')
   else
     d('Joker will periodically send jokes to you!')
@@ -190,31 +191,30 @@ function Joker.checkPeriodicDue()
   
   --[[
     PeriodSince saves number of zones/reloads since we last displayed a joke,
-    with increasing chance to show a joke each load
+    with increasing chance to show a joke each load based on user's preferences.
   ]]
 
   local showJoke = false
+  local frequency = Joker.savedVariables.PeriodicFrequency or 10
 
-  if Joker.savedVariables.PeriodSince < 2 then
-    if (math.random(0,15)) < 3 then
-      showJoke = true
+  if Joker.savedVariables.PeriodSince <= frequency then
+    if Joker.savedVariables.PeriodSince < math.floor(frequency / 3) then
+      if (math.random(0, 25) <= math.floor(frequency / 3)) then
+        showJoke = true
+      end
+    elseif Joker.savedVariables.PeriodSince < math.floor(frequency / 2) then
+      if (math.random(0, 25) <= math.floor(frequency / 2)) then
+        showJoke = true
+      end
+    else
+      if (math.random(0, 25) <= frequency) then
+        showJoke = true
+      end
     end
-  elseif Joker.savedVariables.PeriodSince == 3 then
-    if (math.random(0,12)) < 3 then
-      showJoke = true
-    end
-  elseif Joker.savedVariables.PeriodSince == 4 then
-    if (math.random(0,8)) < 3 then
-      showJoke = true
-    end
-  elseif Joker.savedVariables.PeriodSince == 5 then
-    if (math.random(0,5)) < 3 then
-      showJoke = true
-    end
-  elseif Joker.savedVariables.PeriodSince > 5 then
+  else
     showJoke = true
   end
-  
+
 
   if showJoke then
     Joker.savedVariables.PeriodSince = 0
@@ -365,7 +365,7 @@ end
 
 -- Norris()
 -- Display; Returns Norris joke. Optionals: <me> or <target>, <useConsole: displays in d()>
-function Joker.Norris(target, useConsole)
+function Joker.Norris(useConsole)
   local joke = ""
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
@@ -373,13 +373,6 @@ function Joker.Norris(target, useConsole)
     joke = Joker.GetJoke('Norris')
     jokeLength = string.len(joke)
   until (jokeLength < jokeLengthMax)
-
-  -- Optional target
-  if target == 'me' then
-    joke = string.gsub(joke, "Chuck Norris", GetUnitName("player"))
-  elseif not Joker.isempty(target) then
-    joke = string.gsub(joke, "Chuck Norris", target)
-  end
 
   -- First-Usage: Display intro message
   if Joker.savedVariables.FirstJokes.Norris then
@@ -601,7 +594,7 @@ function Joker.Pickup(target, useConsole)
   until (jokeLength < jokeLengthMax)
 
   -- Optional target
-  if not Joker.isempty(target) then
+  if not Joker.isempty(target) and type(target) == "string" then
     -- Prepend prefix, replace target with target if given
     joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
@@ -633,7 +626,7 @@ function Joker.Burn(target, useConsole)
   until (jokeLength < jokeLengthMax)
 
   -- Optional target
-  if not Joker.isempty(target) then
+  if not Joker.isempty(target) and type(target) == "string" then
     -- Prepend prefix, replace target with target if given
     joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
@@ -665,7 +658,7 @@ function Joker.PickupXXX(target, useConsole)
   until (jokeLength < jokeLengthMax)
 
   -- Optional target
-  if not Joker.isempty(target) then
+  if not Joker.isempty(target) and type(target) == "string" then
     -- Prepend prefix, replace target with target if given
     joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
@@ -697,7 +690,7 @@ function Joker.PickupHP(target, useConsole)
   until (jokeLength < jokeLengthMax)
 
   -- Optional target
-  if not Joker.isempty(target) then
+  if not Joker.isempty(target) and type(target) == "string" then
     -- Prepend prefix, replace target with target if given
     joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
@@ -775,7 +768,7 @@ function Joker.eightBall(question)
   local prefix = "8ball says: "
 
   -- Question provided, so repeat back before giving answer.
-  if not Joker.isempty(question) then
+  if not Joker.isempty(question) and question.type == 'string' then
     d('You asked: "' .. question ..'" ...')
   end
 
@@ -878,7 +871,7 @@ function Joker.readyCheck(target)
   local checkPrompt = "Are you ready?"
 
 
-  if not Joker.isempty(target) then
+  if not Joker.isempty(target) and target.type == 'string' then
     -- Custom ready check prompt.
 
     -- Check for explicit election type
@@ -1023,8 +1016,6 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/burn"] = Joker.Burn
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.readyCheck
-  -- Settings and Mgmt commands:
-  SLASH_COMMANDS["/joke-auto"] = Joker.togglePeriodicJokes
   -- Other misc & utility commands:
   SLASH_COMMANDS["/rl"] = function() ReloadUI("ingame") end
 
@@ -1033,7 +1024,7 @@ function Joker.OnAddOnLoaded(event, addonName)
 
   -- If the user hasn't disabled periodic jokes in console, show it.
   -- TODO: Allow user to disable, or change frequency (time-based or # of addon loads in between)
-  if Joker.savedVariables.PeriodicJokes and Joker.checkPeriodicDue then
+  if Joker.savedVariables.PeriodicJokes and Joker.checkPeriodicDue() then
     zo_callLater(Joker.AnyJokeToLog, 3000)
   end
 end
