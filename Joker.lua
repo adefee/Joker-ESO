@@ -12,7 +12,7 @@ JokerL = JokerL or {}
 
 Joker = {
     name            = "Joker",                                -- Matches folder and Manifest file names.
-    version         = "2.1.1",                                -- Joker internal versioning: Release.Major.Minor
+    version         = "2.2.0",                                -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                                      -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (IGN @CallMeLent, Github @adefee)",
     color           = "D66E4A",                               -- Primary addon color
@@ -24,8 +24,8 @@ Joker = {
       PeriodicJokes = true, -- Periodically show jokes to user in console (chat)
       PeriodicFrequency = 10,
       PeriodSince = 0,
-      RandomPool = "Cat, Dad, ESO, Norris, Twister, Wisdom",
-      RandomPool_Default = "Cat, Dad, ESO, Norris, Twister, Wisdom", -- Default pool sets
+      RandomPool = "Cat, Dad, ESO, Norris, StarWars, Twister, Wisdom",
+      RandomPool_Default = "Cat, Dad, ESO, Norris, StarWars, Twister, Wisdom", -- Default pool sets
       pickupPrefixes = {
         "Hey, jTarget, ",
         "Yo, jTarget, ",
@@ -46,7 +46,8 @@ Joker = {
         Ready = true,
         Twister = true,
         Riddle = true,
-        GoT = true
+        GoT = true,
+        StarWars = true
       },
       SeenJokes = {
         Dad = {},
@@ -62,7 +63,8 @@ Joker = {
         Ready = {},
         Twister = {},
         Riddle = {},
-        GoT = {}
+        GoT = {},
+        StarWars = {}
       },
       CountJokes = {
         Dad = 0,
@@ -78,7 +80,8 @@ Joker = {
         Ready = 0,
         Twister = 0,
         Riddle = 0,
-        GoT = 0
+        GoT = 0,
+        StarWars = 0
       },
       CountSeenJokes = {
         Dad = 0,
@@ -94,7 +97,8 @@ Joker = {
         Ready = 0,
         Twister = 0,
         Riddle = 0,
-        GoT = 0
+        GoT = 0,
+        StarWars = 0
       }
     },
     locale = JokerL:GetLanguage()                            -- Import locale from JokerL container
@@ -289,64 +293,55 @@ end
   PURPOSE: These functions just return data
 ]]
 
+function Joker.GetJokeType(jokeType)
+  -- Jokes Lists
+  local jokes = JokerData.Dad -- default to Dad jokes
+
+  -- jokeType Definitions
+  if jokeType == 'Edgy' then
+    jokes = JokerData.Edgy
+  elseif jokeType == 'Wisdom' then
+    jokes = JokerData.Wisdom
+  elseif jokeType == 'Pickup' then
+    jokes = JokerData.PickupLines
+  elseif jokeType == 'PickupXXX' then
+    jokes = JokerData.PickupLinesXXX
+  elseif jokeType == 'PickupHP' then
+    jokes = JokerData.PickupLinesHP
+  elseif jokeType == 'Norris' then
+    jokes = JokerData.Norris
+  elseif jokeType == 'ESO' then
+    jokes = JokerData.ESO
+  elseif jokeType == 'Burn' then
+    jokes = JokerData.Burns
+  elseif jokeType == 'Cat' then
+    jokes = JokerData.CatFacts
+  elseif jokeType == 'Ready' then
+    jokes = JokerData.ReadyChecks
+  elseif jokeType == 'Twister' then
+    jokes = JokerData.TongueTwisters
+  elseif jokeType == 'Riddle' then
+    jokes = JokerData.Riddles
+  elseif jokeType == 'GoT' then
+    jokes = JokerData.GoT
+  elseif jokeType == 'StarWars' then
+    jokes = JokerData.StarWars
+  end
+
+  return jokes
+end
+
 -- GetJokes()
 -- Data; Returns random joke from jokeType
 function Joker.GetJoke(givenJokeType, returnAll)
 
   -- Defaults
-  local jokes = {}
   local jokeType = givenJokeType or "Dad" -- Set Dad as default type
+  local jokes = Joker.GetJokeType(givenJokeType)
   local joke = ""
   local index = 0
   local loops = 0
   local loopLimit = 1500
-
-  -- Jokes Lists
-  local dadJokes = JokerData.Dad
-  local edgyJokes = JokerData.Edgy
-  local wisdomJokes = JokerData.Wisdom
-  local pickupJokes = JokerData.PickupLines
-  local pickupJokesXXX = JokerData.PickupLinesXXX -- XXX pickups
-  local pickupJokesHP = JokerData.PickupLinesHP -- Harry Potter pickups
-  local norrisJokes = JokerData.Norris
-  local esoJokes = JokerData.ESO
-  local burnJokes = JokerData.Burns
-  local twisterJokes = JokerData.TongueTwisters
-  local catFacts = JokerData.CatFacts
-  local readyChecks = JokerData.ReadyChecks
-  local riddles = JokerData.Riddles
-  local gotJokes = JokerData.GoT
-
-  -- jokeType Definitions
-  if jokeType == 'Dad' then
-    jokes = dadJokes
-  elseif jokeType == 'Edgy' then
-    jokes = edgyJokes
-  elseif jokeType == 'Wisdom' then
-    jokes = wisdomJokes
-  elseif jokeType == 'Pickup' then
-    jokes = pickupJokes
-  elseif jokeType == 'PickupXXX' then
-    jokes = pickupJokesXXX
-  elseif jokeType == 'PickupHP' then
-    jokes = pickupJokesHP
-  elseif jokeType == 'Norris' then
-    jokes = norrisJokes
-  elseif jokeType == 'ESO' then
-    jokes = esoJokes
-  elseif jokeType == 'Burn' then
-    jokes = burnJokes
-  elseif jokeType == 'Cat' then
-    jokes = catFacts
-  elseif jokeType == 'Ready' then
-    jokes = readyChecks
-  elseif jokeType == 'Twister' then
-    jokes = twisterJokes
-  elseif jokeType == 'Riddle' then
-    jokes = riddles
-  elseif jokeType == 'GoT' then
-    jokes = gotJokes
-  end
 
   -- If @param "all" was passed, return all jokes
   if returnAll then
@@ -429,17 +424,6 @@ end
 function Joker.ESO(useConsole)
   local joke = ""
   local jokeLength = jokeLengthMax  -- Max length for a chat message
-
-  -- Split every 300 chars, then paste to chatbox. Leaving for reference in future.
-  --[[
-    joke = Joker.split(joke, 300)
-    d(joke)
-    for _, line in ipairs(joke) do
-      if not Joker.isempty(line) then
-        zo_callLater(function() StartChatInput(line, CHAT_CHANNEL) end, 1000)
-      end
-    end
-  ]]
 
   -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
   repeat
@@ -529,6 +513,32 @@ function Joker.GoT(useConsole)
   if Joker.savedVariables.FirstJokes.GoT then
     Joker.savedVariables.FirstJokes.GoT = false
     d('Want more Game of Thrones jokes? Get more with /joke-got!')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
+-- StarWars()
+-- Display; Returns StarWars joke. Optionals: <useConsole: displays in d()>
+function Joker.StarWars(useConsole)
+  local joke = ""
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('StarWars')
+    jokeLength = string.len(joke)
+  until (jokeLength < jokeLengthMax)
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.StarWars then
+    Joker.savedVariables.FirstJokes.StarWars = false
+    d('Want more Star Wars jokes? Get more with /starwars!')
   end
 
   -- Send
@@ -824,31 +834,34 @@ function Joker.AnyJoke(target)
     "Dad",
     "Wisdom",
     "Twister",
-    "GoT"
+    "GoT",
+    "StarWars"
   }
   -- local jokeSources2 = Joker.fromCSV(Joker.savedVariables.RandomPool)
-  local random = math.random(0, Joker.savedVariables.CountJokesTotal)
+  local random = math.random(#jokeSources)
+  local sourceIndex = jokeSources[random]
+  local joke = Joker[sourceIndex]()
 
   --[[
     RNJesus: Decided which category to pull from.
     Weighted as a true democracy - each joke gets a vote!
     TODO: Maybe bias towards newer categories (or newer jokes after updates)
   ]]
-  if random < Joker.accumulateTypes(jokeSources, 1) then
-    local joke = Joker.Norris()
-  elseif random >= Joker.accumulateTypes(jokeSources, 1) and random < Joker.accumulateTypes(jokeSources, 2) then
-    local joke = Joker.ESO()
-  elseif random >= Joker.accumulateTypes(jokeSources, 2) and random < Joker.accumulateTypes(jokeSources, 3) then
-    local joke = Joker.Dad()
-  elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
-    local joke = Joker.Wisdom()
-  elseif random >= Joker.accumulateTypes(jokeSources, 4) and random <= Joker.accumulateTypes(jokeSources, 5) then
-    local joke = Joker.Twister()
-  elseif random >= Joker.accumulateTypes(jokeSources, 5) and random <= Joker.accumulateTypes(jokeSources, 6) then
-    local joke = Joker.GoT()
-  else
-    local joke = Joker.Dad() -- This should never happen, but better to show Dad than nothing.
-  end
+  -- if random < Joker.accumulateTypes(jokeSources, 1) then
+  --   local joke = Joker.Norris()
+  -- elseif random >= Joker.accumulateTypes(jokeSources, 1) and random < Joker.accumulateTypes(jokeSources, 2) then
+  --   local joke = Joker.ESO()
+  -- elseif random >= Joker.accumulateTypes(jokeSources, 2) and random < Joker.accumulateTypes(jokeSources, 3) then
+  --   local joke = Joker.Dad()
+  -- elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
+  --   local joke = Joker.Wisdom()
+  -- elseif random >= Joker.accumulateTypes(jokeSources, 4) and random <= Joker.accumulateTypes(jokeSources, 5) then
+  --   local joke = Joker.Twister()
+  -- elseif random >= Joker.accumulateTypes(jokeSources, 5) and random <= Joker.accumulateTypes(jokeSources, 6) then
+  --   local joke = Joker.GoT()
+  -- else
+  --   local joke = Joker.Dad() -- This should never happen, but better to show Dad than nothing.
+  -- end
 
   -- Send
   StartChatInput(joke, CHAT_CHANNEL)
@@ -992,6 +1005,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Burn'] = Joker.GetJoke('Burn', true)
   allJokes['GoT'] = Joker.GetJoke('GoT', true)
   allJokes['Burn'] = Joker.GetJoke('Burn', true)
+  allJokes['StarWars'] = Joker.GetJoke('StarWars', true)
   
 
   -- Iterate over jokes
@@ -1040,6 +1054,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/joke-twister"] = Joker.Twister
   SLASH_COMMANDS["/joke-burn"] = Joker.Burn
   SLASH_COMMANDS["/joke-got"] = Joker.GoT
+  SLASH_COMMANDS["/joke-starwars"] = Joker.StarWars
   -- Other joke command aliases:
   SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
   SLASH_COMMANDS["/dad"] = Joker.Dad
@@ -1051,6 +1066,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/pickup-hp"] = Joker.PickupHP
   SLASH_COMMANDS["/twister"] = Joker.Twister
   SLASH_COMMANDS["/burn"] = Joker.Burn
+  SLASH_COMMANDS["/starwars"] = Joker.StarWars
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.readyCheck
   -- Other misc & utility commands:

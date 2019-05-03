@@ -121,68 +121,72 @@ function Joker.LoadSettings()
         },
         [7] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-burn ' .. L.Joker_Or ..' /burn <target>') .. L.Joker_Quick_Btn_JokeBurn_Tip_Advanced
+          text = optionIndent .. Joker.Colorize('/joke-starwars ' .. L.Joker_Or ..' /starwars ') .. L.Joker_Quick_Btn_JokeStarWars_Tip
         },
         [8] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-wisdom ' .. L.Joker_Or ..' /wisdom ') .. L.Joker_Quick_Btn_JokeWisdom_Tip
+          text = optionIndent .. Joker.Colorize('/joke-burn ' .. L.Joker_Or ..' /burn <target>') .. L.Joker_Quick_Btn_JokeBurn_Tip_Advanced
         },
         [9] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-edgy ') .. L.Joker_Quick_Btn_JokeEdgy_Tip
+          text = optionIndent .. Joker.Colorize('/joke-wisdom ' .. L.Joker_Or ..' /wisdom ') .. L.Joker_Quick_Btn_JokeWisdom_Tip
         },
         [10] = {
           type = "description",
-          text = optionIndent .. Joker.Colorize('/joke-norris ' .. L.Joker_Or ..' /norris ') .. L.Joker_Quick_Btn_JokeNorris_Tip
+          text = optionIndent .. Joker.Colorize('/joke-edgy ') .. L.Joker_Quick_Btn_JokeEdgy_Tip
         },
         [11] = {
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/joke-norris ' .. L.Joker_Or ..' /norris ') .. L.Joker_Quick_Btn_JokeNorris_Tip
+        },
+        [12] = {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_JokePickup_Slash, 
         },
-        [12] = {
+        [13] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-pickup ' .. L.Joker_Or ..' /pickup <target> ') .. L.Joker_Quick_Btn_JokePickup_Tip_Advanced,
         },
-        [13] = {
+        [14] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/pickup-xxx <target> ') .. L.Joker_Quick_Btn_JokePickupXXX_Tip_Advanced,
         },
-        [14] = {
+        [15] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/pickup-hp <target> ') .. L.Joker_Quick_Btn_JokePickupHP_Tip_Advanced,
         },
-        [15] = {
+        [16] = {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_Other_Slash, 
         },
-        [16] = {
+        [17] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/8ball <question> ') .. L.Joker_Quick_Btn_Joke8Ball_Tip,
         },
-        [17] = {
+        [18] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/catfact ') .. L.Joker_Quick_Btn_JokeCatFact_Tip,
         },
-        [18] = {
+        [19] = {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_JokeReady_Slash, 
         },
-        [19] = {
+        [20] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/ready ') .. L.Joker_Quick_Btn_JokeReady_Tip,
         },
-        [20] = {
+        [21] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/ready <message> ') .. L.Joker_Quick_Btn_JokeReady_Tip_Advanced,
         },
-        [21] = {
+        [22] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('/ready <voteType> <message> ') .. L.Joker_Quick_Btn_JokeReady_Tip_Advanced_Vote,
         },
-        [22] = {
+        [23] = {
           type = "divider",
         },
-        [23] = {
+        [24] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('More tomfoolery coming soon!'),
         }
@@ -288,6 +292,13 @@ function Joker.LoadSettings()
       name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeGoT, -- Random /joke
       tooltip			= L.Joker_Quick_Btn_JokeGoT_Tip,
       func			  = Joker.GoT,
+      width			  = "half",
+    })
+    table.insert(panelOptions, {
+      type			  = "button",
+      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeStarWars, -- Random /joke
+      tooltip			= L.Joker_Quick_Btn_JokeStarWars_Tip,
+      func			  = Joker.StarWars,
       width			  = "half",
     })
     
