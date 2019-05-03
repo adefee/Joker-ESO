@@ -2,3 +2,4 @@ dist/
 node_modules
 .vscode/
 deploy/credentials.js
+images/logo
