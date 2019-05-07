@@ -349,7 +349,7 @@ function Joker.setRandomPool(poolCSV)
   local givenPool = Joker.fromCSV(poolCSV)
   for k, v in pairs(givenPool) do
     v = Joker.trim(v)
-    if setContains(Joker.savedVariables.RandomPool_Allowed, v) then
+    if setContains(Joker.savedVariables.RandomPool_Allowed, v) and not Joker.isempty(v) then
       table.insert(newPool, v)
     else
       if not Joker.isempty(disallowed) then
