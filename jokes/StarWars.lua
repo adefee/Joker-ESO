@@ -62,7 +62,7 @@ JokerData.StarWars = {
   "What do you call two suns fighting each other? Star Wars.",
   "What do you call a pirate droid? Argh2-D2",
   "Why does Padme wear buns on her head? In case she gets hungry in a Senate meeting.",
-  "What do you call it when only one Star Wars character gives you a round of applase? A Hand Solo.",
+  "What do you call it when only one Star Wars character gives you a round of applause? A Hand Solo.",
   "What do you call a female Mandalorian? A Womandalorian.",
   "Why did the droid cross the road? Because it was programmed by a chicken.",
   "What do you call someone who doesn't like the dark side? Darth Hater",
