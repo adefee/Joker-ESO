@@ -81,10 +81,10 @@ L.Joker_Options_PeriodicFrequency = "How often should Joker send you a joke?"
 L.Joker_Options_PeriodicFrequency_Tip	= "This is the frequency ceiling at which Joker sends (just you) a joke. Joker procedurally increase joke chance based on number of zones since last joke (with a guaranteed occurence at the ceiling you set). The lower the value, the more often jokes will appear!"
 L.Joker_Options_RandomPool = "Random /Joke Pool"
 L.Joker_Options_RandomPool_Warning = "Intended for advanced users - incorrect values here may result in no jokes being shown!"
-L.Joker_Options_RandomPool_Tip	= "For advanced users: Comma-separated list of joke types you want included in the random pool for /joke. See below or check the addon page on ESOUI for a list of all possible options. This option is disabled for now, will be fully enabled in a future update."
+L.Joker_Options_RandomPool_Tip	= "For advanced users: Comma-separated list of joke types you want included in the random pool for /joke. See below or check the addon page on ESOUI for a list of all possible options."
 L.Joker_Options_RandomPool_Types	= "Available Joke Types"
 L.Joker_Options_RandomPool_Types_Default	= "Default"
-L.Joker_Options_RandomPool_Types_Available	= "Also Available"
+L.Joker_Options_RandomPool_Types_Available	= "Available"
 L.Joker_Options_RandomPool_Types_Available_Tip	= "Any items that include the terms Edgy and XXX contain content that has been flagged as potentially inappropriate for some audiences. Please be mindful of others and use responsibly."
 
 -- SECTION: Available Commands

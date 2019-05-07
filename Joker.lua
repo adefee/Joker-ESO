@@ -22,10 +22,41 @@ Joker = {
       CountJokesTotal = 0,
       CountSeenJokesTotal = 0,
       PeriodicJokes = true, -- Periodically show jokes to user in console (chat)
-      PeriodicFrequency = 10,
+      PeriodicFrequency = 3,
       PeriodSince = 0,
-      RandomPool = "Cat, Dad, ESO, Norris, StarWars, Twister, Wisdom",
-      RandomPool_Default = "Cat, Dad, ESO, Norris, StarWars, Twister, Wisdom", -- Default pool sets
+      RandomPool = {  -- Current pool sets, each should match function name (Joker.<PoolName>())
+        "Cat",
+        "Dad",
+        "ESO",
+        "Norris",
+        "StarWars",
+        "Twister",
+        "Wisdom"
+      },
+      RandomPoolDefault = { -- Default pool sets, should match function name (Joker.<PoolName>)
+        "Cat",
+        "Dad",
+        "ESO",
+        "Norris",
+        "StarWars",
+        "Twister",
+        "Wisdom"
+      },  
+      RandomPool_Allowed = { -- All possible vals allowed in pool. Each should match function name (Joker.<PoolName>); this list is checked against when user modifies random pool.
+        ["Burns"] = "Burns",
+        ["Cat"] = "Cat",
+        ["Dad"] = "Dad",
+        ["Edgy"] = "Edgy",
+        ["ESO"] = "ESO",
+        ["GoT"] = "GoT",
+        ["Norris"] = "Norris",
+        ["Pickup"] = "Pickup",
+        ["PickupXXX"] = "PickupXXX",
+        ["PickupHP"] = "PickupHP",
+        ["StarWars"] = "StarWars",
+        ["Twister"] = "Twister",
+        ["Wisdom"] = "Wisdom",
+      },
       pickupPrefixes = {
         "Hey, jTarget, ",
         "Yo, jTarget, ",
@@ -109,7 +140,7 @@ local jokeLengthMax = 325 -- Set max joke length. Max chatbox length is 350 char
 
 --[[
   ** Utilities
-  PURPOSE: These functions provide basic utility for frequently-encountered issues.
+  PURPOSE: These functions provide basic utility for frequent needs.
 ]]
 -- isempty()
 -- Utility; Checks if given string is empty/nil
@@ -120,7 +151,7 @@ end
 -- trim()
 -- Utility; Trims extraneous whitespace from string
 function Joker.trim(s)
-  return s:match "^%s*(.-)%s*$"
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
 
 -- fromCSV()
@@ -139,16 +170,42 @@ function Joker.fromCSV(s)
         a, i, c = string.find(s, '"("?)', i+1)
       until c ~= '"'    -- quote not followed by quote?
       if not i then error('unmatched "') end
-      local f = trim(string.sub(s, fieldstart+1, i-1))
+      local f = string.sub(s, fieldstart+1, i-1)
       table.insert(t, (string.gsub(f, '""', '"')))
       fieldstart = string.find(s, ',', i) + 1
     else                -- unquoted; find next comma
-      local nexti = trim(string.find(s, ',', fieldstart))
+      local nexti = string.find(s, ',', fieldstart)
       table.insert(t, string.sub(s, fieldstart, nexti-1))
       fieldstart = nexti + 1
     end
   until fieldstart > string.len(s)
   return t
+end
+
+-- toCSV()
+function Joker.toCSV(tt)
+  local s = "";
+  for k, v in pairs(tt) do
+    v = Joker.trim(v)
+    if not Joker.isempty(s) then
+      s = s .. ", "
+    end
+    s = s .. v
+  end
+  return s
+end
+
+-- toCSVi()
+function Joker.toCSV(tt)
+  local s = "";
+  for k, v in ipairs(tt) do
+    v = Joker.trim(v)
+    if not Joker.isempty(s) then
+      s = s .. ", "
+    end
+    s = s .. v
+  end
+  return s
 end
 
 -- addToSet()
@@ -280,6 +337,36 @@ function Joker.accumulateTypes(arrayOfTypes, count)
   until (loops >= count)
 
   return total
+end
+
+-- setRandomPool()
+-- Utility; Updates random pool with user settings, but checks to make sure values are allowed
+function Joker.setRandomPool(poolCSV)
+
+  local newPool = {}
+  local disallowed = ""
+
+  local givenPool = Joker.fromCSV(poolCSV)
+  for k, v in pairs(givenPool) do
+    v = Joker.trim(v)
+    if setContains(Joker.savedVariables.RandomPool_Allowed, v) then
+      table.insert(newPool, v)
+    else
+      if not Joker.isempty(disallowed) then
+        disallowed = disallowed .. ', '
+      end
+      disallowed = disallowed .. v
+    end
+  end
+
+  if not Joker.isempty(disallowed) then
+    d('There was an issue with one or more of your changes to Joker\'s random pool. Any invalid options are omitted. Try checking near "' .. disallowed ..'", and make sure each option is separated by a comma. Items are case-sensitive!')
+  else
+    d('Joker\'s random pool has been updated! Don\'t forget that new categories and content are always being added - you might want to update this setting later to include new stuff!')
+  end
+
+  Joker.savedVariables.RandomPool = newPool
+
 end
 
 -- string.starts()
@@ -828,40 +915,10 @@ function Joker.AnyJoke(target)
   
   -- Sources for /joke random pool.
   -- Includes most, but not all, topics. Edgy/explicit should never be included
-  local jokeSources = { 
-    "Norris",
-    "ESO",
-    "Dad",
-    "Wisdom",
-    "Twister",
-    "GoT",
-    "StarWars"
-  }
-  -- local jokeSources2 = Joker.fromCSV(Joker.savedVariables.RandomPool)
-  local random = math.random(#jokeSources)
-  local sourceIndex = jokeSources[random]
-  local joke = Joker[sourceIndex]()
-
-  --[[
-    RNJesus: Decided which category to pull from.
-    Weighted as a true democracy - each joke gets a vote!
-    TODO: Maybe bias towards newer categories (or newer jokes after updates)
-  ]]
-  -- if random < Joker.accumulateTypes(jokeSources, 1) then
-  --   local joke = Joker.Norris()
-  -- elseif random >= Joker.accumulateTypes(jokeSources, 1) and random < Joker.accumulateTypes(jokeSources, 2) then
-  --   local joke = Joker.ESO()
-  -- elseif random >= Joker.accumulateTypes(jokeSources, 2) and random < Joker.accumulateTypes(jokeSources, 3) then
-  --   local joke = Joker.Dad()
-  -- elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
-  --   local joke = Joker.Wisdom()
-  -- elseif random >= Joker.accumulateTypes(jokeSources, 4) and random <= Joker.accumulateTypes(jokeSources, 5) then
-  --   local joke = Joker.Twister()
-  -- elseif random >= Joker.accumulateTypes(jokeSources, 5) and random <= Joker.accumulateTypes(jokeSources, 6) then
-  --   local joke = Joker.GoT()
-  -- else
-  --   local joke = Joker.Dad() -- This should never happen, but better to show Dad than nothing.
-  -- end
+  local sourceIndex = Joker.trim(Joker.savedVariables.RandomPool[math.random(#Joker.savedVariables.RandomPool)])
+  
+  -- Grab appropriate joke.
+  Joker[sourceIndex]()
 
   -- Send
   StartChatInput(joke, CHAT_CHANNEL)
@@ -985,7 +1042,33 @@ function Joker.OnAddOnLoaded(event, addonName)
   -- Keybinds
   ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', 'Random Ready Check')
 
+  -- Setup vars
   Joker.savedVariables = ZO_SavedVars:NewAccountWide("JokerSavedVariables", Joker.versionMajor, nil, Joker.savedVariables)
+
+  -- Legacy versions used CSV, force conversion to table instead
+  Joker.savedVariables.RandomPool = Joker.savedVariables.RandomPool or {}
+  Joker.savedVariables.RandomPool_Allowed = Joker.savedVariables.RandomPool_Allowed or {}
+  if not type(Joker.savedVariables.RandomPool) == 'table' then
+    Joker.savedVariables.RandomPool = Joker.savedVariables.RandomPoolDefault
+  end
+  if not type(Joker.savedVariables.RandomPool_Allowed) == 'table' then
+    Joker.savedVariables.RandomPool = {
+      "Burns",
+      "Cat",
+      "Dad",
+      "Edgy",
+      "ESO",
+      "GoT",
+      "Norris",
+      "Pickup",
+      "PickupXXX",
+      "PickupHP",
+      "StarWars",
+      "Twister",
+      "Wisdom",
+    }
+  end
+  
 
   --[[
     Iterate over all jokes and get total counts of both jokes and seenJokes

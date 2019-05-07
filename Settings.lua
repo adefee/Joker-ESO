@@ -67,11 +67,11 @@ function Joker.LoadSettings()
           type			  = "editbox",
           name			  = optionIndent .. L.Joker_Options_RandomPool,
           tooltip			= L.Joker_Options_RandomPool_Tip,
-          getFunc     = function() return Joker.savedVariables.RandomPool end,
-          setFunc     = function(value) d(value); Joker.savedVariables.RandomPool = value end,
+          getFunc     = function() return Joker.toCSV(Joker.savedVariables.RandomPool) end,
+          setFunc     = function(value) Joker.setRandomPool(value) end,
           warning     = Joker.savedVariables.RandomPool_Warning,
           default     = Joker.savedVariables.RandomPool_Default,
-          disabled    = function() return true end
+          -- disabled    = function() return true end
         },
         [5] = {
           type			  = "description",
@@ -83,7 +83,7 @@ function Joker.LoadSettings()
         },
         [7] = {
           type			  = "description",
-          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Available .. ": ") .. "Edgy, Pickup, PickupXXX, PickupHP, Burn, GoT",
+          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Available .. ": ") .. Joker.toCSV(Joker.savedVariables.RandomPool_Allowed),
           tooltip     = L.Joker_Options_RandomPool_Types_Available_Tip
         }
       }
