@@ -53,7 +53,7 @@ function Joker.LoadSettings()
           tooltip			= L.Joker_Options_PeriodicFrequency_Tip,
           min         = 1,
           max         = 25,
-          step        = 5,
+          step        = 1,
           getFunc			= function() return Joker.savedVariables.PeriodicFrequency end,
           setFunc			= function(value) Joker.savedVariables.PeriodicFrequency = value end,
           width			  = "full",

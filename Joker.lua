@@ -842,7 +842,6 @@ function Joker.PickupHP(target, useConsole)
   end
 end
 
-
 -- eightBall()
 -- Display; Show a yes, no, neutral status. Optionals: <question>
 function Joker.eightBall(question)
