@@ -375,6 +375,17 @@ function string.starts(String,Start)
   return string.sub(String,1,string.len(Start))==Start
 end
 
+function Joker.split(inputstr, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t={}
+  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
+
 --[[
   ** Data Grabs
   PURPOSE: These functions just return data
@@ -907,6 +918,70 @@ function Joker.eightBall(question)
   d(prefix .. answer)
 end
 
+-- Roll()
+-- Display; Rolls between given floor, ceiling and includes memo (if provided). /roll floor,ceiling,memo
+function Joker.Roll(context)
+  local floor = 1
+  local ceiling = 10
+  local contextObj = Joker.split(context, ',')
+
+  -- Determine floor & ceiling for roll
+  if contextObj[2] and not Joker.isempty(contextObj[2]) then
+    ceiling = contextObj[2]
+    floor = contextObj[1]
+  elseif not Joker.isempty(contextObj[1]) then
+    ceiling = contextObj[1]
+  end
+
+  local random = math.random(floor, ceiling)
+
+  -- If we include a memo, publish to chat; otherwise, publish to console
+  if contextObj[3] then
+    StartChatInput('Rolling (' .. floor .. ' - ' .. ceiling .. '):     ' .. random .. ' wins ' .. Joker.trim(contextObj[3]).. '!', CHAT_CHANNEL)
+  else
+    d('Joker: Rolling (' .. floor .. ' - ' .. ceiling .. '): ' .. Joker.Colorize(random .. ' Wins!'))
+  end
+
+end
+
+-- Choose()
+-- Display; Choose between any number of items/users (space delimited)
+function Joker.Choose(context)
+  local choices = {}
+
+  choices = Joker.split(context, " ")
+  if string.starts(context, 'party') or context == 'party' then
+    local partySize = GetGroupSize()
+    local partyMembers = {}
+    local partyCount = 0
+
+    repeat
+      if (partyCount > 0) then
+        table.insert(partyMembers, GetUnitName("group" .. partyCount))
+      end
+      partyCount = partyCount + 1
+    until( partyCount > partySize )
+
+    local random = Joker.trim(partyMembers[math.random(#partyMembers)])
+    local partyContext = context:gsub("party ", "", 1)
+
+    if partyContext then
+      StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Joker.trim(partyContext) .. '! Congrats!', CHAT_CHANNEL)
+    else
+      StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)
+    end
+
+    
+  elseif #choices > 1 then
+    local random = Joker.trim(choices[math.random(#choices)])
+    StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)    
+  else
+    d('Joker chose ... you! Try adding some other options for Joker to choose from!')
+  end
+
+
+end
+
 -- --------------
 -- AnyJoke()
 -- Display; Randomly chooses a type of joke, returns. Optionals passed along as needed.
@@ -1151,6 +1226,8 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/starwars"] = Joker.StarWars
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.readyCheck
+  SLASH_COMMANDS["/roll"] = Joker.Roll
+  SLASH_COMMANDS["/choose"] = Joker.Choose
   -- Other misc & utility commands:
   SLASH_COMMANDS["/rl"] = function() ReloadUI("ingame") end
 
