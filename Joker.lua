@@ -552,9 +552,9 @@ function Joker.Twister(useConsole)
 
   -- Send
   if useConsole == "log" then
-    d('Joker: ' .. joke)
+    d('Joker Tongue Twister: ' .. joke)
   else
-    StartChatInput(joke, CHAT_CHANNEL)
+    StartChatInput('Tongue Twister: ' ..joke, CHAT_CHANNEL)
   end
 end
 
