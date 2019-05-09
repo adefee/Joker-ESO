@@ -12,7 +12,7 @@ JokerL = JokerL or {}
 
 Joker = {
     name            = "Joker",                                -- Matches folder and Manifest file names.
-    version         = "2.2.0",                                -- Joker internal versioning: Release.Major.Minor
+    version         = "2.4.1",                                -- Joker internal versioning: Release.Major.Minor
     versionMajor    = 2,                                      -- Will increment variable versioning, only occurs on major updates.
     author          = "Lent (IGN @CallMeLent, Github @adefee)",
     color           = "D66E4A",                               -- Primary addon color
@@ -948,8 +948,24 @@ end
 -- Display; Choose between any number of items/users (space delimited)
 function Joker.Choose(context)
   local choices = {}
+  local itemsWon = {}
 
   choices = Joker.split(context, " ")
+  for thisChoiceIndex, thisChoiceContent in ipairs(choices) do
+    if string.starts(thisChoiceContent, '|H') or string.starts(thisChoiceContent, '|h') then
+      table.insert(itemsWon, thisChoiceContent)
+      -- Deleting here would upset the table index and the loop (Lua shifts down instead of temp maintaining), so need to delete in separate loop
+      -- Could alternatively keep track of items to remove, but copy/paste is easier ;P
+    end
+  end
+
+  -- Running a separate loop for deletion, see above comment
+  for thisChoiceIndex, thisChoiceContent in pairs(choices) do
+    if string.starts(thisChoiceContent, '|H') or string.starts(thisChoiceContent, '|h') then
+      table.remove(choices, thisChoiceIndex)
+    end
+  end
+
   if string.starts(context, 'party') or context == 'party' then
     local partySize = GetGroupSize()
     local partyMembers = {}
@@ -962,19 +978,29 @@ function Joker.Choose(context)
       partyCount = partyCount + 1
     until( partyCount > partySize )
 
-    local random = Joker.trim(partyMembers[math.random(#partyMembers)])
-    local partyContext = context:gsub("party ", "", 1)
+    if (partySize > 0) then
+      local random = Joker.trim(partyMembers[math.random(#partyMembers)])
+      local partyContext = context:gsub("party ", "", 1)
 
-    if partyContext then
-      StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Joker.trim(partyContext) .. '! Congrats!', CHAT_CHANNEL)
+      if partyContext then
+        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Joker.trim(partyContext) .. '! Congrats!', CHAT_CHANNEL)
+      else
+        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)
+      end
     else
-      StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)
+      d('Joker: I choose you, Pikachu! (There\'s noone in your party, so can\'t choose from your party!)')
     end
 
     
   elseif #choices > 1 then
     local random = Joker.trim(choices[math.random(#choices)])
-    StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)    
+    if #itemsWon > 0 then
+      local itemsWonString = table.concat(itemsWon, ", ")
+      StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins ' .. itemsWonString .. '! Congrats!', CHAT_CHANNEL) 
+    else
+      StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL) 
+    end
+       
   else
     d('Joker chose ... you! Try adding some other options for Joker to choose from!')
   end

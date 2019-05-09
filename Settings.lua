@@ -33,7 +33,7 @@ function Joker.LoadSettings()
 
 
      -- Joker Options
-     table.insert(panelOptions, {
+    table.insert(panelOptions, {
       type = "submenu",
       name = optionIndent_Title .. L.Joker_Options_Title,
       tooltip	= "",
@@ -184,174 +184,180 @@ function Joker.LoadSettings()
           text = optionIndent .. Joker.Colorize('/ready <voteType> <message> ') .. L.Joker_Quick_Btn_JokeReady_Tip_Advanced_Vote,
         },
         [23] = {
-          type = "divider",
+          type = "header",
+          name = optionIndent .. L.Joker_Quick_Btn_JokeRolls_Title, 
         },
         [24] = {
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/roll <options> ') .. L.Joker_Quick_Btn_JokeRolls_Tip,
+        },
+        [25] = {
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/choose <options> ') .. L.Joker_Quick_Btn_JokeChoose_Tip,
+        },
+        [26] = {
+          type = "divider",
+        },
+        [27] = {
           type = "description",
           text = optionIndent .. Joker.Colorize('More tomfoolery coming soon!'),
         }
       }
     })
 
-    -- Quick Commands
+    -- Quick Commands Submenu
     table.insert(panelOptions, {
-      type			  = "header",
-      name			  = L.Joker_Quick_Subtitle, 
-      width			  = "full",
-    })
-
-    table.insert(panelOptions, {
-      type			  = "description",
-      text			  = L.Joker_Quick_Desc,
-      width			  = "full",
-    })
-
-    -- Quick Command Buttons
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_Joke, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_Joke_Tip,
-      func			  = Joker.AnyJoke,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeESO, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeESO_Tip,
-      func			  = Joker.ESO,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeDad, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeDad_Tip,
-      func			  = Joker.Dad,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeEdgy, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeEdgy_Tip,
-      func			  = Joker.Edgy,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeWisdom, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeWisdom_Tip,
-      func			  = Joker.Wisdom,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeNorris, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeNorris_Tip,
-      func			  = Joker.Norris,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickup, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokePickup_Tip,
-      func			  = Joker.Pickup,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickupHP, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokePickupHP_Tip,
-      func			  = Joker.PickupHP,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickupXXX, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokePickupXXX_Tip,
-      func			  = Joker.PickupXXX,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeBurn, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeBurn_Tip,
-      func			  = Joker.Burn,
-      width			  = "half",
-    })
-
-    -- Pop Culture
-    table.insert(panelOptions, {
-      type = "divider"
-    })
-    table.insert(panelOptions, {
-      type			  = "description",
-      text			  = L.Joker_QuickPop_Desc,
-      width			  = "full",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeGoT, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeGoT_Tip,
-      func			  = Joker.GoT,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeStarWars, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeStarWars_Tip,
-      func			  = Joker.StarWars,
-      width			  = "half",
-    })
-    
-    -- Other/Utility Quick Commands
-    table.insert(panelOptions, {
-      type = "divider"
-    })
-    table.insert(panelOptions, {
-      type			  = "description",
-      text			  = L.Joker_QuickUtil_Desc,
-      width			  = "full",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_Joke8Ball, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_Joke8Ball_Tip,
-      func			  = Joker.eightBall,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeTwister, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeTwister_Tip,
-      func			  = Joker.Twister,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeCatFact, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeCatFact_Tip,
-      func			  = Joker.Cat,
-      width			  = "half",
-    })
-    table.insert(panelOptions, {
-      type			  = "button",
-      name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeReady, -- Random /joke
-      tooltip			= L.Joker_Quick_Btn_JokeReady_Tip,
-      func			  = Joker.readyCheck,
-      width			  = "half",
-    })
-
-    -- Want more jokes?
-    table.insert(panelOptions, {
-      type = "divider",
-    })
-    table.insert(panelOptions, {
-      type = "description",
-      text = L.Joker_More_Desc,
-      title = Joker.Colorize(L.Joker_More_Title),
-    })
-
-    table.insert(panelOptions, {
-      type = "divider",
+      type = "submenu",
+      name = optionIndent_Title .. L.Joker_Quick_Title,
+      tooltip	= "",
+      controls		= {
+        {
+          type			  = "header",
+          name			  = optionIndent .. L.Joker_Quick_Subtitle, 
+          width			  = "full",
+        },
+        {
+          type			  = "description",
+          text			  = optionIndent .. L.Joker_Quick_Desc, 
+          width			  = "full",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_Joke, -- Random /joke
+          tooltip			= L.Joker_Quick_Btn_Joke_Tip,
+          func			  = Joker.AnyJoke,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeESO, -- Random ESO
+          tooltip			= L.Joker_Quick_Btn_JokeESO_Tip,
+          func			  = Joker.ESO,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeDad, -- Random Dad
+          tooltip			= L.Joker_Quick_Btn_JokeDad_Tip,
+          func			  = Joker.Dad,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeEdgy, -- Random Edgy
+          tooltip			= L.Joker_Quick_Btn_JokeEdgy_Tip,
+          func			  = Joker.Edgy,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeWisdom, -- Random Wisdom
+          tooltip			= L.Joker_Quick_Btn_JokeWisdom_Tip,
+          func			  = Joker.Wisdom,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeNorris, -- Random Norris
+          tooltip			= L.Joker_Quick_Btn_JokeNorris_Tip,
+          func			  = Joker.Norris,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickup, -- Random pickup
+          tooltip			= L.Joker_Quick_Btn_JokePickup_Tip,
+          func			  = Joker.Pickup,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickupHP, -- Random HP pickup
+          tooltip			= L.Joker_Quick_Btn_JokePickupHP_Tip,
+          func			  = Joker.PickupHP,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickupXXX, -- Random adult pickup
+          tooltip			= L.Joker_Quick_Btn_JokePickupXXX_Tip,
+          func			  = Joker.PickupXXX,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeBurn, -- Random burn
+          tooltip			= L.Joker_Quick_Btn_JokeBurn_Tip,
+          func			  = Joker.Burn,
+          width			  = "half",
+        },
+        {
+          type = "divider"
+        },
+        {
+          type			  = "description",
+          text			  = optionIndent .. L.Joker_QuickPop_Desc,
+          width			  = "full",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeGoT, -- Random GoT
+          tooltip			= L.Joker_Quick_Btn_JokeGoT_Tip,
+          func			  = Joker.GoT,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeStarWars, -- Random StarWars
+          tooltip			= L.Joker_Quick_Btn_JokeStarWars_Tip,
+          func			  = Joker.StarWars,
+          width			  = "half",
+        },
+        {
+          type = "divider"
+        },
+        {
+          type			  = "description",
+          text			  = optionIndent .. L.Joker_QuickUtil_Desc,
+          width			  = "full",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_Joke8Ball, -- 8ball
+          tooltip			= L.Joker_Quick_Btn_Joke8Ball_Tip,
+          func			  = Joker.eightBall,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeTwister, -- Random Twister
+          tooltip			= L.Joker_Quick_Btn_JokeTwister_Tip,
+          func			  = Joker.Twister,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeCatFact, -- Random CatFact
+          tooltip			= L.Joker_Quick_Btn_JokeCatFact_Tip,
+          func			  = Joker.Cat,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeReady, -- Random /joke
+          tooltip			= L.Joker_Quick_Btn_JokeReady_Tip,
+          func			  = Joker.readyCheck,
+          width			  = "half",
+        },
+        {
+          type = "divider",
+        },
+        {
+          type = "description",
+          text = L.Joker_More_Desc,
+          title = Joker.Colorize(L.Joker_More_Title),
+        }
+      }
     })
 
     -- Legal

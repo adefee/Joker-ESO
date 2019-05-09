@@ -1,9 +1,9 @@
 ## Title: Joker
-## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
+## Description: Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, ready checks, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
 ## Author: Lent (IGN @CallMeLent, Github @adefee)
 
-## Version: 2.4.0
-## AddOnVersion: 204000
+## Version: 2.4.1
+## AddOnVersion: 204010
 ## APIVersion: 100026 100027
 ## ## ADDING2.3.0_DependsOn: LibAddonMenu-2.0
 

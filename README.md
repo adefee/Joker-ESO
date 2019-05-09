@@ -33,8 +33,6 @@ The following libraries are presently required for Joker to function properly. O
 - **/joke-wisdom** (or **/wisdom**): Adds a random wisdom tidbit or shower thought to your active chatbox
 - **/joke-edgy**: adds a random edgy joke to your chatbox (added by popular request). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.
 - **/joke-norris** (or **/norris**): Add a random Chuck Norris joke to your active chatbox.
-- **/norris me**: Add a random joke to your chatbox, with *you* as the subject!
-- **/norris *target***: Add a random joke to your chatbox, with `target` as the subject
 - **/joke-pickup *target*** (or /pickup): Add a random cheesy/cute pickup line to your chatbox. If you include a name (target), it will address it to them for you!
 - **/pickup-hp *target***: Add a random Harry Potter pickup line to your chatbox. If you include a name (target), it will address it to them for you!
 - **/pickup-xxx *target***: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. If you include a name (target), it will address it to them for you!
@@ -44,6 +42,8 @@ The following libraries are presently required for Joker to function properly. O
 - **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 - **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
 - And other helpful utilities, like:
+  - **/roll <floor>,<ceiling>,<prize>**: RNG roll. By default, rolls between 1 and 10. Including a single integer will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers. You may optionally also include a prize/memo (supports item links) - which will also post the roll in chat for you.
+  - **/choose <options>** (or **/choose party <prize>**): Similar to /roll, chooses randomly among given options (separated by space). You may instead use "/choose party" to randomly choose a winner from your party (up to 24 members) - with the option to assign a prize (supports item links).
   - **/rl**: Shorthand for /reloadui
 
 ## Build

@@ -71,6 +71,9 @@ L.Joker_Quick_Btn_JokeReady_Slash = "Custom Ready Checks"
 L.Joker_Quick_Btn_JokeReady_Tip = "Ready checks, but funnier & faster! Leerrooyyyyyyy Jeeenkinnssssss!"
 L.Joker_Quick_Btn_JokeReady_Tip_Advanced = "Inside joke, or funnier than Joker? Ready check your group with your own custom message!"
 L.Joker_Quick_Btn_JokeReady_Tip_Advanced_Vote = "Why stop at ready checks? Cast votes of any kind in your group! Choose between simple majority, supermajority, & unanimous vote types! Try `/ready <unan|simple|super> <votePrompt>`!"
+L.Joker_Quick_Btn_JokeRolls_Title = "Rolls, Raffles, etc"
+L.Joker_Quick_Btn_JokeRolls_Tip = "RNG roll. By default, rolls between 1 and 10. Including a single integer ('/roll X') will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers ('/roll X,Y'). You may optionally also include a prize/memo ('/roll x,y <prize>', supports item links) - which will also post the roll results and winner in chat for you."
+L.Joker_Quick_Btn_JokeChoose_Tip = "Similar to /roll, chooses randomly among given options (separated by space, like '/choose option option2 option3'). You may instead use '/choose party' to randomly choose a winner from your party (up to 24 members) - with the option to assign a prize ('/choose party <prize>', supports item links)."
 
 
 -- SECTION: Options
