@@ -69,7 +69,7 @@ function Joker.LoadSettings()
           tooltip			= L.Joker_Options_RandomPool_Tip,
           getFunc     = function() return Joker.toCSV(Joker.savedVariables.RandomPool) end,
           setFunc     = function(value) Joker.setRandomPool(value) end,
-          warning     = Joker.savedVariables.RandomPool_Warning,
+          warning     = L.Joker_Options_RandomPool_Warning,
           default     = Joker.savedVariables.RandomPool_Default,
           -- disabled    = function() return true end
         },
@@ -79,11 +79,11 @@ function Joker.LoadSettings()
         },
         [6] = {
           type			  = "description",
-          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Default .. ": ", "AA00FF") .. Joker.savedVariables.RandomPool_Default,
+          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Default .. ": ", "AA00FF") .. "Dad, Wisdom, Norris, ESO, Cat, Twister",
         },
         [7] = {
           type			  = "description",
-          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Available .. ": ") .. Joker.toCSV(Joker.savedVariables.RandomPool_Allowed),
+          text			  = optionIndent .. Joker.Colorize(L.Joker_Options_RandomPool_Types_Available .. ": ") .. Joker.toCSVi(Joker.savedVariables.RandomPool_Allowed),
           tooltip     = L.Joker_Options_RandomPool_Types_Available_Tip
         }
       }
@@ -95,110 +95,118 @@ function Joker.LoadSettings()
       name = Joker.Colorize(optionIndent_Title .. L.Joker_Commands_Title),
       tooltip	= "",
       controls		= {
-        [1] = {
+        {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_Joke_Slash, 
         },
-        [2] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joker ') .. L.Joker_Quick_Btn_Joker
         },
-        [3] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke ') .. L.Joker_Quick_Btn_Joke_Tip
         },
-        [4] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-eso ') .. L.Joker_Quick_Btn_JokeESO_Tip
         },
-        [5] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-dad ' .. L.Joker_Or ..' /dad ') .. L.Joker_Quick_Btn_JokeDad_Tip
         },
-        [6] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-got ') .. L.Joker_Quick_Btn_JokeGoT_Tip
         },
-        [7] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-starwars ' .. L.Joker_Or ..' /starwars ') .. L.Joker_Quick_Btn_JokeStarWars_Tip
         },
-        [8] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-burn ' .. L.Joker_Or ..' /burn <target>') .. L.Joker_Quick_Btn_JokeBurn_Tip_Advanced
         },
-        [9] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-wisdom ' .. L.Joker_Or ..' /wisdom ') .. L.Joker_Quick_Btn_JokeWisdom_Tip
         },
-        [10] = {
+        {
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/joke-pokemon ' .. L.Joker_Or ..' /pokemon ') .. L.Joker_Quick_Btn_JokePokemon_Tip
+        },
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-edgy ') .. L.Joker_Quick_Btn_JokeEdgy_Tip
         },
-        [11] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-norris ' .. L.Joker_Or ..' /norris ') .. L.Joker_Quick_Btn_JokeNorris_Tip
         },
-        [12] = {
+        {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_JokePickup_Slash, 
         },
-        [13] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/joke-pickup ' .. L.Joker_Or ..' /pickup <target> ') .. L.Joker_Quick_Btn_JokePickup_Tip_Advanced,
         },
-        [14] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/pickup-xxx <target> ') .. L.Joker_Quick_Btn_JokePickupXXX_Tip_Advanced,
         },
-        [15] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/pickup-hp <target> ') .. L.Joker_Quick_Btn_JokePickupHP_Tip_Advanced,
         },
-        [16] = {
+        {
+          type = "description",
+          text = optionIndent .. Joker.Colorize('/pickup-poke <target> ') .. L.Joker_Quick_Btn_JokePickupPokemon_Tip_Advanced,
+        },
+        {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_Other_Slash, 
         },
-        [17] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/8ball <question> ') .. L.Joker_Quick_Btn_Joke8Ball_Tip,
         },
-        [18] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/catfact ') .. L.Joker_Quick_Btn_JokeCatFact_Tip,
         },
-        [19] = {
+        {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_JokeReady_Slash, 
         },
-        [20] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/ready ') .. L.Joker_Quick_Btn_JokeReady_Tip,
         },
-        [21] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/ready <message> ') .. L.Joker_Quick_Btn_JokeReady_Tip_Advanced,
         },
-        [22] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/ready <voteType> <message> ') .. L.Joker_Quick_Btn_JokeReady_Tip_Advanced_Vote,
         },
-        [23] = {
+        {
           type = "header",
           name = optionIndent .. L.Joker_Quick_Btn_JokeRolls_Title, 
         },
-        [24] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/roll <options> ') .. L.Joker_Quick_Btn_JokeRolls_Tip,
         },
-        [25] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('/choose <options> ') .. L.Joker_Quick_Btn_JokeChoose_Tip,
         },
-        [26] = {
+        {
           type = "divider",
         },
-        [27] = {
+        {
           type = "description",
           text = optionIndent .. Joker.Colorize('More tomfoolery coming soon!'),
         }
@@ -265,6 +273,13 @@ function Joker.LoadSettings()
         },
         {
           type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePokemon, -- Random Pokemon
+          tooltip			= L.Joker_Quick_Btn_JokePokemon_Tip,
+          func			  = Joker.Pokemon,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
           name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickup, -- Random pickup
           tooltip			= L.Joker_Quick_Btn_JokePickup_Tip,
           func			  = Joker.Pickup,
@@ -275,6 +290,13 @@ function Joker.LoadSettings()
           name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickupHP, -- Random HP pickup
           tooltip			= L.Joker_Quick_Btn_JokePickupHP_Tip,
           func			  = Joker.PickupHP,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokePickupPokemon, -- Random Pokemon pickup
+          tooltip			= L.Joker_Quick_Btn_JokePickupPokemon_Tip,
+          func			  = Joker.PickupPokemon,
           width			  = "half",
         },
         {

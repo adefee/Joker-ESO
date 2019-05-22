@@ -11,33 +11,35 @@ JokerData = JokerData or {}
 JokerL = JokerL or {}
 
 Joker = {
-    name            = "Joker",                                -- Matches folder and Manifest file names.
-    version         = "2.4.1",                                -- Joker internal versioning: Release.Major.Minor
-    versionMajor    = 2,                                      -- Will increment variable versioning, only occurs on major updates.
-    author          = "Lent (IGN @CallMeLent, Github @adefee)",
-    color           = "D66E4A",                               -- Primary addon color
+    name                      = "Joker",                                    -- Matches folder and Manifest file names.
+    version                   = "2.4.4",                                    -- Joker internal versioning: Release.Major.Minor
+    variableWipeIncrement     = 2,                                          -- Incrementing forces a new variable set (so we lose our savedVars)
+    author                    = "Lent (IGN @CallMeLent, Github @adefee)",
+    color                     = "D66E4A",                                   -- Primary addon color
     -- Default settings:
-    savedVariables = {
+    variableDefaults = {
       FirstLoad = true,      
       CountJokesTotal = 0,
       CountSeenJokesTotal = 0,
       PeriodicJokes = true, -- Periodically show jokes to user in console (chat)
       PeriodicFrequency = 3,
       PeriodSince = 0,
-      RandomPool = {  -- Current pool sets, each should match function name (Joker.<PoolName>())
+      RandomPool = {  -- Current pool sets, each should match function name (Joker.<PoolName>()). This is set here for new users, can be modified by settings.
         "Cat",
         "Dad",
         "ESO",
         "Norris",
         "StarWars",
         "Twister",
+        "Pokemon",
         "Wisdom"
       },
-      RandomPoolDefault = { -- Default pool sets, should match function name (Joker.<PoolName>)
+      RandomPoolDefault = { -- Default pool sets, should match function name (Joker.<PoolName>).
         "Cat",
         "Dad",
         "ESO",
         "Norris",
+        "Pokemon",
         "StarWars",
         "Twister",
         "Wisdom"
@@ -50,9 +52,11 @@ Joker = {
         ["ESO"] = "ESO",
         ["GoT"] = "GoT",
         ["Norris"] = "Norris",
+        ["Pokemon"] = "Pokemon",
         ["Pickup"] = "Pickup",
         ["PickupXXX"] = "PickupXXX",
         ["PickupHP"] = "PickupHP",
+        ["PickupPokemon"] = "PickupPokemon",
         ["StarWars"] = "StarWars",
         ["Twister"] = "Twister",
         ["Wisdom"] = "Wisdom",
@@ -67,9 +71,11 @@ Joker = {
         Dad = true,
         Edgy = true,
         Wisdom = true,
+        Pokemon = true,
         Pickup = true,
         PickupXXX = true,
         PickupHP = true,
+        PickupPokemon = true,
         Norris = true,
         ESO = true,
         Burn = true,
@@ -84,9 +90,11 @@ Joker = {
         Dad = {},
         Edgy = {},
         Wisdom = {},
+        Pokemon = {},
         Pickup = {},
         PickupXXX = {},
         PickupHP = {},
+        PickupPokemon = {},
         Norris = {},
         ESO = {},
         Burn = {},
@@ -101,9 +109,11 @@ Joker = {
         Dad = 0,
         Edgy = 0,
         Wisdom = 0,
+        Pokemon = 0,
         Pickup = 0,
         PickupXXX = 0,
         PickupHP = 0,
+        PickupPokemon = 0,
         Norris = 0,
         ESO = 0,
         Burn = 0,
@@ -118,9 +128,11 @@ Joker = {
         Dad = 0,
         Edgy = 0,
         Wisdom = 0,
+        Pokemon = 0,
         Pickup = 0,
         PickupXXX = 0,
         PickupHP = 0,
+        PickupPokemon = 0,
         Norris = 0,
         ESO = 0,
         Burn = 0,
@@ -196,7 +208,7 @@ function Joker.toCSV(tt)
 end
 
 -- toCSVi()
-function Joker.toCSV(tt)
+function Joker.toCSVi(tt)
   local s = "";
   for k, v in ipairs(tt) do
     v = Joker.trim(v)
@@ -218,6 +230,20 @@ end
 -- Utility; Determines if a set contains a key
 function setContains(set, key)
   return set[key] ~= nil
+end
+
+-- difference()
+-- Utility; Returns array (table) of differences between two tables
+function difference(a, b)
+  local aa = {}
+  for k,v in pairs(a) do aa[v]=true end
+  for k,v in pairs(b) do aa[v]=nil end
+  local ret = {}
+  local n = 0
+  for k,v in pairs(a) do
+      if aa[v] then n=n+1 ret[n]=v end
+  end
+  return ret
 end
 
 -- isSeen()
@@ -349,7 +375,7 @@ function Joker.setRandomPool(poolCSV)
   local givenPool = Joker.fromCSV(poolCSV)
   for k, v in pairs(givenPool) do
     v = Joker.trim(v)
-    if setContains(Joker.savedVariables.RandomPool_Allowed, v) and not Joker.isempty(v) then
+    if setContains(Joker.savedVariables.RandomPool_Allowed, v) and not Joker.isempty(v) and not setContains(newPool, v) then
       table.insert(newPool, v)
     else
       if not Joker.isempty(disallowed) then
@@ -359,13 +385,16 @@ function Joker.setRandomPool(poolCSV)
     end
   end
 
+  d("New Random Pool:")
+  d(newPool)
+
+  Joker.savedVariables.RandomPool = newPool
+
   if not Joker.isempty(disallowed) then
     d('There was an issue with one or more of your changes to Joker\'s random pool. Any invalid options are omitted. Try checking near "' .. disallowed ..'", and make sure each option is separated by a comma. Items are case-sensitive!')
   else
     d('Joker\'s random pool has been updated! Don\'t forget that new categories and content are always being added - you might want to update this setting later to include new stuff!')
   end
-
-  Joker.savedVariables.RandomPool = newPool
 
 end
 
@@ -400,12 +429,16 @@ function Joker.GetJokeType(jokeType)
     jokes = JokerData.Edgy
   elseif jokeType == 'Wisdom' then
     jokes = JokerData.Wisdom
+  elseif jokeType == 'Pokemon' then
+    jokes = JokerData.Pokemon
   elseif jokeType == 'Pickup' then
     jokes = JokerData.PickupLines
   elseif jokeType == 'PickupXXX' then
     jokes = JokerData.PickupLinesXXX
   elseif jokeType == 'PickupHP' then
     jokes = JokerData.PickupLinesHP
+  elseif jokeType == 'PickupPokemon' then
+    jokes = JokerData.PickupLinesPokemon
   elseif jokeType == 'Norris' then
     jokes = JokerData.Norris
   elseif jokeType == 'ESO' then
@@ -585,6 +618,32 @@ function Joker.Dad(useConsole)
   if Joker.savedVariables.FirstJokes.Dad then
     Joker.savedVariables.FirstJokes.Dad = false
     d('Hi, Dad! Like these types of jokes? Get more with /dad!')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
+-- Pokemon()
+-- Display; Returns Pokemon joke. Optionals: <useConsole: displays in d()>
+function Joker.Pokemon(useConsole)
+  local joke = ""
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('Pokemon')
+    jokeLength = string.len(joke)
+  until (jokeLength < jokeLengthMax)
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.Pokemon then
+    Joker.savedVariables.FirstJokes.Pokemon = false
+    d('Like these types of jokes? Get more with /pokemon!')
   end
 
   -- Send
@@ -853,6 +912,39 @@ function Joker.PickupHP(target, useConsole)
   end
 end
 
+
+-- PickupPokemon()
+-- Display; Returns cheesy pickup line. Optionals: <target: Text following the /cmd>, <useConsole: displays in d()>
+function Joker.PickupPokemon(target, useConsole)
+  local joke = ""
+  local jokeLength = jokeLengthMax  -- Max length for a chat message
+
+  -- v1.1.2: For now, if joke is longer than 350 chars, fetch again
+  repeat
+    joke = Joker.GetJoke('PickupPokemon')
+    jokeLength = string.len(joke)
+  until (jokeLength < jokeLengthMax)
+
+  -- Optional target
+  if not Joker.isempty(target) and type(target) == "string" then
+    -- Prepend prefix, replace target with target if given
+    joke = string.gsub(Joker.getPrefix(), "jTarget", target) .. joke:sub(1,1):lower() .. joke:sub(2)
+  end
+
+  -- First-Usage: Display intro message
+  if Joker.savedVariables.FirstJokes.PickupPokemon then
+    Joker.savedVariables.FirstJokes.PickupPokemon = false
+    d('Need a date? Get more like this with /pickup-pokemon!')
+  end
+
+  -- Send
+  if useConsole == "log" then
+    d('Joker: ' .. joke)
+  else
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+end
+
 -- eightBall()
 -- Display; Show a yes, no, neutral status. Optionals: <question>
 function Joker.eightBall(question)
@@ -991,7 +1083,8 @@ function Joker.Choose(context)
       d('Joker: I choose you, Pikachu! (There\'s noone in your party, so can\'t choose from your party!)')
     end
 
-    
+  elseif string.starts(context, 'guild') or context == 'guild' then
+    d('Support for choosing among both online & offline guild members will be coming soon!')
   elseif #choices > 1 then
     local random = Joker.trim(choices[math.random(#choices)])
     if #itemsWon > 0 then
@@ -1012,6 +1105,11 @@ end
 -- AnyJoke()
 -- Display; Randomly chooses a type of joke, returns. Optionals passed along as needed.
 function Joker.AnyJoke(target)
+
+  if (#Joker.savedVariables.RandomPool < 1) then
+    d('Setting random pool to default')
+    --Joker.savedVariables.RandomPool = Joker.savedVariables.RandomPoolDefault
+  end
   
   -- Sources for /joke random pool.
   -- Includes most, but not all, topics. Edgy/explicit should never be included
@@ -1027,39 +1125,7 @@ end
 -- AnyJokeToLog()
 -- Display; Randomly chooses a type of joke, returns *into console*. This gets called in new zones, if user has enabled.
 function Joker.AnyJokeToLog(target)
-
-  -- Sources for /joke random pool.
-  -- Includes most, but not all, topics. Edgy/explicit should never be included
-  local jokeSources = { 
-    "Norris",
-    "ESO",
-    "Dad",
-    "Wisdom",
-    "Twister",
-    "GoT"
-  }
-  local random = math.random(0, Joker.savedVariables.CountJokesTotal)
-
-  --[[
-    RNJesus: Decided which category to pull from.
-    Weighted as a true democracy - each joke gets a vote!
-    TODO: Maybe bias towards newer categories (or newer jokes after updates)
-  ]]
-  if random < Joker.accumulateTypes(jokeSources, 1) then
-    local joke = Joker.Norris('', "log")
-  elseif random >= Joker.accumulateTypes(jokeSources, 1) and random < Joker.accumulateTypes(jokeSources, 2) then
-    local joke = Joker.ESO("log")
-  elseif random >= Joker.accumulateTypes(jokeSources, 2) and random < Joker.accumulateTypes(jokeSources, 3) then
-    local joke = Joker.Dad("log")
-  elseif random >= Joker.accumulateTypes(jokeSources, 3) and random <= Joker.accumulateTypes(jokeSources, 4) then
-    local joke = Joker.Wisdom("log")
-  elseif random >= Joker.accumulateTypes(jokeSources, 4) and random <= Joker.accumulateTypes(jokeSources, 5) then
-    local joke = Joker.Twister("log")
-  elseif random >= Joker.accumulateTypes(jokeSources, 5) and random <= Joker.accumulateTypes(jokeSources, 6) then
-    local joke = Joker.GoT("log")
-  else
-    local joke = Joker.Dad("log") -- This should never happen, but better to show Dad than nothing.
-  end
+  Joker.Dad("log")
 end
 
 -- readyCheck()
@@ -1126,9 +1192,6 @@ function Joker.Activated(e)
 
   if Joker.savedVariables.FirstLoad then
       Joker.savedVariables.FirstLoad = false
-
-      d(Joker.name .. GetString(SI_NEW_ADDON_MESSAGE)) -- Prints to chat.
-      ZO_AlertNoSuppression(UI_ALERT_CATEGORY_ALERT, nil, Joker.name .. GetString(SI_NEW_ADDON_MESSAGE)) -- Top-right alert.
   end
 end
 
@@ -1143,31 +1206,13 @@ function Joker.OnAddOnLoaded(event, addonName)
   ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', 'Random Ready Check')
 
   -- Setup vars
-  Joker.savedVariables = ZO_SavedVars:NewAccountWide("JokerSavedVariables", Joker.versionMajor, nil, Joker.savedVariables)
+  Joker.savedVariables = ZO_SavedVars:NewAccountWide("JokerSavedVariables", Joker.variableWipeIncrement, nil, Joker.variableDefaults)
 
-  -- Legacy versions used CSV, force conversion to table instead
-  Joker.savedVariables.RandomPool = Joker.savedVariables.RandomPool or {}
-  Joker.savedVariables.RandomPool_Allowed = Joker.savedVariables.RandomPool_Allowed or {}
-  if not type(Joker.savedVariables.RandomPool) == 'table' then
-    Joker.savedVariables.RandomPool = Joker.savedVariables.RandomPoolDefault
-  end
-  if not type(Joker.savedVariables.RandomPool_Allowed) == 'table' then
-    Joker.savedVariables.RandomPool = {
-      "Burns",
-      "Cat",
-      "Dad",
-      "Edgy",
-      "ESO",
-      "GoT",
-      "Norris",
-      "Pickup",
-      "PickupXXX",
-      "PickupHP",
-      "StarWars",
-      "Twister",
-      "Wisdom",
-    }
-  end
+
+  -- See if we've added any new random pool defaults since user's last update.
+  -- If so, append only the new additions to their random pool so they benefit from new changes.
+  -- d(difference(Joker.savedVariables.RandomPoolDefault, randomJokeAdditions))
+  -- TODO: Continue with this, fix RandomPool setting issue first.
   
 
   --[[
@@ -1181,6 +1226,8 @@ function Joker.OnAddOnLoaded(event, addonName)
   allJokes['Pickup'] = Joker.GetJoke('Pickup', true)
   allJokes['PickupXXX'] = Joker.GetJoke('PickupXXX', true)
   allJokes['PickupHP'] = Joker.GetJoke('PickupHP', true)
+  allJokes['PickupPokemon'] = Joker.GetJoke('PickupPokemon', true)
+  allJokes['Pokemon'] = Joker.GetJoke('Pokemon', true)
   allJokes['Norris'] = Joker.GetJoke('Norris', true)
   allJokes['ESO'] = Joker.GetJoke('ESO', true)
   allJokes['Cat'] = Joker.GetJoke('Cat', true)
@@ -1237,6 +1284,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/joke-twister"] = Joker.Twister
   SLASH_COMMANDS["/joke-burn"] = Joker.Burn
   SLASH_COMMANDS["/joke-got"] = Joker.GoT
+  SLASH_COMMANDS["/joke-pokemon"] = Joker.Pokemon
   SLASH_COMMANDS["/joke-starwars"] = Joker.StarWars
   -- Other joke command aliases:
   SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
@@ -1247,9 +1295,11 @@ function Joker.OnAddOnLoaded(event, addonName)
   SLASH_COMMANDS["/pickup"] = Joker.Pickup
   SLASH_COMMANDS["/pickup-xxx"] = Joker.PickupXXX
   SLASH_COMMANDS["/pickup-hp"] = Joker.PickupHP
+  SLASH_COMMANDS["/pickup-poke"] = Joker.PickupPokemon
   SLASH_COMMANDS["/twister"] = Joker.Twister
   SLASH_COMMANDS["/burn"] = Joker.Burn
   SLASH_COMMANDS["/starwars"] = Joker.StarWars
+  SLASH_COMMANDS["/pokemon"] = Joker.Pokemon
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.readyCheck
   SLASH_COMMANDS["/roll"] = Joker.Roll
