@@ -40,6 +40,7 @@ JokerData.ReadyChecks = {
   "Are the Argonians all sacrificed?", --@silvereyes333
   "Is the trash taken out?",
   "Ready to blame the healers?", --@silvereyes333
+  "Leeroy, you got your fried chicken?", --@silvereyes333
   "Ready to blame the tanks?",
   "Hamsters running full speed?",
   "Liquids sufficiently distanced from keyboard?",
