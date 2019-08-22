@@ -21,7 +21,7 @@
 JokerData = JokerData or {}
 
 -- Cheesy and cute (mostly clean) lines
-JokerData.PickupLines = {
+JokerData.Pickup = {
   "Can I have your picture so I can show Santa what I want for Christmas?",
   "Are you a magician? Because whenever I look at you, everyone else disappears!",
   "Was your dad a boxer? Because damn, you’re a knockout!",

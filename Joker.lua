@@ -34,13 +34,19 @@ Joker = {
   author                    = "Lent (IGN @CallMeLent, Github @adefee)",   
   color                     = "D66E4A",                                   
   locale                    = JokerL:GetLanguage(),
-  categories                = { -- Active categories
-    "Burns", "Cat", "Dad", "Edgy", "ESO", "GameOfThrones", "HarryPotter", "LordOfTheRings", "Norris", "Pickup", "PickupXXX", "PickupHP", "PickupPokemon", "StarWars", "Twister", "Wisdom"
+  categories                = { -- Shipped categories
+    "Burns", "Cat", "Dad", "Edgy", "ESO", "GameOfThrones", "HarryPotter", "LordOfTheRings", "Norris", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "Pokemon", "ReadyChecks", "StarWars", "Twisters", "Wisdom"
   },
   categoriesDeprecated      = { -- Deprecated categories no longer used
   },
-  utility                   = {} -- Placeholder for utility functions
-  data                      = {} -- Placeholder for data functions
+  pickupPrefixes                  = {
+    "Hey, jTarget, ",
+    "Yo, jTarget, ",
+    "jTarget, ",
+    "jTarget! "
+  },
+  utility                   = {}, -- Placeholder for utility functions
+  data                      = {}, -- Placeholder for data functions
 }
 
 local L = Joker.locale
@@ -55,21 +61,31 @@ function Joker.getDefaults()
 
   local defaultValues = {
     categories = {},
-    lastUpdate = Joker.versionESO -- keep track of last update
+    lastUpdate = Joker.versionESO, -- keep track of last update
     countJokes = 0, -- total count of loaded jokes
     countSeenJokes = 0, -- total count of seen jokes
     periodicJokes = true, -- Periodically show jokes to user in console (chat)
-    periodicFrequency = 3, -- Number of zones between jokes
+    periodicFrequency = 1, -- Number of zones between jokes
     periodSince = 0, -- Number of zones since joke last shown
     firstLoad = true,
-    randomPoolDefault = 'Cat, Dad, ESO, GameOfThrones, Norris, Pokemon, StarWars, Twister, Wisdom' -- Set as string because ZOS does weird things with nested objects.
-    randomPool = randomPoolDefault
+    randomPoolAvailable = Util.toCSV(Joker.categories),
+    randomPoolDefault = 'Cat, Dad, ESO, GameOfThrones, Norris, Pokemon, StarWars, Twisters, Wisdom', -- Set as string because ZOS does weird things with nested objects.
+    randomPool = '',
   }
+
+  if Joker.savedVariables then
+    if Util.isEmpty(Joker.savedVariables.randomPool) then defaultValues.randomPool = defaultValues.randomPoolDefault end
+  else
+    defaultValues.randomPool = defaultValues.randomPoolDefault
+  end
 
   local categoryTemplate = {
     count = 0, -- total number of jokes in this category
     seenCount = 0, -- number of jokes seen
-    seenJokes = {} -- record of jokes seen
+    seenJokes = {}, -- record of jokes seen
+    usePrefix = false, -- whether or this joke might use a prefix
+    firstLoad = true,
+    ignoreContext = false, -- whether or not this joke always ignores any given context
   }
 
   for i = 1, #Joker.categories do
@@ -92,9 +108,9 @@ end
   *****************************
 ]]
 
--- isempty()
+-- isEmpty()
 -- Utility; Checks if given string is empty/nil
-function Util.isempty(s)
+function Util.isEmpty(s)
   return s == nil or s == ''
 end
 
@@ -138,7 +154,7 @@ function Util.toCSV(tt)
   local s = "";
   for k, v in pairs(tt) do
     v = Util.trim(v)
-    if not Util.isempty(s) then
+    if not Util.isEmpty(s) then
       s = s .. ", "
     end
     s = s .. v
@@ -151,8 +167,8 @@ end
 function Util.toCSVi(tt)
   local s = "";
   for k, v in ipairs(tt) do
-    v = Joker.trim(v)
-    if not Joker.isempty(s) then
+    v = Util.trim(v)
+    if not Util.isEmpty(s) then
       s = s .. ", "
     end
     s = s .. v
@@ -166,7 +182,7 @@ function Util.addToSet(set, key)
   set[key] = 1
 end
 
--- setContains()
+-- Util.setContains()
 -- Utility; Determines if a set contains a key
 function Util.setContains(set, key)
   return set[key] ~= nil
@@ -190,7 +206,7 @@ end
 -- Utility; Determines if a specific joke has already been seen
 function Util.isSeen(jokeCategory, jokeIndex)
 
-  if setContains(Joker.savedVariables[jokeCategory].seenJokes, tonumber(jokeIndex)) then
+  if Util.setContains(Joker.savedVariables.categories[jokeCategory].seenJokes, tonumber(jokeIndex)) then
     return true
   end
 
@@ -202,9 +218,9 @@ end
 -- Utility; Add a specific joke to corresponding seen
 function Util.addSeen(jokeCategory, jokeIndex)
 
-  addToSet(Joker.savedVariables[jokeCategory].seenJokes, tonumber(jokeIndex))
+  Util.addToSet(Joker.savedVariables.categories[jokeCategory].seenJokes, tonumber(jokeIndex))
 
-  Joker.savedVariables[jokeCategory].seenCount = Joker.savedVariables[jokeCategory].seenCount + 1
+  Joker.savedVariables.categories[jokeCategory].seenCount = Joker.savedVariables.categories[jokeCategory].seenCount + 1
   Joker.savedVariables.countSeenJokes = Joker.savedVariables.countSeenJokes + 1
   return true
 
@@ -214,15 +230,15 @@ end
 -- Utility; Rests seen object & count for given jokeCategory
 function Util.resetSeen(jokeCategory)
   -- d("Nice! You've seen everything in the ".. jokeCategory .. " category! We're always adding more content, but in the meantime - we've reset this category. You may see a few duplicates, but make sure to check every day for updates - new content is added almost daily!")
-  Joker.savedVariables[jokeCategory].seenCount = 0
-  Joker.savedVariables[jokeCategory].seenJokes = {}
+  Joker.savedVariables.categories[jokeCategory].seenCount = 0
+  Joker.savedVariables.categories[jokeCategory].seenJokes = {}
   return true
 end
 
 -- formatNumber()
 -- Utility; Returns US-formatted (comma thousands, period decimals) number
 function Util.formatNumber(amount)
-  return zo_strformat("<<1>>", ZO_LocalizeDecimalNumber(amount)
+  return zo_strformat("<<1>>", ZO_LocalizeDecimalNumber(amount))
 end
 
 -- starts()
@@ -244,7 +260,7 @@ function Util.split(inputstr, sep)
   return t
 end
 
--- Colorize()
+-- colorize()
 -- Display; Wraps text with a color. Credit: @Phuein
 function Util.colorize(text, color)
   -- Default to addon's .color.
@@ -289,7 +305,7 @@ function Data.checkPeriodicDue()
   local showJoke = false
   local frequency = Joker.savedVariables.periodicFrequency or 10
 
-  if Joker.savedVariables.periodSince <= frequency then
+  if Joker.savedVariables.periodSince < frequency then
     if Joker.savedVariables.periodSince < math.floor(frequency / 3) then
       if (math.random(0, 25) <= math.floor(frequency / 3)) then
         showJoke = true
@@ -318,6 +334,18 @@ function Data.checkPeriodicDue()
 
 end
 
+function Data.getRandomPool()
+  
+  if Joker.savedVariables then
+    if Util.isEmpty(Joker.savedVariables.randomPool) then Joker.savedVariables.randomPool = Joker.savedVariables.randomPoolDefault end
+  else
+    Joker.savedVariables.randomPool = Joker.savedVariables.randomPoolDefault
+  end
+
+  return Joker.savedVariables.randomPool
+
+end
+
 -- setRandomPool()
 -- Utility; Updates random pool with user settings, but checks to make sure values are allowed
 function Data.setRandomPool(poolCSV)
@@ -325,27 +353,22 @@ function Data.setRandomPool(poolCSV)
   local newPool = {}
   local disallowed = ""
 
-  local givenPool = Joker.fromCSV(poolCSV)
+  local givenPool = Util.fromCSV(poolCSV)
   for k, v in pairs(givenPool) do
-    v = Joker.trim(v)
-    if setContains(Joker.savedVariables.categories, v) and not Joker.isempty(v) and not setContains(newPool, v) then
+    v = Util.trim(v)
+    if Util.setContains(Joker.savedVariables.categories, v) and not Util.isEmpty(v) and not Util.setContains(newPool, v) then
       table.insert(newPool, v)
     else
-      if not Joker.isempty(disallowed) then
+      if not Util.isEmpty(disallowed) then
         disallowed = disallowed .. ', '
       end
       disallowed = disallowed .. v
     end
   end
 
-  d("New Random Pool:")
-  d(newPool)
-  newPool = Joker.toCSV(newPool)
-  d('Converted to CSV: ' .. newPool)
+  Joker.savedVariables.randomPool = Util.toCSV(newPool)
 
-  Joker.savedVariables.randomPool = newPool
-
-  if not Joker.isempty(disallowed) then
+  if not Util.isEmpty(disallowed) and not Util.isEmpty(Joker.savedVariables.randomPool) then
     d('There was an issue with one or more of your changes to Joker\'s random pool. Any invalid options are omitted. Try checking near "' .. disallowed ..'", and make sure each option is separated by a comma. Items are case-sensitive!')
   else
     d('Joker\'s random pool has been updated! Don\'t forget that new categories and content are always being added - you might want to update this setting later to include new stuff!')
@@ -372,13 +395,13 @@ function Data.getJokeKey(jokeCategory)
     jokes = JokerData.Wisdom
   elseif jokeType == 'Pokemon' then
     jokes = JokerData.Pokemon
-  elseif jokeType == 'Pickup' then
+  elseif jokeType == 'PickupLines' then
     jokes = JokerData.PickupLines
-  elseif jokeType == 'PickupXXX' then
+  elseif jokeType == 'PickupLinesXXX' then
     jokes = JokerData.PickupLinesXXX
-  elseif jokeType == 'PickupHP' then
+  elseif jokeType == 'PickupLinesHP' then
     jokes = JokerData.PickupLinesHP
-  elseif jokeType == 'PickupPokemon' then
+  elseif jokeType == 'PickupLinesPokemon' then
     jokes = JokerData.PickupLinesPokemon
   elseif jokeType == 'Norris' then
     jokes = JokerData.Norris
@@ -388,7 +411,7 @@ function Data.getJokeKey(jokeCategory)
     jokes = JokerData.Burns
   elseif jokeType == 'Cat' then
     jokes = JokerData.CatFacts
-  elseif jokeType == 'Ready' then
+  elseif jokeType == 'ReadyChecks' then
     jokes = JokerData.ReadyChecks
   elseif jokeType == 'Twister' then
     jokes = JokerData.TongueTwisters
@@ -405,7 +428,7 @@ end
 
 -- getJoke()
 -- Data; Returns random joke from given category, or all jokes from category if returnAll is passed
-function Data.getJoke(jokeCategory, returnAll) {
+function Data.getJoke(jokeCategory, returnAll) 
 
   -- Defaults
   local jokeCategory = jokeCategory or "Dad" -- Set Dad as default category
@@ -413,7 +436,7 @@ function Data.getJoke(jokeCategory, returnAll) {
   local joke = ""
   local index = 0
   local loops = 0
-  local loopLimit = Joker.savedVariables[jokeCategory].count
+  local loopLimit = 1500
 
   -- If @param "all" was passed, return all jokes
   if returnAll then
@@ -421,7 +444,7 @@ function Data.getJoke(jokeCategory, returnAll) {
   end
 
   -- Before we loop, see if we need to reset seenJokes for this type
-  if Joker.savedVariables[jokeCategory].seenCount > 0 and Joker.savedVariables[jokeCategory].seenCount >= Joker.savedVariables[jokeCategory].count then
+  if Joker.savedVariables.categories[jokeCategory].seenCount > 0 and Joker.savedVariables.categories[jokeCategory].seenCount >= Joker.savedVariables.categories[jokeCategory].count then
     Util.resetSeen(jokeCategory)
   end
 
@@ -439,7 +462,8 @@ function Data.getJoke(jokeCategory, returnAll) {
   -- Finally, return joke
   return joke
 
-}
+end
+
 
 
 
@@ -452,26 +476,57 @@ function Data.getJoke(jokeCategory, returnAll) {
   *****************************
 ]]
 
--- AnyJoke()
--- Display; Randomly chooses a type of joke, returns. Optionals and context passed along.
-function Joker.AnyJoke(target)
+-- Joke()
+-- Display; Doctor up any retrieved joke as needed, based on context
+function Joker.Joke(jokeCategory, context, returnOnly)
 
-  if (#Joker.savedVariables.randomPool < 1) then
-    d('Setting random pool to default')
-    -- Joker.savedVariables.randomPool = Joker.savedVariables.randomPoolDefault
+  local joke = Data.getJoke(jokeCategory)
+
+  -- See if we should apply a prefix or suffix
+  -- if Joker.savedVariables.categories[jokeCategory].usePrefix then
+  --   joke = Data.getPrefix() .. joke
+  -- end
+
+  -- If adding context
+  if not Util.isEmpty(context) and not Joker.savedVariables.categories[jokeCategory].ignoreContext and type(context) == "string" then
+    joke = string.gsub(Data.getPrefix(), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
   end
 
-  local jokePool = Util.fromCSV(Joker.savedVariables.RandomPool)
+  if (returnOnly) then
+    return joke
+  end
+
+  -- Send to active chatbox
+  StartChatInput(joke, CHAT_CHANNEL)
+
+end
+
+-- AnyJoke()
+-- Display; Randomly chooses a type of joke, returns. Optionals and context passed along.
+function Joker.AnyJoke(context, console)
+
+  local jokePool = Util.fromCSV(Joker.savedVariables.randomPool)
+
+  if (#jokePool < 1) then
+    d('Setting random pool to default')
+    Joker.savedVariables.randomPool = Joker.savedVariables.randomPoolDefault
+  end
   
   -- Sources for /joke random pool.
   -- Includes most, but not all, topics. Edgy/explicit should never be included
-  local sourceIndex = Joker.trim(jokePool[math.random(#jokePool)])
-  
-  -- Grab appropriate joke.
-  Joker[sourceIndex](target)
+  local jokeCategory = Util.trim(jokePool[math.random(#jokePool)])
 
-  -- Send
-  StartChatInput(joke, CHAT_CHANNEL)
+  -- Grab joke based on chosen category and context
+  local joke = Joker.Joke(jokeCategory, context)
+
+  if console then
+    -- Log to console instead of chat
+    d('Joker: ' .. joke)
+  else
+    -- Send to active chatbox
+    StartChatInput(joke, CHAT_CHANNEL)
+  end
+  
 end
 
 -- EightBall()
@@ -532,7 +587,7 @@ function Joker.EightBall(question)
   local prefix = "8ball says: "
 
   -- Question provided, so repeat back before giving answer.
-  if not Joker.isempty(question) and question.type == 'string' then
+  if not Util.isEmpty(question) and question.type == 'string' then
     d('You asked: "' .. question ..'" ...')
   end
 
@@ -540,27 +595,35 @@ function Joker.EightBall(question)
 end
 
 -- Roll()
--- Display; Rolls between given floor, ceiling and includes memo (if provided). /roll floor,ceiling,memo
+-- Display; Rolls between given floor, ceiling and includes memo (if provided). Space delimited: /roll floor ceiling memo
 function Joker.Roll(context)
   local floor = 1
   local ceiling = 10
   local contextObj = Util.split(context, ' ')
+  local memo = ''
 
   -- Determine floor & ceiling for roll
-  if contextObj[2] and not Joker.isempty(contextObj[2]) then
+  if contextObj[2] and not Util.isEmpty(contextObj[2]) then
     ceiling = contextObj[2]
     floor = contextObj[1]
-  elseif not Joker.isempty(contextObj[1]) then
+  elseif not Util.isEmpty(contextObj[1]) then
     ceiling = contextObj[1]
   end
 
   local random = math.random(floor, ceiling)
 
+  -- Determine if memo is provided (for now, must include explicit floor and ceiling)
+  if contextObj[3] and not Util.isEmpty(Util.trim(contextObj[3])) then
+    memo = string.gsub(context, contextObj[1], '')
+    memo = string.gsub(memo, contextObj[2], '')
+    memo = '(Memo: ' .. Util.trim(memo) .. ')'
+  end
+
   -- If we include a memo, publish to chat; otherwise, publish to console
   if contextObj[3] then
-    StartChatInput('Rolling (' .. floor .. ' - ' .. ceiling .. '):     ' .. random .. ' wins ' .. Joker.trim(contextObj[3]).. '!', CHAT_CHANNEL)
+    StartChatInput('Rolling a ' .. (ceiling - floor) + 1 .. '-sided die (from ' .. floor .. ' through ' .. ceiling .. ') ... and ' .. random .. ' is rolled! ' .. memo, CHAT_CHANNEL)
   else
-    d('Joker: Rolling (' .. floor .. ' - ' .. ceiling .. '): ' .. Joker.Colorize(random .. ' Wins!'))
+    d('Joker: Rolling a ' .. (ceiling - floor) + 1 .. '-sided die (from ' .. floor .. ' through ' .. ceiling .. ') ... and ' .. Util.colorize(random) .. ' is rolled! ' .. Util.colorize(memo))
   end
 
 end
@@ -571,9 +634,9 @@ function Joker.Choose(context)
   local choices = {}
   local itemsWon = {}
 
-  choices = Joker.split(context, " ")
+  choices = Util.split(context, " ")
   for thisChoiceIndex, thisChoiceContent in ipairs(choices) do
-    if string.starts(thisChoiceContent, '|H') or string.starts(thisChoiceContent, '|h') then
+    if Util.starts(thisChoiceContent, '|H') or Util.starts(thisChoiceContent, '|h') then
       table.insert(itemsWon, thisChoiceContent)
       -- Deleting here would upset the table index and the loop (Lua shifts down instead of temp maintaining), so need to delete in separate loop
       -- Could alternatively keep track of items to remove, but copy/paste is easier ;P
@@ -582,12 +645,12 @@ function Joker.Choose(context)
 
   -- Running a separate loop for deletion, see above comment
   for thisChoiceIndex, thisChoiceContent in pairs(choices) do
-    if string.starts(thisChoiceContent, '|H') or string.starts(thisChoiceContent, '|h') then
+    if Util.starts(thisChoiceContent, '|H') or Util.starts(thisChoiceContent, '|h') then
       table.remove(choices, thisChoiceIndex)
     end
   end
 
-  if string.starts(context, 'party') or context == 'party' then
+  if Util.starts(context, 'party') or context == 'party' then
     local partySize = GetGroupSize()
     local partyMembers = {}
     local partyCount = 0
@@ -600,11 +663,11 @@ function Joker.Choose(context)
     until( partyCount > partySize )
 
     if (partySize > 0) then
-      local random = Joker.trim(partyMembers[math.random(#partyMembers)])
+      local random = Util.trim(partyMembers[math.random(#partyMembers)])
       local partyContext = context:gsub("party ", "", 1)
 
       if partyContext then
-        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Joker.trim(partyContext) .. '! Congrats!', CHAT_CHANNEL)
+        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Util.trim(partyContext) .. '! Congrats!', CHAT_CHANNEL)
       else
         StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)
       end
@@ -612,10 +675,10 @@ function Joker.Choose(context)
       d('Joker: There\'s noone in your party, so can\'t choose from your party!')
     end
 
-  elseif string.starts(context, 'guild') or context == 'guild' then
+  elseif Util.starts(context, 'guild') or context == 'guild' then
     d('Support for choosing among both online & offline guild members will be coming soon!')
   elseif #choices > 1 then
-    local random = Joker.trim(choices[math.random(#choices)])
+    local random = Util.trim(choices[math.random(#choices)])
     if #itemsWon > 0 then
       local itemsWonString = table.concat(itemsWon, ", ")
       StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins ' .. itemsWonString .. '! Congrats!', CHAT_CHANNEL) 
@@ -646,17 +709,17 @@ function Joker.ReadyCheck(target)
   local checkPrompt = "Are you ready?"
 
 
-  if not Joker.isempty(target) and target.type == 'string' then
+  if not Util.isEmpty(target) then
     -- Custom ready check prompt.
 
     -- Check for explicit election type
-    if string.starts(target, 'unan ') then
+    if Util.starts(target, 'unan ') then
       checkType = 2
       checkPrompt = target:gsub('unan ', '')
-    elseif string.starts(target, 'simple ') then
+    elseif Util.starts(target, 'simple ') then
       checkType = 0
       checkPrompt = target:gsub('simple ', '')
-    elseif string.starts(target, 'super ') then
+    elseif Util.starts(target, 'super ') then
       checkType = 1
       checkPrompt = target:gsub('super ', '')
     else
@@ -667,13 +730,13 @@ function Joker.ReadyCheck(target)
   else
     -- Choose random prompt
     repeat
-      checkPrompt = Joker.GetJoke('Ready')
+      checkPrompt = Joker.Joke('ReadyChecks', '', 1)
       local promptLength = string.len(checkPrompt)
     until (promptLength < 350)
   
     -- First-Usage: Display intro message
-    if Joker.savedVariables.FirstJokes.Ready then
-      Joker.savedVariables.FirstJokes.Ready = false
+    if Joker.savedVariables.categories['ReadyChecks'].firstLoad then
+      Joker.savedVariables.categories['ReadyChecks'].firstLoad = false
     end
     
   end
@@ -710,7 +773,6 @@ function Joker.OnAddOnLoaded(event, addonName)
   -- Keybinds
   ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', 'Random Ready Check')
   
-
   -- Setup vars
   Joker.savedVariables = ZO_SavedVars:NewAccountWide("JokerSavedVariables", Joker.variableWipeIncrement, nil, Joker.getDefaults())
   
@@ -721,71 +783,71 @@ function Joker.OnAddOnLoaded(event, addonName)
   local allJokes = {}
   for i = 1, #Joker.categories do
     local categoryName = Joker.categories[i]
-    allJokes[categoryName] = Joker.GetJoke(categoryName, true)
+    allJokes[categoryName] = Data.getJoke(categoryName, true)
   end
 
   -- Iterate over jokes
   Joker.savedVariables.countJokes = 0 -- reset count
   for jokeType, thisJokes in pairs(allJokes) do
     -- Reset count
-    Joker.savedVariables[jokeType].Count = 0
+    Joker.savedVariables.categories[jokeType].count = 0
     -- Iterate over this type's jokes and count
     for thisJokeIndex, thisJokeText in pairs(thisJokes) do
-      Joker.savedVariables[jokeType].Count = Joker.savedVariables[jokeType].Count + 1
+      Joker.savedVariables.categories[jokeType].count = Joker.savedVariables.categories[jokeType].count + 1
       Joker.savedVariables.countJokes = Joker.savedVariables.countJokes + 1
     end
-    d(jokeType .. ': loaded ' .. Joker.savedVariables[jokeType].Count .. ' jokes.') -- load debugging
+    -- d(jokeType .. ': loaded ' .. Joker.savedVariables.categories[jokeType].count .. ' jokes.') -- load debugging
   end
 
   -- Iterate over seenJokes
   Joker.savedVariables.countSeenJokes = 0 -- reset count
   for jokeType, thisJokes in pairs(allJokes) do
     -- Reset count
-    Joker.savedVariables[jokeType].Seen = 0
+    Joker.savedVariables.categories[jokeType].Seen = 0
     -- Iterate over this type's seenJokes and count
-    for thisJokeIndex, thisJokeText in pairs(Joker.savedVariables.SeenJokes[jokeType]) do
-      Joker.savedVariables[jokeType].Seen = Joker.savedVariables[jokeType].Seen + 1
+    for thisJokeIndex, thisJokeText in pairs(Joker.savedVariables.categories[jokeType].seenJokes) do
+      Joker.savedVariables.categories[jokeType].seenCount = Joker.savedVariables.categories[jokeType].seenCount + 1
       Joker.savedVariables.countSeenJokes = Joker.savedVariables.countSeenJokes + 1
     end
   end
 
   -- Legacy: Update Periodic Jokes
-  if (Joker.savedVariables.PeriodicJokes == 'Enabled') then
-    Joker.savedVariables.PeriodicJokes = true
-  elseif (Joker.savedVariables.PeriodicJokes == 'Disabled') then
-    Joker.savedVariables.PeriodicJokes = false
+  if (Joker.savedVariables.periodicJokes == 'Enabled') then
+    Joker.savedVariables.periodicJokes = true
+  elseif (Joker.savedVariables.periodicJokes == 'Disabled') then
+    Joker.savedVariables.periodicJokes = false
   end
 
   -- Settings menu in Settings.lua.
   Joker.LoadSettings()
 
   -- NOTE: Slash commands must be lowercase!
-  SLASH_COMMANDS["/joke"] = Joker.AnyJoke -- By default, does not include edgy or pickup lines!
-  SLASH_COMMANDS["/joke-norris"] = Joker.Norris
-  SLASH_COMMANDS["/joke-eso"] = Joker.ESO
-  SLASH_COMMANDS["/joke-dad"] = Joker.Dad
-  SLASH_COMMANDS["/joke-edgy"] = Joker.Edgy
-  SLASH_COMMANDS["/joke-wisdom"] = Joker.Wisdom
-  SLASH_COMMANDS["/joke-pickup"] = Joker.Pickup
-  SLASH_COMMANDS["/joke-twister"] = Joker.Twister
-  SLASH_COMMANDS["/joke-burn"] = Joker.Burn
-  SLASH_COMMANDS["/joke-got"] = Joker.GoT
-  SLASH_COMMANDS["/joke-pokemon"] = Joker.Pokemon
-  SLASH_COMMANDS["/joke-starwars"] = Joker.StarWars
+  SLASH_COMMANDS["/joke"] = function (context) Joker.AnyJoke(context) end
+  SLASH_COMMANDS["/joke-norris"] = function (context) Joker.Joke('Norris', context) end
+  SLASH_COMMANDS["/joke-eso"] = function (context) Joker.Joke('ESO', context) end
+  SLASH_COMMANDS["/joke-dad"] = function (context) Joker.Joke('Dad', context) end
+  SLASH_COMMANDS["/joke-edgy"] = function (context) Joker.Joke('Edgy', context) end
+  SLASH_COMMANDS["/joke-wisdom"] = function (context) Joker.Joke('Wisdom', context) end
+  SLASH_COMMANDS["/joke-pickup"] = function (context) Joker.Joke('Pickup', context) end
+  SLASH_COMMANDS["/joke-twister"] = function (context) Joker.Joke('Twisters', context) end
+  SLASH_COMMANDS["/joke-burn"] = function (context) Joker.Joke('Burns', context) end
+  SLASH_COMMANDS["/joke-got"] = function (context) Joker.Joke('GameOfThrones', context) end
+  SLASH_COMMANDS["/joke-pokemon"] = function (context) Joker.Joke('Pokemon', context) end
+  SLASH_COMMANDS["/joke-starwars"] = function (context) Joker.Joke('StarWars', context) end
   -- Other joke command aliases:
-  SLASH_COMMANDS["/wisdom"] = Joker.Wisdom
-  SLASH_COMMANDS["/dad"] = Joker.Dad
-  SLASH_COMMANDS["/norris"] = Joker.Norris
-  SLASH_COMMANDS["/8ball"] = Joker.eightBall
-  SLASH_COMMANDS["/catfact"] = Joker.Cat
-  SLASH_COMMANDS["/pickup"] = Joker.Pickup
-  SLASH_COMMANDS["/pickup-xxx"] = Joker.PickupXXX
-  SLASH_COMMANDS["/pickup-hp"] = Joker.PickupHP
-  SLASH_COMMANDS["/pickup-poke"] = Joker.PickupPokemon
-  SLASH_COMMANDS["/twister"] = Joker.Twister
-  SLASH_COMMANDS["/burn"] = Joker.Burn
-  SLASH_COMMANDS["/starwars"] = Joker.StarWars
-  SLASH_COMMANDS["/pokemon"] = Joker.Pokemon
+  SLASH_COMMANDS["/wisdom"] = function (context) Joker.Joke('Wisdom', context) end
+  SLASH_COMMANDS["/dad"] = function (context) Joker.Joke('Dad', context) end
+  SLASH_COMMANDS["/norris"] = function (context) Joker.Joke('Norris', context) end
+  SLASH_COMMANDS["/8ball"] = Joker.EightBall
+  SLASH_COMMANDS["/catfact"] = function (context) Joker.Joke('Cat', context) end
+  SLASH_COMMANDS["/pickup"] = function (context) Joker.Joke('PickupLines', context) end
+  SLASH_COMMANDS["/pickup-xxx"] = function (context) Joker.Joke('PickupLinesXXX', context) end
+  SLASH_COMMANDS["/pickup-hp"] = function (context) Joker.Joke('PickupLinesHP', context) end
+  SLASH_COMMANDS["/pickup-poke"] = function (context) Joker.Joke('PickupLinesPoke', context) end
+  SLASH_COMMANDS["/twister"] = function (context) Joker.Joke('Twisters', context) end
+  SLASH_COMMANDS["/burn"] = function (context) Joker.Joke('Burns', context) end
+  SLASH_COMMANDS["/starwars"] = function (context) Joker.Joke('StarWars', context) end
+  SLASH_COMMANDS["/pokemon"] = function (context) Joker.Joke('Pokemon', context) end
   -- Other fun commands:
   SLASH_COMMANDS["/ready"] = Joker.ReadyCheck
   SLASH_COMMANDS["/roll"] = Joker.Roll
@@ -798,8 +860,10 @@ function Joker.OnAddOnLoaded(event, addonName)
 
   -- If the user hasn't disabled periodic jokes in console, show it.
   -- TODO: Allow user to disable, or change frequency (time-based or # of addon loads in between)
-  if Joker.savedVariables.PeriodicJokes and Joker.checkPeriodicDue() then
-    zo_callLater(Joker.AnyJokeToLog, 3000)
+  if Joker.savedVariables.periodicJokes and Data.checkPeriodicDue() then
+    d('Random joke!')
+    Joker.AnyJoke('', 1)
+    -- zo_callLater(Joker.AnyJoke('', 1), 2500)
   end
 end
 

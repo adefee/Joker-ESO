@@ -11,7 +11,7 @@
 
 JokerData = JokerData or {}
 
-JokerData.CatFacts = {
+JokerData.Cat = {
   "In relation to their body size, cats have the largest eyes of any mammal.",
   "When well treated, a cat can live twenty or more years but the average life span of a domestic cat is 14 years.",
   "There are cats who have survived falls from over 32 stories (320 meters) onto concrete.",

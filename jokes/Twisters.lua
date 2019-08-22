@@ -13,7 +13,7 @@
 
 JokerData = JokerData or {}
 
-JokerData.TongueTwisters = {
+JokerData.Twisters = {
   "Peter Piper picked a peck of pickled peppers. How many pickled peppers did Peter Piper pick?",
   "How can a clam cram in a clean cream can?",
   "Denise sees the fleece, Denise sees the fleas. At least Denise could sneeze and feed and freeze the fleas.",

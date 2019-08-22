@@ -12,7 +12,7 @@
 
 JokerData = JokerData or {}
 
-JokerData.GoT = {
+JokerData.GameOfThrones = {
   "How do you circumcise a Lannister? You kick his sister's jaw.",
   "What is Hodor's favorite cereal? Raisin Bran!",
   "What's the difference between Game of Thrones and Twitter? Twitter has a limit of 140 characters.",

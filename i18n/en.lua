@@ -12,10 +12,11 @@ L.Joker_Or = "or"
 L.Joker_And = "and"
 L.Joker_Of = "of"
 L.Joker_With = "with"
+L.Joker_Wins = "Wins"
 
 -- SECTION: Intro
 L.Joker_Intro_Status_Prefix = "You've viewed"
-L.Joker_Intro_Status_Suffix	= "loaded jokes, wisdom, fun facts, & more!"
+L.Joker_Intro_Status_Suffix	= "loaded jokes, burns, wisdom, fun facts, & more!"
 
 -- SECTION: Quick Commands
 L.Joker_Quick_Title = "Quick Commands"
