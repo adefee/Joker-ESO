@@ -20,7 +20,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 
 ## Dependencies
-The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO, including (probably) the upcoming Elsweyr chapter. Both are packaged within. 
+The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO. Both are packaged within, but if you have newer versions installed those will be used instead. 
 - `LibAddonMenu-2.0`
 - `LibStub`
 

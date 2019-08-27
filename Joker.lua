@@ -19,19 +19,21 @@
 ]]--
 
 -- Handle includes
-JokerData = JokerData or {}
-JokerL = JokerL or {}
-Joker = Joker or {}
+JokerData = JokerData or {} -- content
+JokerL = JokerL or {} -- i18n
+Joker = Joker or {} -- vars, defaults
 
-local L = Joker.locale
-local Util = Joker.utility
-local Data = Joker.data
+local L = Joker.locale -- sets our locale
+local Util = JokerUtilityFn or {} -- utility functions used throughout
+local Data = JokerDataFn or {} -- data and content processing & display
+
 local jokeLengthMax = 325 -- Max safe length of a message in ESO chatbox before it risks being snipped.
 
 
 -- Runs only the first time load
 local function runtime_maiden()
   d('Maiden load')
+  Joker.saved.internal.firstLoad = 0
 end
 
 
@@ -43,7 +45,7 @@ end
 
 --[[
   *****************************
-  ** Addon Instantiation
+  ** Addon Instantiation, Hook to Ingame Events
   *****************************
 ]]
 
@@ -53,12 +55,9 @@ function Joker.Activated(e)
 
   if Joker.saved and Joker.saved.internal.firstLoad > 0 then
     runtime_maiden()
-    Joker.saved.internal.firstLoad = 0 -- TODO: disable (0), leaving enabled for now
   end
 end
-
--- When player is ready, after everything has been loaded.
-EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED, Joker.Activated)
+EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED, Joker.Activated) -- When player is ready, only after everything is loaded.
 
 
 function Joker.OnAddOnLoaded(event, addonName)
@@ -76,4 +75,4 @@ function Joker.OnAddOnLoaded(event, addonName)
 
 end
 
-EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_ADD_ON_LOADED, Joker.OnAddOnLoaded)
+EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_ADD_ON_LOADED, Joker.OnAddOnLoaded) -- Press Start.
