@@ -1,6 +1,13 @@
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+  * VERSION: --0.0.1 ** Please do not modify this info.
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your checks in the
+  * '_MyCustomReadyChecks.lua' file instead.
+  *
   * COMPILATION: Ready-Check Prompts
 	*
 	* SOURCES:
