@@ -1,13 +1,13 @@
 # Joker-ESO
 A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
-### [Download here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
+### [Download live version here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Release: **v2.4.4** (ESO-204040)
+#### Current Branch Release: **v4.0.0** (ESO-400000)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
 
-> Latest release contains a growing assortment of Chuck Norris, ESO-related, Dad, and Edgy jokes (plus some sarcastic tidbits of wisdom), with more content coming super soon!
+> Version 4.X.X is a major milestone release, with the purpose of offering a simpler and more aesthetically pleasing settings UI, greater customization and control (including a simplified manner with which to add your own jokes, riddles, and more!), removal of extra dependencies (where possible), and possibly an auto-update mechanism!
 
 ## Table of Contents
 
