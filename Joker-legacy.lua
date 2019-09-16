@@ -18,6 +18,7 @@
 
 ]]--
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
 JokerL = JokerL or {}
 
 --[[

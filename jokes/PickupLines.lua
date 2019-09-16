@@ -1,7 +1,7 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
   ----------------------------------------------------------
-  * VERSION: --0.0.1 ** Please do not modify this info.
   *
   * ADDING YOUR OWN JOKES:
   * Be aware that modifying this file incorrectly could break Joker,
@@ -26,9 +26,31 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.PickupLines = {
+  label = "Pickup Lines",
+  command = "pickup",
+  nsfw = false,
+  joke = false
+}
+
+JokerData.Config.PickupLinesXXX = {
+  label = "Pickup Lines (Adult)",
+  command = "pickup-xxx",
+  nsfw = true,
+  joke = false
+}
+
+JokerData.Config.PickupLinesHP = {
+  label = "Pickup Lines (Harry Potter)",
+  command = "pickup-hp",
+  nsfw = false,
+  joke = false
+}
 
 -- Cheesy and cute (mostly clean) lines
-JokerData.Pickup = {
+JokerData.PickupLines = {
   "Can I have your picture so I can show Santa what I want for Christmas?",
   "Are you a magician? Because whenever I look at you, everyone else disappears!",
   "Was your dad a boxer? Because damn, you’re a knockout!",

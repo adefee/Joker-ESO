@@ -1,7 +1,7 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
   ----------------------------------------------------------
-  * VERSION: --0.0.1 ** Please do not modify this line.
   *
 	* Authors:
 	* - Lent (IGN @CallMeLent, Github @adefee)
@@ -12,6 +12,7 @@
 ]]--
 
 JokerData = JokerData or {} -- Content
+JokerData.Config = JokerData.Config or {} -- content-specific config
 JokerL = JokerL or {} -- i18n
 
 Joker = {
@@ -21,8 +22,26 @@ Joker = {
   author = "Lent (IGN @CallMeLent, Github @adefee)",
   color = "D66E4A",
   locale = JokerL:GetLanguage(),
-  categories = {},
-  pickupPrefixes = {},
+  sadMessages = {
+    "Joker is sad!",
+    "Sad Joker!",
+    "Bad Joker!",
+    "Oof.",
+    "Aww shucks!",
+    "Dammit, Wanda!",
+    "Unfortunate."
+  },
+  happyMessages = {
+    "Awesome!",
+    "Joker is happy.",
+    "Wicked!",
+    "Oh yeahhhh!",
+    "Swag!",
+    "Hot damn!",
+    "Sweet!",
+    "Joker can dig it!",
+    "**Happy dance**"
+  },
   utility = {},
   data = {},
   saved = {},
@@ -31,34 +50,14 @@ Joker = {
       "Hey, jTarget, ",
       "Yo, jTarget, ",
       "jTarget, ",
-      "jTarget! "
-    },
-    activeJokes = {
-      Burns = "Burns",
-      Cat = "Cat Facts",
-      Dad = "Dad",
-      Edgy = "Edgy/Adult",
-      ESO = "Elder Scrolls",
-      GameOfThrones = "Game of Thrones",
-      HarryPotter = "Harry Potter",
-      LordOfTheRings = "Lord of the Rings",
-      Norris = "Chuck Norris",
-      PickupLines = "Pickup Lines",
-      PickupLinesXXX = "Adult Pickup Lines",
-      PickupLinesHP = "Potter Pickup Lines",
-      PickupLinesPokemon = "Pokemon Pickup Lines",
-      Pokemon = "Pokemon",
-      ReadyChecks = "Ready Checks",
-      Riddles = "Riddles",
-      StarWars = "Star Wars",
-      Twisters = "Tongue Twisters",
-      Wisdom = "Wise(?) Wisdom",
+      "jTarget! ",
+      "jTarget - ",
     },
     contentFilter = {
-      sensitive_enable = 1,
-      sensitive_sendToPublic = 0,
-      sensitive_sendToGuild = 1,
-      sensitive_sendToFriend = 1,
+      nsfw_enable = 1,
+      nsfw_sendToPublic = 0,
+      nsfw_sendToGuild = 1,
+      nsfw_sendToFriend = 1,
       spam_enable = 1,
       spam_limit = 3,
       spam_trackChannelsSeparately = 1,
@@ -68,11 +67,13 @@ Joker = {
     count = {
       loaded = 0,
       active = 0,
-      seen = 0
+      seen = 0,
+      categories = {}
     },
     enable = {
-      jokeIntros = 1,
-      contentFilter = 0
+      jokeIntros = 1, -- Replace intros (like in burns/pickup lines). Default 1
+      contentFilter = 0, -- Enable content filter. Default 0
+      consoleOnly = false -- Show jokes only in console/log, never post to chatbox. Default 0
     },
     internal = {
       lastUpdate = 0,

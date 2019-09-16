@@ -1,7 +1,7 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
   ----------------------------------------------------------
-  * VERSION: --0.0.1 ** Please do not modify this version.
   *
   * COMPILATION: Your Custom Ready Check messages!
 	*
@@ -16,6 +16,7 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
 
 JokerData.MyCustomReadyChecks = {
   "Go get 'em, Tiger!",

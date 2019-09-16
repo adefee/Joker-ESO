@@ -66,6 +66,8 @@ jokes\_MyCustomReadyChecks.lua
 
 ## Initialize Joker
 options\customize.lua
+Joker-Util.lua
+Joker-Data.lua
 Joker.lua
 bindings.xml
 
