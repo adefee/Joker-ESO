@@ -22,7 +22,7 @@ local Util = JokerUtilityFn or {}
 -- isEmpty()
 -- Utility; Checks if given string is empty/nil
 function Util.isEmpty(s)
-  return s == nil or s == ''
+  return s == nil or s == ""
 end
 
 -- trim()
@@ -38,9 +38,23 @@ function Util.addToSet(set, key)
 end
 
 -- Util.setContains()
--- Utility; Determines if a set contains a key
+-- Utility; Determines if a set contains a key. Best used for ipair-able things
 function Util.setContains(set, key)
   return set[key] ~= nil
+end
+
+-- Util.setContains()
+-- Utility; Determines if a set and key contain a value
+function Util.setContainsValue(set, value)
+  local foundValue = false
+
+  for i,v in pairs(set) do
+    if v == value then
+      foundValue = true
+    end
+  end
+
+  return foundValue
 end
 
 -- Util.countSet()

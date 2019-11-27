@@ -29,24 +29,30 @@ JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.PickupLines = {
-  label = "Pickup Lines",
   command = "pickup",
+  label = "Pickup Lines",
   nsfw = false,
-  joke = false
+  joke = true,
+  usePrefix = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.Config.PickupLinesXXX = {
-  label = "Pickup Lines (Adult)",
   command = "pickup-xxx",
+  label = "Pickup Lines (Adult)",
   nsfw = true,
-  joke = false
+  joke = true,
+  usePrefix = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.Config.PickupLinesHP = {
-  label = "Pickup Lines (Harry Potter)",
   command = "pickup-hp",
+  label = "Pickup Lines (Harry Potter)",
+  joke = true,
   nsfw = false,
-  joke = false
+  usePrefix = true,
+  whitelistSlashCommand = true
 }
 
 -- Cheesy and cute (mostly clean) lines

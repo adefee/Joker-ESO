@@ -21,10 +21,12 @@ JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.Burns = {
+  command = "burn",
   label = "Burns",
-  command = "burns",
+  joke = true,
   nsfw = false,
-  joke = true
+  usePrefix = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.Burns = {

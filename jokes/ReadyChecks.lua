@@ -26,7 +26,8 @@ JokerData.Config.ReadyChecks = {
   label = "Ready Checks",
   command = "ready",
   nsfw = false,
-  joke = false
+  joke = false,
+  whitelistSlashCommand = true
 }
 
 JokerData.ReadyChecks = {

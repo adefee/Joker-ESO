@@ -20,12 +20,14 @@ JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.LordOfTheRings = {
-  label = "Lord of the Rings",
   command = "lotr",
+  disable = true,
+  joke = true,
+  label = "Lord of the Rings",
   nsfw = false,
-  joke = true
+  whitelistSlashCommand = true
 }
 
 JokerData.LordOfTheRings = {
-  
+  "Why don't you ask a hobbit for money? Because they're always a little short."
 }

@@ -22,7 +22,8 @@ JokerData.Config.MyCustomJokes = {
   label = "My Custom Jokes",
   command = "custom",
   nsfw = false,
-  joke = true
+  joke = true,
+  disabled = true
 }
 
 JokerData.MyCustomJokes = {

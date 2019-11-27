@@ -7,7 +7,122 @@ local L = Joker.locale -- sets our locale
 local Util = JokerUtilityFn or {} -- utility functions used throughout
 local Data = JokerDataFn or {} -- data and content processing & display
 
--- Settings menu.
+local panelOptions = {}
+local optionIndent = "   " -- Spacer/indent for submenu options
+local optionIndent_Title = " " -- Spacer/indent for submenu titles
+local optionIndent_Button = "" -- Spacer/indent for buttons
+
+-- Display NSFW
+-- Data; Display NSFW
+
+-- settingsPanelMain
+-- Data; Creates series of controls for main/basic options
+function Data.settingsPanelMain()
+  
+  local thisPanelSettings = {
+    {
+      type			  = "checkbox",
+      name			  = optionIndent .. L.Joker_Options_Periodic, -- Toggles Periodic Jokes
+      tooltip			= L.Joker_Options_Periodic_Tip,
+      getFunc			= function() return Joker.saved.periodic.jokes_enable > 0 end,
+      setFunc			= function() 
+                      Data.togglePeriodicEvents('jokes')
+                      Data.runPeriodicEvents('jokes', {
+                        joke = function() Joker.AnyJoke('', 1) end
+                        }, 1)
+                    end,
+      width			  = "full",
+      default			= function() return Joker.saved.periodic.jokes_enable > 0 end,
+    },
+    {
+      type			  = "slider",
+      name			  = optionIndent .. L.Joker_Options_PeriodicFrequency,
+      tooltip			= L.Joker_Options_PeriodicFrequency_Tip,
+      min         = 1,
+      max         = 25,
+      step        = 1,
+      getFunc			= function() return Joker.saved.periodic.jokes_frequency end,
+      setFunc			= function(value) Joker.saved.periodic.jokes_frequency = value end,
+      width			  = "full",
+      default			= Joker.saved.periodic.jokes_frequency,
+      disabled    = function() return not Joker.saved.periodic.jokes_enable end,
+    },
+    {
+      type			  = "checkbox",
+      name			  = optionIndent .. L.Joker_Options_Periodic_Health, -- Toggles Periodic Health Reminders
+      tooltip			= L.Joker_Options_Periodic_Health_Tip,
+      getFunc			= function() return Joker.saved.periodic.health_enable end,
+      setFunc			= function() Data.togglePeriodicEvents('health') end,
+      width			  = "full",
+      default			= Joker.saved.periodic.health_enable,
+      disabled    = function() return true end,
+    }
+  }
+
+  return thisPanelSettings
+end
+
+-- generateRandomPoolOptions
+-- Data; Creates series of controls for random pool (auto-gens based on available options)
+function Data.settingsPanelPool()
+  
+  local thisPanelSettings = {
+  }
+
+  -- Description Part A
+  table.insert(thisPanelSettings, {
+    type = "description",
+    text = L.Joker_Options_Categories_Description_A,
+    width = "full",
+  })
+
+  -- Divider
+  table.insert(thisPanelSettings, {
+    type = "divider",
+    width = "full",
+  })
+
+  -- Description Part B
+  table.insert(thisPanelSettings, {
+    type = "description",
+    text = L.Joker_Options_Categories_Description_B,
+    width = "full",
+  })
+
+  -- Sort pool alphabetically
+  table.sort(Joker.saved.randomPool.enabled, function(a,b) return a < b end)
+
+  for i,v in ipairs(Joker.saved.randomPool.enabled) do
+    d('Joker: ' .. i .. ', ' .. v)
+
+    -- Don't add specific things
+    if v ~= 'ReadyChecks' and v ~= 'MyCustomJokes' then
+      table.insert(thisPanelSettings, {
+        type			  = "checkbox",
+        name			  = optionIndent .. Util.colorize((Joker.saved.activeJokes[v] or 'Unknown Category')) .. Data.isNSFW(v, true) .. ' (' .. Joker.saved.count.categories[v] ..' ' .. L.Joker_Items .. ')', -- Category name + number of items in category
+        tooltip			= L.Joker_Options_Categories_ItemTooltip .. JokerData.Config[v].command,
+        getFunc			= function() return Data.randomPoolGet(v) end,
+        setFunc			= function() Data.randomPoolSet(v) end,
+        width			  = "full",
+        default			= function() return Util.setContainsValue(Joker.defaults.randomPool.enabled, v) and not Util.setContainsValue(Joker.defaults.randomPool.blacklist, v) end,
+        disabled    = function() return not Joker.saved.activeJokes[v] end,
+      })
+    end
+    
+  end
+
+  table.insert(thisPanelSettings, {
+    type			  = "button",
+    name			  = optionIndent_Button .. "Reset to defaults", -- Reset random pool blacklist to default
+    func			  = function () Data.randomPoolSetDefault() end,
+    width			  = "half",
+  })
+
+  return thisPanelSettings
+end
+
+
+-- Compile Addon Settings menu.
 function Joker.LoadSettings()
     local LAM = LibAddonMenu2 or LibStub("LibAddonMenu-2.0")
 
@@ -22,19 +137,36 @@ function Joker.LoadSettings()
         registerForDefaults = true,
     }
 
-    local panelOptions = {}
-    local optionIndent = "   " -- Spacer/indent for submenu options
-    local optionIndent_Title = " " -- Spacer/indent for submenu titles
-    local optionIndent_Button = "" -- Spacer/indent for buttons
-
     --[[
       Intro Section
     ]]
-
     table.insert(panelOptions, {
       type = "description",
       text = Util.colorize(Util.formatNumber(Joker.saved.count.loaded)) .. " " .. L.Joker_Intro_Status_Suffix,
       width = "full",
+    })
+
+
+    --[[
+      Main Settings: Periodic Events, Toggle NSFW, & Other Options
+    ]]
+    local settingsPanelMain = Data.settingsPanelMain()
+    table.insert(panelOptions, {
+      type = "submenu",
+      name = optionIndent_Title .. L.Joker_Options_Title,
+      tooltip = L.Joker_Options_Title_Tooltip,
+      controls = settingsPanelMain
+    })
+
+
+    --[[
+      Random Pool Settings: Periodic Events, Toggle NSFW, & Other Options
+    ]]
+    local settingsPanelPool = Data.settingsPanelPool()
+    table.insert(panelOptions, {
+      type = "submenu",
+      name = optionIndent_Title .. L.Joker_Options_Categories,
+      controls = settingsPanelPool
     })
 
 

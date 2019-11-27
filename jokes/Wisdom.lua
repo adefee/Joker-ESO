@@ -24,7 +24,8 @@ JokerData.Config.Wisdom = {
   label = "Shower Wisdom",
   command = "wisdom",
   nsfw = false,
-  joke = true
+  joke = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.Wisdom = {

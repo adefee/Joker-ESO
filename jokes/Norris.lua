@@ -21,10 +21,11 @@ JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.Norris = {
-  label = "Norris",
   command = "norris",
+  label = "Norris",
+  joke = true,
   nsfw = false,
-  joke = true
+  whitelistSlashCommand = true
 }
 
 JokerData.Norris = {

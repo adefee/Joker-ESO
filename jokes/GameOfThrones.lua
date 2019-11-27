@@ -23,8 +23,9 @@ JokerData.Config = JokerData.Config or {}
 JokerData.Config.GameOfThrones = {
   label = "Game of Thrones",
   command = "got",
+  joke = true,
   nsfw = false,
-  joke = true
+  whitelistSlashCommand = true
 }
 
 JokerData.GameOfThrones = {

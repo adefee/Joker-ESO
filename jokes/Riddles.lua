@@ -25,7 +25,9 @@ JokerData.Config.Riddles = {
   label = "Riddles",
   command = "riddles",
   nsfw = false,
-  joke = false
+  joke = false,
+  disable = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.Riddles = {

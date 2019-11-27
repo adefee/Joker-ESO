@@ -26,7 +26,8 @@ JokerData.Config.StarWars = {
   label = "Star Wars",
   command = "starwars",
   nsfw = false,
-  joke = true
+  joke = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.StarWars = {

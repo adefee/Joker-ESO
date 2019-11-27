@@ -22,8 +22,9 @@ JokerData.Config = JokerData.Config or {}
 JokerData.Config.Cat = {
   label = "Cat Facts",
   command = "cat",
+  joke = true,
   nsfw = false,
-  joke = true
+  whitelistSlashCommand = true
 }
 
 JokerData.Cat = {

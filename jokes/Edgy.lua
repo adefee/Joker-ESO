@@ -22,8 +22,8 @@ JokerData.Config = JokerData.Config or {}
 JokerData.Config.Edgy = {
   label = "Edgy",
   command = "edgy",
-  nsfw = true,
-  joke = true
+  joke = true,
+  nsfw = true
 }
 
 JokerData.Edgy = {

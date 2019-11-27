@@ -22,8 +22,9 @@ JokerData.Config = JokerData.Config or {}
 JokerData.Config.ESO = {
   label = "ESO",
   command = "eso",
+  joke = true,
   nsfw = false,
-  joke = true
+  whitelistSlashCommand = true
 }
 
 JokerData.ESO = {

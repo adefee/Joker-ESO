@@ -22,17 +22,19 @@ JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.Pokemon = {
-  label = "Pokemon",
   command = "pokemon",
-  nsfw = false,
-  joke = true
+  joke = true,
+  label = "Pokemon",
+  nsfw = false
 }
 
 JokerData.Config.PickupLinesPokemon = {
-  label = "Pickup Lines (Pokemon)",
   command = "pickup-poke",
+  joke = true,
+  label = "Pickup Lines (Pokemon)",
   nsfw = true,
-  joke = false
+  usePrefix = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.Pokemon = {

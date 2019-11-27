@@ -23,12 +23,14 @@ JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.HarryPotter = {
-  label = "Harry Potter",
   command = "potter",
+  disable = true,
+  label = "Harry Potter",
+  joke = true,
   nsfw = false,
-  joke = true
+  whitelistSlashCommand = true
 }
 
 JokerData.HarryPotter = {
-  ""
+
 }

@@ -22,6 +22,18 @@ Joker = {
   author = "Lent (IGN @CallMeLent, Github @adefee)",
   color = "D66E4A",
   locale = JokerL:GetLanguage(),
+  attribution = {
+    guildName = "Chaotic Redemption (NA)",
+    guildNameLink = "|cFF0000|H1:guild:610211|hChaotic Redemption|h|r (NA)",
+    guildID = "",
+    guildURL = "",
+    guildDiscord = "https://tinyurl.com/chaotic-discord",
+    guildDiscordAlt = "https://discord.gg/VWDXkzA",
+    author = "Lent",
+    authorIGN = "@CallMeLent",
+    authorDiscord = "Lent#1337",
+    authorGit = "@adefee"
+  },
   sadMessages = {
     "Joker is sad!",
     "Sad Joker!",
@@ -78,15 +90,16 @@ Joker = {
     internal = {
       lastUpdate = 0,
       enableUpdates = 0,
-      firstLoad = 1
+      firstLoad = 1,
+      showDebug = 0
     },
     periodic = {
       jokes_enable = 1,
       jokes_frequency = 1,
       jokes_lastSeen = 0,
       health_enable = 1,
-      health_frequency = 1,
-      health_lastSeen = 0
+      health_frequency = 1, -- Integer number of hours after lastSeen to show message
+      health_lastSeen = 0 -- Timestamp in seconds a message was last seen or that user logged in
     },
     randomPool = {
       blacklist = {"Burns", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},

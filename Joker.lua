@@ -36,7 +36,16 @@ local L = Joker.locale -- sets our locale
 local Util = JokerUtilityFn or {} -- utility functions used throughout
 local Data = JokerDataFn or {} -- data and content processing & display
 
-
+-- Joker.ToggleDebug()
+function Joker.ToggleDebug()
+  if Joker.saved.internal.showDebug > 0 then
+    d('Disabling Joker debug mode.')
+    Joker.saved.internal.showDebug = 0
+  else
+    d('Enabling Joker debug mode.')
+    Joker.saved.internal.showDebug = 1
+  end
+end
 
 -- Joker.Joke()
 -- Display; Retrieve and display a joke (either in chatbox or in console). We aren't allowed to send on user's behalf.
@@ -51,6 +60,21 @@ function Joker.Joke(category, context, logToConsole)
     end
   end  
 end
+
+-- Joker.Joke()
+-- Display; Retrieve and display a random joke based on context
+function Joker.AnyJoke(context, logToConsole)
+  local joke = Data.GetRandomJoke(context)
+  
+  if joke and not Util.isEmpty(joke) then
+    if logToConsole or Joker.saved.enable.consoleOnly then
+      d(joke)
+    else
+      StartChatInput(joke, CHAT_CHANNEL)
+    end
+  end  
+end
+
 
 
 function Joker.ReadyCheck()
@@ -84,28 +108,46 @@ end
 
 -- Runs each load
 local function runtime_onload()
-  d('Joker (' .. Joker.version .. ') loaded.')
+
+  -- Tell the user if debug mode is enabled, which may result in lots of chat spam.
+  if Joker.saved.internal.showDebug > 0 then
+    d('Joker: debug mode enabled. Run /_joker-debug to toggle off.')
+  end
 
   -- Iterate over jokes and enable as we need
   local loadedJokes = {}
   local countAllJokes = 0
+  Joker.saved.randomPool.enabled = {}
   for i,v in pairs(JokerData) do
     if i == 'Config' then
       -- Metadata entries, ignore
     else
       if Util.setContains(JokerData.Config, i) and JokerData.Config[i].label and JokerData.Config[i].command then
-        if JokerData.Config[i].joke then
-          -- Enable /joke-x slash command for this category
-          SLASH_COMMANDS["/joke-" .. JokerData.Config[i].command] = function (context) Joker.Joke(i, context) end
-
+        if not JokerData.Config[i].disable then
           -- Load & count all the jokes for this category
           local categoryJokeCount = Util.countSet(JokerData[i])
           countAllJokes = countAllJokes + categoryJokeCount
           Joker.saved.count.categories[i] = categoryJokeCount
 
-          -- Optionally add an additional command for that joke (e.g. /dad instead of just /joke-dad)
-          if JokerData.Config[i].whitelistSlashCommand then
-            SLASH_COMMANDS["/" .. JokerData.Config[i].command] = function (context) Joker.Joke(i, context) end
+          -- If there are jokes (> 0), enable:
+          if categoryJokeCount > 0 then
+
+            -- Add joke to list of enabled
+            table.insert(Joker.saved.randomPool.enabled, i);
+
+            -- Enable /joke-x slash command for this category
+            SLASH_COMMANDS["/joke-" .. JokerData.Config[i].command] = function (context) Joker.Joke(i, context) end
+
+            -- Optionally add an additional command for that joke (e.g. /dad instead of just /joke-dad)
+            if JokerData.Config[i].whitelistSlashCommand then
+              SLASH_COMMANDS["/" .. JokerData.Config[i].command] = function (context) Joker.Joke(i, context) end
+            end
+          else
+            d('Joker: The category "' .. i .. '" was enabled but contains no jokes. It has not been loaded (uhhh ... there\'s nothing to load!).')
+          end
+        else
+          if Joker.saved.internal.showDebug > 0 then
+            d('Joker: The category "' .. i .. '" is available, but is disabled. It has not been loaded.')
           end
         end
       end
@@ -116,6 +158,34 @@ local function runtime_onload()
   Joker.saved.count.loaded = countAllJokes
 
 
+  --[[
+    Periodic Events
+    > Jokes
+    > Mental Health / Excercise Reminders
+  ]]
+  Data.runPeriodicEvents('joke', {
+    joke = function() Joker.AnyJoke('', 1) end
+  })
+
+
+  --[[
+    Additional Slash Commands
+  ]]
+
+  -- Add cmd: random joke
+  SLASH_COMMANDS["/joke"] = function (context) Joker.AnyJoke(context) end
+
+  -- Add cmd: attribution
+  SLASH_COMMANDS["/joker-guild"] = function (context) 
+    d(L.Joker_Guild_A .. Joker.attribution.guildNameLink .. L.Joker_Guild_B .. Joker.attribution.guildDiscord .. L.Joker_Guild_C)
+  end
+  SLASH_COMMANDS["/joker-author"] = function (context) 
+    d(L.Joker_Author_A .. Joker.attribution.authorIGN .. L.Joker_Author_B .. Joker.attribution.authorDiscord .. ' :)')
+  end
+
+  -- Add cmd: debug & misc utilities
+  SLASH_COMMANDS["/_joker-debug"] = function () Joker.ToggleDebug() end
+  SLASH_COMMANDS["/rl"] = function() ReloadUI("ingame") end
 
 end
 

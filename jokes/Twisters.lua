@@ -25,7 +25,8 @@ JokerData.Config.Twisters = {
   label = "Twisters",
   command = "twisters",
   nsfw = false,
-  joke = true
+  joke = true,
+  whitelistSlashCommand = true
 }
 
 JokerData.Twisters = {
