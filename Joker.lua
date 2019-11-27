@@ -128,6 +128,8 @@ local function runtime_onload()
           local categoryJokeCount = Util.countSet(JokerData[i])
           countAllJokes = countAllJokes + categoryJokeCount
           Joker.saved.count.categories[i] = categoryJokeCount
+          Joker.saved.activeJokes = Joker.saved.activeJokes or {}
+          Joker.saved.activeJokes[i] = JokerData.Config[i].label
 
           -- If there are jokes (> 0), enable:
           if categoryJokeCount > 0 then
@@ -218,7 +220,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', L.Joker_Quick_Btn_JokeReady_Label)
 
   -- Load Saved Variables
-  Joker.saved = ZO_SavedVars:NewAccountWide('JokerSavedVars', 1, nil, Joker.defaults)
+  Joker.saved = ZO_SavedVars:NewAccountWide('JokerSavedVars', 2, nil, Joker.defaults)
 
   -- Init our primary runtime (runs each load)
   runtime_onload()
