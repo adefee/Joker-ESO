@@ -175,6 +175,7 @@ local function runtime_onload()
   SLASH_COMMANDS["/joke"] = Joker.AnyJoke -- Add cmd: random joke
   SLASH_COMMANDS["/8ball"] = Data.eightBall -- Add cmd: 8ball
   SLASH_COMMANDS["/ready"] = Data.readyCheck -- Add cmd: ready checks
+  SLASH_COMMANDS["/choose"] = Data.choose -- Add cmd: ready checks
 
   -- Add cmd: attribution
   SLASH_COMMANDS["/joker-guild"] = function (context) 

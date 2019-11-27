@@ -438,4 +438,68 @@ function Data.readyCheck(target)
 
 end
 
+
+-- choose()
+-- Display; Choose between any number of items/users (space delimited)
+function Data.choose(context)
+  local choices = {}
+  local itemsWon = {}
+
+  choices = Util.split(context, " ")
+  for thisChoiceIndex, thisChoiceContent in ipairs(choices) do
+    if Util.startsWith(thisChoiceContent, '|H') or Util.startsWith(thisChoiceContent, '|h') then
+      table.insert(itemsWon, thisChoiceContent)
+      -- Deleting here would upset the table index and the loop (Lua shifts down instead of temp maintaining), so need to delete in separate loop
+      -- Could alternatively keep track of items to remove, but copy/paste is easier ;P
+    end
+  end
+
+  -- Running a separate loop for deletion, see above comment
+  for thisChoiceIndex, thisChoiceContent in pairs(choices) do
+    if Util.startsWith(thisChoiceContent, '|H') or Util.startsWith(thisChoiceContent, '|h') then
+      table.remove(choices, thisChoiceIndex)
+    end
+  end
+
+  if Util.startsWith(context, 'party') or context == 'party' then
+    local partySize = GetGroupSize()
+    local partyMembers = {}
+    local partyCount = 0
+
+    repeat
+      if (partyCount > 0) then
+        table.insert(partyMembers, GetUnitName("group" .. partyCount))
+      end
+      partyCount = partyCount + 1
+    until( partyCount > partySize )
+
+    if (partySize > 0) then
+      local random = Util.trim(partyMembers[math.random(#partyMembers)])
+      local partyContext = context:gsub("party ", "", 1)
+
+      if partyContext then
+        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Util.trim(partyContext) .. '! Congrats!', CHAT_CHANNEL)
+      else
+        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)
+      end
+    else
+      d('Joker: There\'s noone in your party, so can\'t choose from your party!')
+    end
+
+  elseif Util.startsWith(context, 'guild') or context == 'guild' then
+    d('Support for choosing among both online & offline guild members will be coming soon!')
+  elseif #choices > 1 then
+    local random = Util.trim(choices[math.random(#choices)])
+    if #itemsWon > 0 then
+      local itemsWonString = table.concat(itemsWon, ", ")
+      StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins ' .. itemsWonString .. '! Congrats!', CHAT_CHANNEL) 
+    else
+      StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL) 
+    end
+       
+  else
+    d('Joker chose ... you! Try adding some other options for Joker to choose from!')
+  end
+end
+
 JokerDataFn = Data or {}
