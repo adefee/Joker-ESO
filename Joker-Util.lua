@@ -71,6 +71,12 @@ function Util.countSet(T)
   return count
 end
 
+-- Util.sortSet
+-- Utility; Sorts table alphabetically
+function Util.sortSet(set)
+  return table.sort(set, function(a,b) return a < b end)
+end
+
 -- difference()
 -- Utility; Returns table of differences between two given tables
 function Util.difference(a, b)

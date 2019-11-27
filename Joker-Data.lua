@@ -75,16 +75,23 @@ function Data.GetJoke(jokeCategory, context)
   local joke = ""
   local index = 0
   local usePrefix = false
+  local useSuffix = false
+  local suffixTarget = false -- If suffix is targeted
   local searchFilter = ""
 
   if not JokerData[jokeCategory] then
     return ""
   end
 
+  if JokerData.Config[jokeCategory].useSuffix then
+    useSuffix = true
+  end
+
   if context and not Util.isEmpty(context) then
     if JokerData.Config[jokeCategory].usePrefix then
-      usePrefix = true      
-
+      usePrefix = true
+    elseif JokerData.Config[jokeCategory].useSuffix then
+      suffixTarget = true
     else
       searchFilter = Util.trim(context)
     end
@@ -95,7 +102,7 @@ function Data.GetJoke(jokeCategory, context)
   local loopLimit = 1500
 
   -- If we have a search keyword, iterate over that first
-  if searchFilter and not usePrefix and not Util.isEmpty(searchFilter) then
+  if searchFilter and not usePrefix and not useSuffix and not Util.isEmpty(searchFilter) then
     for i,v in pairs(JokerData[jokeCategory]) do
       if string.match(v, searchFilter) then
         table.insert(jokes, v)
@@ -131,6 +138,13 @@ function Data.GetJoke(jokeCategory, context)
 
   if usePrefix then
     joke = string.gsub(Data.getPrefix(), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
+  elseif useSuffix then
+    if suffixTarget then
+      joke = joke:sub(1,1) .. joke:sub(2) .. ', ' .. context .. '!'
+    else
+      joke = joke:sub(1,1) .. joke:sub(2) .. '!'
+    end
+    
   end
 
   -- Add to seenJokes so we don't pull again
@@ -154,6 +168,7 @@ function Data.GetRandomJoke(context)
   local joke = ""
   local index = 0
   local usePrefix = false
+  local useSuffix = false
   local searchFilter = ""
 
   if context and not Util.isEmpty(context) then
@@ -323,7 +338,7 @@ function Data.randomPoolSet(target)
       d('Joker: The category "' .. target .. '" is being toggled off.')
     end
     table.insert(Joker.saved.randomPool.blacklist, target)
-    table.sort(Joker.saved.randomPool.blacklist, function(a,b) return a < b end)
+    Util.sortSet(Joker.saved.randomPool.blacklist)
   else
     if Joker.saved.internal.showDebug > 0 then
       d('Joker: The category "' .. target .. '" is being toggled ON.')
@@ -341,7 +356,7 @@ function Data.randomPoolSet(target)
         d('Joker: Found index, removing index ' .. indexToRemove)
       end
       table.remove(Joker.saved.randomPool.blacklist, indexToRemove)
-      table.sort(Joker.saved.randomPool.blacklist, function(a,b) return a < b end)
+      Util.sortSet(Joker.saved.randomPool.blacklist)
     end
   end
 end
