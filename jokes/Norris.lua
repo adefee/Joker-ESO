@@ -256,7 +256,7 @@ JokerData.Norris = {
   "According to Einstein's theory of relativity, Chuck Norris can actually roundhouse kick you yesterday.",
   "Most tough men eat nails for breakfast. Chuck Norris does all of his grocery shopping at Home Depot.",
   "Chuck Norris can hit you so hard that he can actually alter your DNA. Decades from now your descendants will occasionally clutch their heads and yell 'What The Hell was That?'.",
-  "There?s an order to the universe: space, time, Chuck Norris.... Just kidding, Chuck Norris is first.",
+  "There's an order to the universe: space, time, Chuck Norris.... Just kidding, Chuck Norris is first.",
   "It is said that looking into Chuck Norris' eyes will reveal your future. Unfortunately, everybody's future is always the same: death by a roundhouse-kick to the face.",
   "CNN was originally created as the 'Chuck Norris Network' to update Americans with on-the-spot ass kicking in real-time.",
   "Chuck Norris can win at solitaire with only 18 cards.",
