@@ -29,6 +29,12 @@ function Data.GetMessage(mood)
   return message
 end
 
+-- getPrefix()
+-- Data; Returns a prefix
+function Data.getPrefix()
+  return Joker.saved.activeIntros[(1 + math.floor((math.random() * #Joker.saved.activeIntros)))]
+end
+
 -- getJoke()
 -- Data; Returns random joke from given category
 -- @param jokeCategory, string, Category to pull from
@@ -45,7 +51,7 @@ function Data.GetJoke(jokeCategory, context)
   local usePrefix = false
   local searchFilter = ""
 
-  if not JokerData[jokeCategory] or Util.setContains(Joker.saved.randomPool.blacklist, jokeCategory) then
+  if not JokerData[jokeCategory] then
     return ""
   end
 
@@ -96,6 +102,10 @@ function Data.GetJoke(jokeCategory, context)
     joke = jokes[index]
   -- until (not Data.isSeen(jokeCategory, index) or loops >= loopLimit)
   until (loops > 0 or loops >= loopLimit)
+
+  if usePrefix then
+    joke = string.gsub(Data.getPrefix(), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
+  end
 
   -- Add to seenJokes so we don't pull again
   -- Data.addSeen(jokeCategory, index)
