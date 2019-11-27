@@ -121,7 +121,7 @@ function Data.GetRandomJoke(context)
   local searchFilter = ""
 
   if context and not Util.isEmpty(context) then
-    searchFilter = Util.trim(context)
+    searchFilter = string.lower(Util.trim(context)) -- Convert both content and searchFilter to lowercase
   end
 
   -- Later: when tracking seen jokes, loop until we find a joke we haven't seen
@@ -136,7 +136,8 @@ function Data.GetRandomJoke(context)
     for i,v in pairs(Joker.saved.randomPool.enabled) do
       if not Util.setContainsValue(Joker.saved.randomPool.blacklist, v) then
         for j,w in pairs(JokerData[v]) do
-          if string.match(w, searchFilter) then
+          local jokeContent = string.lower(w) -- Convert both content and searchFilter to lowercase
+          if string.match(jokeContent, searchFilter) then
             table.insert(jokes, w)
           end
         end
