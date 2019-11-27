@@ -23,7 +23,7 @@ L.Joker_Author_A = "Encounter bugs? Want more features? Just wanna chat? Add me 
 L.Joker_Author_B = " or via Discord: "
 
 -- Settings: Intro
-L.Joker_Intro_Status_Prefix = "You've viewed"
+L.Joker_Intro_Status_Prefix = "You've viewed atleast"
 L.Joker_Intro_Status_Suffix	= "loaded jokes, burns, wisdom, fun facts, & more!"
 
 -- Settings: Quick Commands
