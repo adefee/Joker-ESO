@@ -385,4 +385,57 @@ function Data.eightBall(question)
 end
 
 
+-- readyCheck()
+-- Display; Randomly choose a ready-check message, then trigger ready check. Optionals: <target: any prompt>
+function Data.readyCheck(target)
+
+  --[[
+    checkType:
+    0: SimpleMajority [51%],
+    1: SuperMajority [67%],
+    2: Unanimous [100%],
+  ]]
+  local checkType = 2
+  local explicitCheckType = false
+  local checkPrompts = JokerData.ReadyChecks
+  local checkPrompt = "Are you ready?"
+
+
+  if not Util.isEmpty(target) then
+    -- Custom ready check prompt.
+
+    -- Check for explicit election type
+    if Util.startsWith(target, 'unan ') then
+      checkType = 2
+      checkPrompt = target:gsub('unan ', '')
+    elseif Util.startsWith(target, 'simple ') then
+      checkType = 0
+      checkPrompt = target:gsub('simple ', '')
+    elseif Util.startsWith(target, 'super ') then
+      checkType = 1
+      checkPrompt = target:gsub('super ', '')
+    else
+      checkType = 2
+      checkPrompt = target
+    end
+
+  else
+    -- Choose random prompt
+    repeat
+      checkPrompt = Data.GetJoke('ReadyChecks')
+      local promptLength = string.len(checkPrompt)
+    until (promptLength < 350)
+  
+    -- First-Usage: Display intro message
+    if Joker.saved.internal.firstReadyCheck then
+      Joker.saved.internal.firstReadyCheck = false
+    end
+    
+  end
+
+  d('Ready checking with: ' .. checkPrompt)
+  BeginGroupElection(checkType, checkPrompt)
+
+end
+
 JokerDataFn = Data or {}

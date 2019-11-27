@@ -172,9 +172,9 @@ local function runtime_onload()
     Additional Slash Commands
   ]]
 
-  -- Add cmd: random joke
-  SLASH_COMMANDS["/joke"] = Joker.AnyJoke
-  SLASH_COMMANDS["/8ball"] = Data.eightBall
+  SLASH_COMMANDS["/joke"] = Joker.AnyJoke -- Add cmd: random joke
+  SLASH_COMMANDS["/8ball"] = Data.eightBall -- Add cmd: 8ball
+  SLASH_COMMANDS["/ready"] = Data.readyCheck -- Add cmd: ready checks
 
   -- Add cmd: attribution
   SLASH_COMMANDS["/joker-guild"] = function (context) 
@@ -213,7 +213,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   EVENT_MANAGER:UnregisterForEvent(Joker.name, EVENT_ADD_ON_LOADED)
 
   -- Keybinds
-  ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', 'Random Ready Check')
+  ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', L.Joker_Quick_Btn_JokeReady_Label)
 
   -- Load Saved Variables
   Joker.saved = ZO_SavedVars:NewAccountWide('JokerSavedVars', 1, nil, Joker.defaults)

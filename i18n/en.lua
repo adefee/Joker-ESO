@@ -81,6 +81,7 @@ L.Joker_Quick_Btn_JokeTwister_Tip = "Get a random tongue twister! Can you say it
 L.Joker_Quick_Btn_JokeCatFact = "Cat Fact"
 L.Joker_Quick_Btn_JokeCatFact_Tip = "Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!"
 L.Joker_Quick_Btn_JokeReady = "Ready Check"
+L.Joker_Quick_Btn_JokeReady_Label = "Random Ready Check"
 L.Joker_Quick_Btn_JokeReady_Slash = "Custom Ready Checks"
 L.Joker_Quick_Btn_JokeReady_Tip = "Ready checks, but funnier & faster! Leerrooyyyyyyy Jeeenkinnssssss!"
 L.Joker_Quick_Btn_JokeReady_Tip_Advanced = "Inside joke, or funnier than Joker? Ready check your group with your own custom message!"
