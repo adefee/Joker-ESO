@@ -77,12 +77,6 @@ end
 
 
 
-function Joker.ReadyCheck()
-  d('ready check')
-end
-
-
-
 --[[----------------------------------------------------------
   Addon Instantiation
   - Initialize any runtimes & ESO hooks

@@ -93,8 +93,6 @@ function Data.settingsPanelPool()
   table.sort(Joker.saved.randomPool.enabled, function(a,b) return a < b end)
 
   for i,v in ipairs(Joker.saved.randomPool.enabled) do
-    d('Joker: ' .. i .. ', ' .. v)
-
     -- Don't add specific things
     if v ~= 'ReadyChecks' and v ~= 'CustomReadyChecks' and v ~= 'CustomJokes' then
       table.insert(thisPanelSettings, {
