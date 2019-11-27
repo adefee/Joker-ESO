@@ -123,7 +123,7 @@ JokerData.Dad = {
   "C, E-flat, and G walk into a bar. The bartender shows them the door, saying 'Sorry, we don't serve minors!'",
   "A sign at a music shop: 'Gone Chopin, be Back in a minuet!'",
   "What was Beethoven's favorite fruit? Ba-na-na-naaaaaaa!",
-  "A photon is going through security. The TSA agent asks if he has any luggage. The photo cooly replies, 'No, I'm traveling light!'",
+  "A photon is going through security. The TSA agent asks if he has any luggage. The photon cooly replies, 'No, I'm traveling light!'",
   "The bartender says 'Sorry, we don't server time travelers here'. A time traveler walks into a bar.",
   "What did the Buddhist say to the hot dog vendor? 'Make me one with everything.'",
   "If you jumped off the bridge in Paris, you'd be in Seine.",
