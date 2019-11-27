@@ -99,4 +99,5 @@ JokerData.Edgy = {
   "Why is there air conditioning in hospitals? To keep the vegetables cool and fresh.",
   "'Racecar' backwards is 'racecar'. 'Racecar' sideways is how Paul Walker died.",
   "Having sex without a condom is like using your phone without a case, much better experience but it’s risky!",
+  "Did you hear about the dwarf that overdosed on Viagra? He's a little stiff now."
 }

@@ -97,4 +97,5 @@ JokerData.ESO = {
   "'How is your wife,' asked Zalither. 'She's in bed with laryngitis,' replied Harlyth. 'Is that Argonian bastard back in town again?'",
   "Why does Fargoth smell? So blind people can hate him too.",
   "You know, it only takes one drink to get a Nord drunk. I can't remember if it's the thirteenth or the fourteenth.",
+  "Why shouldn't you piss off a dwarf? Because he's got a short temper."
 }
