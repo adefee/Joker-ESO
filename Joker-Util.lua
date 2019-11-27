@@ -117,4 +117,10 @@ function Util.colorize(text, color)
   return text
 end
 
+-- roundNumber
+-- Util: Round number [num] to given decimal places [numDecimalPlaces]
+function Util.roundNumber(num, numDecimalPlaces)
+  return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+end
+
 JokerUtilityFn = Util or {}

@@ -502,4 +502,44 @@ function Data.choose(context)
   end
 end
 
+
+-- roll()
+-- Display; Rolls with given ceiling and includes memo (if provided). Space delimited: /roll floor ceiling memo
+function Data.roll(context)
+  local floor = 1
+  local ceiling = 10
+  local contextObj = Util.split(context, ' ')
+  local memo = ''
+  local maxNumber = 999999999 -- ESO will error out if we roll higher than this number
+
+  -- Determine floor & ceiling for roll
+  if not Util.isEmpty(contextObj[1]) then
+    ceiling = tonumber(contextObj[1]) or ceiling
+  end
+
+  if (ceiling > maxNumber or floor > maxNumber) then
+    d("Joker: " .. Joker_Quick_Btn_JokeRolls_Max .. ' ' .. Util.formatNumber(maxNumber))
+    return false
+  end
+
+  local random = math.random(floor, ceiling)
+
+  -- Determine if memo is provided (for now, must include explicit floor and ceiling)
+  if contextObj[2] and not Util.isEmpty(Util.trim(contextObj[2])) then
+    memo = string.gsub(context, contextObj[1], '')
+    memo = '(Memo: ' .. Util.trim(memo) .. ')'
+  end
+
+  local percentChance = '~' .. Util.roundNumber((100 / ceiling), 4) .. '% chance per 1'
+
+  -- If we include a memo, publish to chat; otherwise, publish to console
+  if contextObj[2] then
+    StartChatInput('Rolling a ' .. Util.formatNumber(((ceiling - floor) + 1)) .. '-sided die (' .. percentChance .. ') ... and ' .. Util.formatNumber(random) .. ' is rolled! ' .. memo, CHAT_CHANNEL)
+  else
+    d('Joker: Rolling a ' .. Util.formatNumber(((ceiling - floor) + 1)) .. '-sided die (' .. percentChance .. ') ... and ' .. Util.colorize(Util.formatNumber(random)) .. ' is rolled! ' .. Util.colorize(memo))
+    StartChatInput('Joker: Rolling a ' .. Util.formatNumber(((ceiling - floor) + 1)) .. '-sided die (' .. percentChance .. ') ... and ' .. Util.formatNumber(random) .. ' is rolled! ' .. memo, CHAT_CHANNEL)
+  end
+
+end
+
 JokerDataFn = Data or {}
