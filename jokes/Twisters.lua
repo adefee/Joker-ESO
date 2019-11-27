@@ -23,7 +23,7 @@ JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.Twisters = {
   label = "Twisters",
-  command = "twisters",
+  command = "twister",
   nsfw = false,
   joke = true,
   whitelistSlashCommand = true

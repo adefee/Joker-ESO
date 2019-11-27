@@ -116,7 +116,7 @@ L.Joker_Options_RandomPool_Types_Available	= "Available"
 L.Joker_Options_RandomPool_Types_Available_Tip	= "Any items that include the terms Edgy and XXX contain content that has been flagged as potentially inappropriate for some audiences. Please be mindful of others and use responsibly."
 
 -- Settings: Available Commands
-L.Joker_Commands_Title = "/Slash Commands"
+L.Joker_Commands_Title = "/Slash Commands Reference"
 
 -- Settings: More Jokes
 L.Joker_More_Title = "Want More Jokes?"

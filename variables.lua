@@ -107,6 +107,8 @@ Joker = {
     },
     rolls = {
       syncWhenAble = 1
+    },
+    seenJokes = {
     }
   }
 }

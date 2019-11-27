@@ -13,6 +13,32 @@ local Data = JokerDataFn or {}
 local Util = JokerUtilityFn or {}
 
 
+-- getJokeSeen()
+-- Data; Determines if joke is seen
+function Data.getJokeSeen(category, index)
+  if not Util.setContains(Joker.saved.seenJokes, category) then
+    return false
+  end
+
+  return Util.setContainsValue(Joker.saved.seenJokes[category], index)
+end
+
+-- setJokeSeen()
+-- Data; Set joke as seen
+function Data.setJokeSeen(category, index)
+
+  if not Util.setContains(Joker.saved, 'seenJokes') then
+    Joker.saved.seenJokes = {}
+  end
+
+  if not Util.setContains(Joker.saved.seenJokes, category) then
+    Joker.saved.seenJokes[category] = {}
+  end
+
+  table.insert(Joker.saved.seenJokes[category], index)
+  Joker.saved.count.seen = tonumber(Joker.saved.count.seen) + 1
+end
+
 -- getMessage()
 -- Data; Returns mood message from Joker
 -- @param mood, string, happy|sad
@@ -148,7 +174,7 @@ function Data.GetRandomJoke(context)
         for j,w in pairs(JokerData[v]) do
           local jokeContent = string.lower(w) -- Convert both content and searchFilter to lowercase
           if string.match(jokeContent, searchFilter) then
-            table.insert(jokes, w)
+            table.insert(jokes, v .. ':::' .. j .. ':::' .. w)
           end
         end
       end
@@ -159,20 +185,22 @@ function Data.GetRandomJoke(context)
     --   Util.resetSeen(jokeCategory)
     -- end
 
+    -- Update count
+    jokeCount = Util.countSet(jokes)
+
     -- Loop until we find a joke we haven't yet seen. If we hit loopLimit, we'll just use what we have 
     repeat
       local random = math.random() * jokeCount
       loops = loops + 1
       index = 1 + math.floor(random)
       joke = jokes[index]
-    -- until (not Data.isSeen(jokeCategory, index) or loops >= loopLimit)
-    until (loops > 0 or loops >= loopLimit)
+      thisJokeCategory, thisJokeIndex, thisJokeContent = joke:match("(.+):::(.+):::(.+)")
+      joke = thisJokeContent
+    until (not Data.getJokeSeen(thisJokeCategory, thisJokeIndex) or loops >= loopLimit)
+    -- until (loops > 0 or loops >= loopLimit)
 
     -- Add to seenJokes so we don't pull again
-    -- Data.addSeen(jokeCategory, index)
-
-    -- Update count
-    jokeCount = Util.countSet(jokes)
+    Data.setJokeSeen(thisJokeCategory, thisJokeIndex)
 
     if jokeCount < 1 and not Util.isEmpty(searchFilter) then
       d('Unable to find any jokes matching your search for "'.. searchFilter ..'". ' .. Data.GetMessage('sad'))
@@ -196,11 +224,16 @@ function Data.GetRandomJoke(context)
       table.insert(availableCategories, 'Dad')
     end
 
-    local randomCategoryIndex = 1 + math.floor(math.random() * #availableCategories)
-    local randomCategory = availableCategories[randomCategoryIndex]
-    local randomJokeIndex = 1 + math.floor(math.random() * #JokerData[randomCategory])
-    local randomJoke = JokerData[randomCategory][randomJokeIndex]
-    return randomJoke
+    repeat
+      randomCategoryIndex = 1 + math.floor(math.random() * #availableCategories)
+      randomCategory = availableCategories[randomCategoryIndex]
+      randomJokeIndex = 1 + math.floor(math.random() * #JokerData[randomCategory])
+      joke = JokerData[randomCategory][randomJokeIndex]
+    until (not Data.getJokeSeen(randomCategory, randomJokeIndex) or loops >= loopLimit)
+
+    Data.setJokeSeen(randomCategory, randomJokeIndex)
+
+    return joke
   end
 
 end
