@@ -173,7 +173,8 @@ local function runtime_onload()
   ]]
 
   -- Add cmd: random joke
-  SLASH_COMMANDS["/joke"] = function (context) Joker.AnyJoke(context) end
+  SLASH_COMMANDS["/joke"] = Joker.AnyJoke
+  SLASH_COMMANDS["/8ball"] = Data.eightBall
 
   -- Add cmd: attribution
   SLASH_COMMANDS["/joker-guild"] = function (context) 

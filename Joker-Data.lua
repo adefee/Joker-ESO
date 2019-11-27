@@ -313,8 +313,76 @@ function Data.randomPoolSet(target)
   end
 end
 
+-- randomPoolSetDefault()
+-- Data; Return randomPool blacklist to default settings
 function Data.randomPoolSetDefault()
   Joker.saved.randomPool.blacklist = Joker.defaults.randomPool.blacklist
 end
+
+-- EightBall()
+-- Display; Show a yes, no, neutral status. Optionals: <question>
+function Data.eightBall(question)
+  local yesAnswers = {
+    "Signs point to yes!",
+    "The outlook is good!",
+    "Don't count on it!",
+    "Yes!",
+    "It is certain.",
+    "Without a doubt!",
+    "Duh!",
+    "Mhm.",
+    "Fk yeah! ('Murica)",
+    "It is decidedly so.",
+  }
+
+  local noAnswers = {
+    "My sources say 'no'.",
+    "As I see it, no.",
+    "You aren't going to like this, but ... no.",
+    "Very doubtful.",
+    "What?!? No! Are you crazy?",
+    "Awwwww, hell naw!",
+    "Nah.",
+    "Unlikely.",
+  }
+
+  local neutAnswers = {
+    "I'm neutral, try again.",
+    "I dunno.",
+    "Ask later.",
+    "Reply is a bit hazy, try again!",
+    "Hmm, better not tell you now...",
+    "Can't predict that right now, sorry. Try again.",
+  }
+
+  -- Decide how to answer
+  local random = math.random(0, 2)
+  local random2 = math.random() * #yesAnswers
+  local index = 1 + math.floor(random2)
+  local answer = yesAnswers[index]
+
+  if random == 0 then
+    answerType = "yes"
+  elseif random == 1 then
+    answerType = "no"
+    random2 = math.random() * #noAnswers
+    index = 1 + math.floor(random2)
+    answer = noAnswers[index]
+  elseif random == 2 then
+    answerType = "neut"
+    random2 = math.random() * #neutAnswers
+    index = 1 + math.floor(random2)
+    answer = neutAnswers[index]
+  end
+  local prefix = "Joker's 8ball says: "
+
+  -- Question provided, so repeat back before giving answer.
+  if not Util.isEmpty(question) then
+    d('You asked the 8ball: "' .. question ..'" ...')
+  end
+
+  d(prefix .. answer)
+end
+
 
 JokerDataFn = Data or {}
