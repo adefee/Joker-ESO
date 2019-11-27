@@ -1,6 +1,13 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your jokes in the
+  * '_MyCustomJokes.lua' file instead.
+  *
   * COMPILATION: Wisdom tidbits & shower thoughts (sometimes motivational, sometimes not)
 	*
 	* SOURCES:
@@ -11,6 +18,15 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.Wisdom = {
+  label = "Shower Wisdom",
+  command = "wisdom",
+  nsfw = false,
+  joke = true,
+  whitelistSlashCommand = true
+}
 
 JokerData.Wisdom = {
   "Temples are free to enter but still empty. Pubs charge to enter, but are full. People ignore inner peace & choose to pay for self destruction.",

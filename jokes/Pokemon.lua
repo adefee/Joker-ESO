@@ -1,6 +1,14 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your jokes in the
+  * '_MyCustomJokes.lua' file instead.
+  *
   * COMPILATION: Pokemon
 	*
 	* SOURCES:
@@ -11,6 +19,23 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.Pokemon = {
+  command = "pokemon",
+  joke = true,
+  label = "Pokemon",
+  nsfw = false
+}
+
+JokerData.Config.PickupLinesPokemon = {
+  command = "pickup-poke",
+  joke = true,
+  label = "Pickup Lines (Pokemon)",
+  nsfw = true,
+  usePrefix = true,
+  whitelistSlashCommand = true
+}
 
 JokerData.Pokemon = {
   "What did one Geodude say to the other Geodude? Let's rock!",

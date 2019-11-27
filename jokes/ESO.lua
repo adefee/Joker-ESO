@@ -1,6 +1,13 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your jokes in the
+  * '_MyCustomJokes.lua' file instead.
+  *
   * COMPILATION: ESO-related jokes
 	*
 	* SOURCES:
@@ -10,6 +17,15 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.ESO = {
+  label = "ESO",
+  command = "eso",
+  joke = true,
+  nsfw = false,
+  whitelistSlashCommand = true
+}
 
 JokerData.ESO = {
   "What does a new Sentinel private learn first as a combat technique? How to retreat.",
@@ -81,4 +97,5 @@ JokerData.ESO = {
   "'How is your wife,' asked Zalither. 'She's in bed with laryngitis,' replied Harlyth. 'Is that Argonian bastard back in town again?'",
   "Why does Fargoth smell? So blind people can hate him too.",
   "You know, it only takes one drink to get a Nord drunk. I can't remember if it's the thirteenth or the fourteenth.",
+  "Why shouldn't you piss off a dwarf? Because he's got a short temper."
 }

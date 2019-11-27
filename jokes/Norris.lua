@@ -1,6 +1,13 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your jokes in the
+  * '_MyCustomJokes.lua' file instead.
+  *
   * COMPILATION: Chuck Norris jokes
 	*
 	* SOURCES:
@@ -11,6 +18,15 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.Norris = {
+  command = "norris",
+  label = "Norris",
+  joke = true,
+  nsfw = false,
+  whitelistSlashCommand = true
+}
 
 JokerData.Norris = {
   "When an episode of Walker Texas Ranger was aired in France, the French surrendered to Chuck Norris just to be on the safe side.",

@@ -2,7 +2,7 @@
 	<Layer name="SI_KEYBINDINGS_LAYER_GENERAL">
 		<Category name="|cd66e4aJoker|r">
 			<Action name="JOKER_READYCHECK">
-				<Up>Joker.readyCheck()</Up>
+				<Up>JokerDataFn.readyCheck()</Up>
 			</Action>
 		</Category>
 	</Layer>

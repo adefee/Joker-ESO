@@ -1,6 +1,13 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your jokes in the
+  * '_MyCustomJokes.lua' file instead.
+  *
   * COMPILATION: Star Wars-related jokes
 	*
 	* SOURCES:
@@ -13,6 +20,15 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.StarWars = {
+  label = "Star Wars",
+  command = "starwars",
+  nsfw = false,
+  joke = true,
+  whitelistSlashCommand = true
+}
 
 JokerData.StarWars = {
   "Which program do Jedi use to open PDF files? Adobe Wan Kenobi.",

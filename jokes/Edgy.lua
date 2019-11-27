@@ -1,6 +1,13 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your jokes in the
+  * '_MyCustomJokes.lua' file instead.
+  *
   * COMPILATION: Edgy/Explicit jokes (user is warned prior to first use)
 	*
 	* SOURCES:
@@ -10,6 +17,14 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.Edgy = {
+  label = "Edgy",
+  command = "edgy",
+  joke = true,
+  nsfw = true
+}
 
 JokerData.Edgy = {
   "What is worse than ants in your pants? Uncles!",
@@ -84,4 +99,5 @@ JokerData.Edgy = {
   "Why is there air conditioning in hospitals? To keep the vegetables cool and fresh.",
   "'Racecar' backwards is 'racecar'. 'Racecar' sideways is how Paul Walker died.",
   "Having sex without a condom is like using your phone without a case, much better experience but it’s risky!",
+  "Did you hear about the dwarf that overdosed on Viagra? He's a little stiff now."
 }

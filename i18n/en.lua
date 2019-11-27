@@ -13,19 +13,27 @@ L.Joker_And = "and"
 L.Joker_Of = "of"
 L.Joker_With = "with"
 L.Joker_Wins = "Wins"
+L.Joker_Items = "Items"
 
--- SECTION: Intro
+-- SECTION: Attribution
+L.Joker_Guild_A = "Joker is tested & proudly sponsored by members of "
+L.Joker_Guild_B = "! Come hang out with us in Discord: "
+L.Joker_Guild_C = " ... FYI we are mostly active in the evenings :)"
+L.Joker_Author_A = "Encounter bugs? Want more features? Just wanna chat? Add me ingame (NA): "
+L.Joker_Author_B = " or via Discord: "
+
+-- Settings: Intro
 L.Joker_Intro_Status_Prefix = "You've viewed"
 L.Joker_Intro_Status_Suffix	= "loaded jokes, burns, wisdom, fun facts, & more!"
 
--- SECTION: Quick Commands
+-- Settings: Quick Commands
 L.Joker_Quick_Title = "Quick Commands"
 L.Joker_Quick_Subtitle = "Click a button below to get a joke!"
 L.Joker_Quick_Desc = "Joker will post a joke to your chatbox - just hit 'Enter' to send! Whenever possible, Joker will try to show you jokes you haven't seen before."
 L.Joker_QuickPop_Desc = "Movies, TV, Pop Culture"
 L.Joker_QuickUtil_Desc = "Other / Utility"
 
--- Quick Command Buttons (Jokes)
+-- Settings: Quick Commands - Buttons (Jokes)
 L.Joker_Quick_Btn_Joker = "Shows the Joker settings window (this window)"
 L.Joker_Quick_Btn_Joke = "Any Joke"
 L.Joker_Quick_Btn_Joke_Slash = "Jokes and Such"
@@ -64,7 +72,7 @@ L.Joker_Quick_Btn_JokeBurn_Tip = "Adds a random burn to your active chatbox. See
 L.Joker_Quick_Btn_JokeBurn_Tip_Advanced = "Adds a random burn to your active chatbox. Optionally add a target to make them the subject!"
 
 
--- Quick Command Buttons (Other/Utility)
+-- Settings: Quick Commands - Buttons (Other/Utility)
 L.Joker_Quick_Btn_Other_Slash = "Other Fun Commands"
 L.Joker_Quick_Btn_Joke8Ball = "8ball"
 L.Joker_Quick_Btn_Joke8Ball_Tip = "Undecided? Get advice from the sage 8ball."
@@ -73,6 +81,7 @@ L.Joker_Quick_Btn_JokeTwister_Tip = "Get a random tongue twister! Can you say it
 L.Joker_Quick_Btn_JokeCatFact = "Cat Fact"
 L.Joker_Quick_Btn_JokeCatFact_Tip = "Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!"
 L.Joker_Quick_Btn_JokeReady = "Ready Check"
+L.Joker_Quick_Btn_JokeReady_Label = "Random Ready Check"
 L.Joker_Quick_Btn_JokeReady_Slash = "Custom Ready Checks"
 L.Joker_Quick_Btn_JokeReady_Tip = "Ready checks, but funnier & faster! Leerrooyyyyyyy Jeeenkinnssssss!"
 L.Joker_Quick_Btn_JokeReady_Tip_Advanced = "Inside joke, or funnier than Joker? Ready check your group with your own custom message!"
@@ -80,14 +89,24 @@ L.Joker_Quick_Btn_JokeReady_Tip_Advanced_Vote = "Why stop at ready checks? Cast 
 L.Joker_Quick_Btn_JokeRolls_Title = "Rolls, Raffles, etc"
 L.Joker_Quick_Btn_JokeRolls_Tip = "RNG roll. By default, rolls between 1 and 10. Including a single integer ('/roll X') will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers ('/roll X,Y'). You may optionally also include a prize/memo ('/roll x,y <prize>', supports item links) - which will also post the roll results and winner in chat for you."
 L.Joker_Quick_Btn_JokeChoose_Tip = "Similar to /roll, chooses randomly among given options (separated by space, like '/choose option option2 option3'). You may instead use '/choose party' to randomly choose a winner from your party (up to 24 members) - with the option to assign a prize ('/choose party <prize>', supports item links)."
+L.Joker_Quick_Btn_JokeRolls_Max = "ESO won't let me roll numbers larger than"
 
 
--- SECTION: Options
-L.Joker_Options_Title	= "Customization Options"
+-- Settings: Options
+L.Joker_Options_Title	= "Basic Options"
+L.Joker_Options_Title_Tooltip	= "Customize Joker's behavior"
 L.Joker_Options_Periodic = "Show me jokes periodically"
 L.Joker_Options_Periodic_Tip	= "Joker can periodically post a joke to your chat window (only visible to you)!"
 L.Joker_Options_PeriodicFrequency = "How often should Joker send you a joke?"
-L.Joker_Options_PeriodicFrequency_Tip	= "This is the frequency ceiling at which Joker sends (just you) a joke. Joker procedurally increase joke chance based on number of zones since last joke (with a guaranteed occurence at the ceiling you set). The lower the value, the more often jokes will appear!"
+L.Joker_Options_PeriodicFrequency_Tip	= "This is the frequency ceiling at which Joker sends (just you) a joke, based on number of zones/UI reloads. The lower the value, the more often jokes will appear!"
+L.Joker_Options_Periodic_Health = "Show me health reminders periodically"
+L.Joker_Options_Periodic_Health_Tip	= "Joker can periodically remind you to take a break, walk around, hydrate, etc. Frequency/timing is based on recommendations from health professionals. This feature is not yet implemented and will be added in a future update (soon)."
+
+L.Joker_Options_Categories = "Random Joke Categories"
+L.Joker_Options_Categories_Description_A = "When using the /joke command (or when Joker periodically sends you a joke), Joker will randomly choose a joke from any of the categories enabled below. If all categories are disabled, Joker will pull only Dad jokes."
+L.Joker_Options_Categories_Description_B = "Note: All categories are still always available via their respective slash commands, even if disabled here."
+L.Joker_Options_Categories_ItemTooltip = "Available any time with /"
+
 L.Joker_Options_RandomPool = "Random /Joke Pool"
 L.Joker_Options_RandomPool_Warning = "Intended for advanced users - incorrect values here may result in no jokes being shown!"
 L.Joker_Options_RandomPool_Tip	= "For advanced users: Comma-separated list of joke types you want included in the random pool for /joke. See below or check the addon page on ESOUI for a list of all possible options."
@@ -96,14 +115,14 @@ L.Joker_Options_RandomPool_Types_Default	= "Default"
 L.Joker_Options_RandomPool_Types_Available	= "Available"
 L.Joker_Options_RandomPool_Types_Available_Tip	= "Any items that include the terms Edgy and XXX contain content that has been flagged as potentially inappropriate for some audiences. Please be mindful of others and use responsibly."
 
--- SECTION: Available Commands
-L.Joker_Commands_Title = "/Slash Commands"
+-- Settings: Available Commands
+L.Joker_Commands_Title = "/Slash Commands Reference"
 
--- SECTION: More Jokes
+-- Settings: More Jokes
 L.Joker_More_Title = "Want More Jokes?"
 L.Joker_More_Desc = "More fun-, pop-culture- and leisure-minded options (such as movie & TV-show jokes, popular memes, riddles, and more) are expected to be added in future releases. Bug reports, requests & suggestions are always enthusiastically welcomed! Have jokes you want to add? Send them to me! Whisper me ingame (NA @CallMeLent), or get in touch via esoui.com, Twitter (@adefee), or Github (@adefee)."
 
--- SECTION: Legal
+-- Settings: Legal
 L.Joker_Legal_Title	 = "Legal"
 L.Joker_Legal_Desc	 = "I want to emphasize that the jokes contained in this addon are (for the most part) not my own, but rather are originally sourced from various public internet sources. I claim no ownership of the content, and make no profit from this addon or any content therein. All code for this addon (and the content therein) is open-source and publicly available on Github. If there are any copyright, trademark, DMCA, or other legal issues please reach out at me@andrewdefee.com and I'll comply as quickly and accurately as I can within the scope of US law. I'm just trying to share a few laughs - after all, what good is a joke if it's not shared?"
 

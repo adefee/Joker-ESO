@@ -1,6 +1,13 @@
+-- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
-	----------------------------------------------------------
+  ----------------------------------------------------------
+  *
+  * ADDING YOUR OWN JOKES:
+  * Be aware that modifying this file incorrectly could break Joker,
+  * so for normal users I recommend just compiling your jokes in the
+  * '_MyCustomJokes.lua' file instead.
+  *
   * COMPILATION: Cheesy pickup lines
   *
   * INCLUDES MULTIPLE!
@@ -19,9 +26,37 @@
 ]]--
 
 JokerData = JokerData or {}
+JokerData.Config = JokerData.Config or {}
+
+JokerData.Config.PickupLines = {
+  command = "pickup",
+  label = "Pickup Lines",
+  nsfw = false,
+  joke = true,
+  usePrefix = true,
+  whitelistSlashCommand = true
+}
+
+JokerData.Config.PickupLinesXXX = {
+  command = "pickup-xxx",
+  label = "Pickup Lines (Adult)",
+  nsfw = true,
+  joke = true,
+  usePrefix = true,
+  whitelistSlashCommand = true
+}
+
+JokerData.Config.PickupLinesHP = {
+  command = "pickup-hp",
+  label = "Pickup Lines (Harry Potter)",
+  joke = true,
+  nsfw = false,
+  usePrefix = true,
+  whitelistSlashCommand = true
+}
 
 -- Cheesy and cute (mostly clean) lines
-JokerData.Pickup = {
+JokerData.PickupLines = {
   "Can I have your picture so I can show Santa what I want for Christmas?",
   "Are you a magician? Because whenever I look at you, everyone else disappears!",
   "Was your dad a boxer? Because damn, you’re a knockout!",

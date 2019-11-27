@@ -1,0 +1,67 @@
+## Title: |cFF9900Joker
+## Description: Best enjoyed with Skooma, |cFF9900Joker |cFFFFFFoffers a collection of various jokes, riddles, ready checks, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
+## Author: |cFF9900Lent|cFFFFFF (IGN |cFF9900@CallMeLent|cFFFFFF)
+
+## Version: 3.0.0
+## AddOnVersion: 300000
+## APIVersion: 100028
+## ## ADDING2.3.0_DependsOn: LibAddonMenu-2.0
+
+## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 
+## The Elder Scrolls® and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the 
+## United States and/or other countries. All rights reserved.
+
+## SavedVariables: JokerSavedVariables
+## OptionalDependsOn: LibAddonMenu-2.0
+
+
+# Start Loading Joker Components
+Joker.xml
+
+
+## I18n & Locales (default: en)
+i18n\en.lua
+i18n\$(language).lua
+
+
+## Lib Dependencies
+libs\LibStub\LibStub.lua
+libs\LibAddonMenu-2.0\LibAddonMenu-2.0.lua
+libs\LibAddonMenu-2.0\controls\panel.lua
+libs\LibAddonMenu-2.0\controls\submenu.lua
+libs\LibAddonMenu-2.0\controls\button.lua
+libs\LibAddonMenu-2.0\controls\checkbox.lua
+libs\LibAddonMenu-2.0\controls\colorpicker.lua
+libs\LibAddonMenu-2.0\controls\custom.lua
+libs\LibAddonMenu-2.0\controls\description.lua
+libs\LibAddonMenu-2.0\controls\dropdown.lua
+libs\LibAddonMenu-2.0\controls\editbox.lua
+libs\LibAddonMenu-2.0\controls\header.lua
+libs\LibAddonMenu-2.0\controls\slider.lua
+libs\LibAddonMenu-2.0\controls\texture.lua
+libs\LibAddonMenu-2.0\controls\iconpicker.lua
+libs\LibAddonMenu-2.0\controls\divider.lua
+
+## Jokes
+jokes\Burns.lua
+jokes\Cat.lua
+jokes\Dad.lua
+jokes\Edgy.lua
+jokes\ESO.lua
+jokes\GameOfThrones.lua
+jokes\HarryPotter.lua
+jokes\Norris.lua
+jokes\PickupLines.lua
+jokes\ReadyChecks.lua
+jokes\Riddles.lua
+jokes\Pokemon.lua
+jokes\StarWars.lua
+jokes\Twisters.lua
+jokes\Wisdom.lua
+
+## Core
+Joker.lua
+bindings.xml
+
+## Addon Settings Window
+Settings.lua
