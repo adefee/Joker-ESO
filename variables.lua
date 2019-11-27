@@ -17,8 +17,8 @@ JokerL = JokerL or {} -- i18n
 
 Joker = {
   name = "Joker",
-  version = "4.1.3",
-  versionESO = 401030,
+  version = "4.2.0",
+  versionESO = 402000,
   author = "Lent (IGN @CallMeLent, Github @adefee)",
   color = "D66E4A",
   locale = JokerL:GetLanguage(),
@@ -102,7 +102,7 @@ Joker = {
       health_lastSeen = 0 -- Timestamp in seconds a message was last seen or that user logged in
     },
     randomPool = {
-      blacklist = {"Burns", "CustomJokes", "CustomReadyChecks", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},
+      blacklist = {"Burns", "Curse", "CustomJokes", "CustomReadyChecks", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},
       enabled = {}
     },
     rolls = {

@@ -99,6 +99,23 @@ local function runtime_maiden()
   Joker.saved.internal.firstLoad = 0
 end
 
+-- Run any updates needed if addon has been updated
+local function runtime_updates()
+  if Joker.saved.internal.lastUpdate < Joker.versionESO then
+    local oldVersion = Joker.saved.internal.lastUpdate -- Shorter var to reference
+    -- Version has been updated, see if there any updates needed
+
+    -- Update 4.2.0 added curses, needs to not be default
+    if oldVersion < 402000 then
+      if Joker.saved.internal.showDebug > 0 then
+        d('Joker: Housekeeping for update to version 4.2.0')
+      end
+      table.insert(Joker.saved.randomPool.blacklist, 'Curse')
+      Util.sortSet(Joker.saved.randomPool.blacklist)
+      Joker.saved.internal.lastUpdate = 402000
+    end
+  end
+end
 
 -- Runs each load
 local function runtime_onload()
@@ -107,6 +124,8 @@ local function runtime_onload()
   if Joker.saved.internal.showDebug > 0 then
     d('Joker: debug mode enabled. Run /_joker-debug to toggle off.')
   end
+
+  runtime_updates()
 
   -- Iterate over jokes and enable as we need
   local loadedJokes = {}
@@ -199,8 +218,12 @@ end
 function Joker.Activated(e)
   EVENT_MANAGER:UnregisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED)
 
-  if Joker.saved and Joker.saved.internal.firstLoad > 0 then
-    runtime_maiden()
+  if Joker.saved then
+    if Joker.saved.internal.firstLoad > 0 then
+      runtime_maiden()
+    end
+
+    runtime_updates()
   end
 end
 EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED, Joker.Activated) -- When player is ready, only after everything is loaded.
