@@ -18,7 +18,7 @@
 JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
-JokerData.Config.MyCustomJokes = {
+JokerData.Config.CustomJokes = {
   label = "My Custom Jokes",
   command = "custom",
   nsfw = false,
@@ -26,7 +26,7 @@ JokerData.Config.MyCustomJokes = {
   disabled = true
 }
 
-JokerData.MyCustomJokes = {
+JokerData.CustomJokes = {
   "Seven days without a pun makes one weak.",
   "When does a joke become a dad joke? When it becomes apparent."
 }

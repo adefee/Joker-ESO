@@ -181,6 +181,10 @@ function Data.GetRandomJoke(context)
       end
     end
 
+    if Util.isSetEmpty(availableCategories) then
+      table.insert(availableCategories, 'Dad')
+    end
+
     local randomCategoryIndex = 1 + math.floor(math.random() * #availableCategories)
     local randomCategory = availableCategories[randomCategoryIndex]
     local randomJokeIndex = 1 + math.floor(math.random() * #JokerData[randomCategory])

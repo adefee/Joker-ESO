@@ -96,7 +96,7 @@ function Data.settingsPanelPool()
     d('Joker: ' .. i .. ', ' .. v)
 
     -- Don't add specific things
-    if v ~= 'ReadyChecks' and v ~= 'MyCustomJokes' then
+    if v ~= 'ReadyChecks' and v ~= 'CustomReadyChecks' and v ~= 'CustomJokes' then
       table.insert(thisPanelSettings, {
         type			  = "checkbox",
         name			  = optionIndent .. Util.colorize((Joker.saved.activeJokes[v] or 'Unknown Category')) .. Data.isNSFW(v, true) .. ' (' .. Joker.saved.count.categories[v] ..' ' .. L.Joker_Items .. ')', -- Category name + number of items in category

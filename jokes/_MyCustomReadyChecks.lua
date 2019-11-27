@@ -18,7 +18,7 @@
 JokerData = JokerData or {}
 JokerData.Config = JokerData.Config or {}
 
-JokerData.MyCustomReadyChecks = {
+JokerData.CustomReadyChecks = {
   "Go get 'em, Tiger!",
   "Life is like a box of chocolates..."
 }

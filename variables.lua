@@ -102,7 +102,7 @@ Joker = {
       health_lastSeen = 0 -- Timestamp in seconds a message was last seen or that user logged in
     },
     randomPool = {
-      blacklist = {"Burns", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},
+      blacklist = {"Burns", "CustomJokes", "CustomReadyChecks", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},
       enabled = {}
     },
     rolls = {

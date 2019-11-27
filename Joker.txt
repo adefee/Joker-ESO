@@ -44,6 +44,7 @@ jokes\Edgy.lua
 jokes\ESO.lua
 jokes\GameOfThrones.lua
 jokes\HarryPotter.lua
+jokes\LordOfTheRings.lua
 jokes\Norris.lua
 jokes\PickupLines.lua
 jokes\ReadyChecks.lua

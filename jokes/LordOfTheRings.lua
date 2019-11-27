@@ -21,7 +21,7 @@ JokerData.Config = JokerData.Config or {}
 
 JokerData.Config.LordOfTheRings = {
   command = "lotr",
-  disable = true,
+  disable = false,
   joke = true,
   label = "Lord of the Rings",
   nsfw = false,

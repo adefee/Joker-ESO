@@ -25,6 +25,12 @@ function Util.isEmpty(s)
   return s == nil or s == ""
 end
 
+-- isSetEmpty()
+-- Utility; Checks if given string is empty/nil
+function Util.isSetEmpty(t)
+  return next (t) == nil
+end
+
 -- trim()
 -- Utility; Trims extraneous whitespace from string
 function Util.trim(s)
