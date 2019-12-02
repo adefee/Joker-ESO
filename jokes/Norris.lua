@@ -488,7 +488,6 @@ JokerData.Norris = {
   "There are no races, only countries of people Chuck Norris has beaten to different shades of black and blue.",
   "Chuck Norris knows the last digit of pi.",
   "Chuck Norris's brain waves are suspected to be harmful to cell phones.",
-  "On the set of Walker Texas Ranger Chuck Norris brought a dying lamb back to life by nuzzling it with his beard. As the onlookers gathered, the lamb sprang to life. Chuck Norris then roundhouse kicked it, killing it instantly. This was just to prove that the good Chuck givet",
   "Chuck Norris doesn't use reflection, reflection asks politely for his help.",
   "If you Google search 'Chuck Norris getting his ass kicked' you will generate zero results. It just doesn't happen.",
   "Chuck Norris has never won an Academy Award for acting... because he's not acting.",

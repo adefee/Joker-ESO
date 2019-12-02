@@ -204,18 +204,21 @@ function Data.GetRandomJoke(context)
     jokeCount = Util.countSet(jokes)
 
     -- Loop until we find a joke we haven't yet seen. If we hit loopLimit, we'll just use what we have 
-    repeat
-      local random = math.random() * jokeCount
-      loops = loops + 1
-      index = 1 + math.floor(random)
-      joke = jokes[index]
-      thisJokeCategory, thisJokeIndex, thisJokeContent = joke:match("(.+):::(.+):::(.+)")
-      joke = thisJokeContent
-    until (not Data.getJokeSeen(thisJokeCategory, thisJokeIndex) or loops >= loopLimit)
-    -- until (loops > 0 or loops >= loopLimit)
+    if (jokeCount > 0) then
+      repeat
+        local random = math.random() * jokeCount
+        loops = loops + 1
+        index = 1 + math.floor(random)
+        joke = jokes[index]
+        thisJokeCategory, thisJokeIndex, thisJokeContent = joke:match("(.+):::(.+):::(.+)")
+        joke = thisJokeContent
+      until (not Data.getJokeSeen(thisJokeCategory, thisJokeIndex) or loops >= loopLimit)
+      -- until (loops > 0 or loops >= loopLimit)
 
-    -- Add to seenJokes so we don't pull again
-    Data.setJokeSeen(thisJokeCategory, thisJokeIndex)
+      -- Add to seenJokes so we don't pull again
+      Data.setJokeSeen(thisJokeCategory, thisJokeIndex)
+    end
+
 
     if jokeCount < 1 and not Util.isEmpty(searchFilter) then
       d('Unable to find any jokes matching your search for "'.. searchFilter ..'". ' .. Data.GetMessage('sad'))

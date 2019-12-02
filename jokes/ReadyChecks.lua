@@ -63,6 +63,5 @@ JokerData.ReadyChecks = {
   "Liquids sufficiently distanced from keyboard?",
   "We're going to die.",
   "Legends never die.",
-  "W.W.J.D. - What Would Julianos Do?",
-  "Let's get this bread!" -- @a'merri
+  "W.W.J.D. - What Would Julianos Do?"
 }
