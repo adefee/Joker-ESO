@@ -17,8 +17,8 @@ JokerL = JokerL or {} -- i18n
 
 Joker = {
   name = "Joker",
-  version = "4.2.1",
-  versionESO = 402010,
+  version = "4.3.0",
+  versionESO = 403000,
   author = "Lent (IGN @CallMeLent, Github @adefee)",
   color = "D66E4A",
   locale = JokerL:GetLanguage(),
@@ -106,7 +106,8 @@ Joker = {
       enabled = {}
     },
     rolls = {
-      syncWhenAble = 1
+      syncWhenAble = 1,
+      postToChat = 0
     },
     seenJokes = {
     }

@@ -66,7 +66,6 @@ JokerData.ESO = {
   "What is the first thing a Dunmer woman does in the morning? Walk home!",
   "What do you call an Orc with half a brain? Gifted!",
   "'I keep seeing spots before my eyes.' 'Have you seen a healer?' 'No, just spots.'",
-  "A big Nord named Julgen was set on by a gang of thieves. He fought them furiously, but in the end, they beat him into semiconsciousness. They searched his pockets and discovered that he only had three gold pieces on him. 'Do you mean to tell us you fought us like a mad lupe for three lousy gold pieces?' sneered one of the thieves. 'No,' answered Julgen. 'I was afraid you were after the four hundred gold pieces in my boot.'",
   "What is the thinnest book in the world? Redguard Heroes of the War of Betony.",
   "How can you tell if a Khajiit is lying? His lips are moving!",
   "Argonian in Morrowind: 'All I wanted was a pair of boots.'",

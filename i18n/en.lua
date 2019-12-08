@@ -23,8 +23,8 @@ L.Joker_Author_A = "Encounter bugs? Want more features? Just wanna chat? Add me 
 L.Joker_Author_B = " or via Discord: "
 
 -- Settings: Intro
-L.Joker_Intro_Status_Prefix = "You've viewed atleast"
-L.Joker_Intro_Status_Suffix	= "loaded jokes, burns, wisdom, fun facts, & more!"
+L.Joker_Intro_Status_Prefix = "Joker has loaded over"
+L.Joker_Intro_Status_Suffix	= "jokes, burns, wisdom, fun facts, & more!"
 
 -- Settings: Quick Commands
 L.Joker_Quick_Title = "Quick Commands"
@@ -114,6 +114,9 @@ L.Joker_Options_RandomPool_Types	= "Available Joke Types"
 L.Joker_Options_RandomPool_Types_Default	= "Default"
 L.Joker_Options_RandomPool_Types_Available	= "Available"
 L.Joker_Options_RandomPool_Types_Available_Tip	= "Any items that include the terms Edgy and XXX contain content that has been flagged as potentially inappropriate for some audiences. Please be mindful of others and use responsibly."
+
+L.Joker_Options_Rolls_PostToChat	= "Send /roll and /choose results to chat?"
+L.Joker_Options_Rolls_PostToChat_Tooltip	= "Results will always post to your system messages, but Joker can also post results to your chatbox so you can easily share results with others."
 
 -- Settings: Available Commands
 L.Joker_Commands_Title = "/Slash Commands Reference"

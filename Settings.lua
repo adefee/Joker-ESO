@@ -56,6 +56,15 @@ function Data.settingsPanelMain()
       width			  = "full",
       default			= Joker.saved.periodic.health_enable,
       disabled    = function() return true end,
+    },
+    {
+      type			  = "checkbox",
+      name			  = optionIndent .. L.Joker_Options_Rolls_PostToChat, -- Toggles Rolls being posted to chat
+      tooltip			= L.Joker_Options_Rolls_PostToChat_Tooltip,
+      getFunc			= function() return Joker.saved.rolls.postToChat > 0 end,
+      setFunc			= function() Data.toggleRollsToChat() end,
+      width			  = "full",
+      default			= Joker.saved.rolls.postToChat
     }
   }
 
@@ -140,7 +149,7 @@ function Joker.LoadSettings()
     ]]
     table.insert(panelOptions, {
       type = "description",
-      text = L.Joker_Intro_Status_Prefix .. ' ' .. Util.colorize(Util.formatNumber(Joker.saved.count.seen)) .. ' ' .. L.Joker_Of .. ' ' .. Util.colorize(Util.formatNumber(Joker.saved.count.loaded)) .. " " .. L.Joker_Intro_Status_Suffix,
+      text = L.Joker_Intro_Status_Prefix .. " " .. Util.colorize(Util.formatNumber(Joker.saved.count.loaded)) .. " " .. L.Joker_Intro_Status_Suffix,
       width = "full",
     })
 

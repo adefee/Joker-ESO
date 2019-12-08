@@ -296,6 +296,16 @@ function Data.togglePeriodicEvents(target)
   end
 end
 
+-- toggleRollsToChat
+-- Data; Toggles on/off whether roll results are sent to chatbox or displayed only in console
+function Data.toggleRollsToChat()
+  if Joker.saved.rolls.postToChat > 0 then
+    Joker.saved.rolls.postToChat = 0
+  else
+    Joker.saved.rolls.postToChat = 1
+  end
+end
+
 -- updatePeriodicSeen
 -- Data; Updates lastSeen timestamp for a periodic event
 function Data.updatePeriodicSeen(target)
@@ -527,12 +537,20 @@ function Data.choose(context)
     if (partySize > 0) then
       local random = Util.trim(partyMembers[math.random(#partyMembers)])
       local partyContext = context:gsub("party ", "", 1)
+      local resultsMessage = ''
 
       if partyContext then
-        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Util.trim(partyContext) .. '! Congrats!', CHAT_CHANNEL)
+        resultsMessage = 'Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins ' .. Util.trim(partyContext) .. '! Congrats!'
       else
-        StartChatInput('Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL)
+        resultsMessage = 'Choosing from ' .. partySize .. ' party members ... and ' .. random .. ' wins! Congrats!'
       end
+
+      d(resultsMessage)
+
+      if Joker.saved.rolls.postToChat > 0 then
+        StartChatInput(resultsMessage, CHAT_CHANNEL)
+      end
+
     else
       d('Joker: There\'s noone in your party, so can\'t choose from your party!')
     end
@@ -541,11 +559,18 @@ function Data.choose(context)
     d('Support for choosing among both online & offline guild members will be coming soon!')
   elseif #choices > 1 then
     local random = Util.trim(choices[math.random(#choices)])
+    local resultsMessage = ''
     if #itemsWon > 0 then
       local itemsWonString = table.concat(itemsWon, ", ")
-      StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins ' .. itemsWonString .. '! Congrats!', CHAT_CHANNEL) 
+      resultsMessage = 'Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins ' .. itemsWonString .. '! Congrats!'
     else
-      StartChatInput('Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins! Congrats!', CHAT_CHANNEL) 
+      resultsMessage = 'Choosing from ' .. #choices .. ' options ... and ' .. random .. ' wins! Congrats!'
+    end
+
+    d(resultsMessage)
+
+    if Joker.saved.rolls.postToChat > 0 then
+      StartChatInput(resultsMessage, CHAT_CHANNEL)
     end
        
   else
@@ -583,12 +608,12 @@ function Data.roll(context)
 
   local percentChance = '~' .. Util.roundNumber((100 / ceiling), 4) .. '% chance per 1'
 
-  -- If we include a memo, publish to chat; otherwise, publish to console
-  if contextObj[2] then
+  -- Post result to console
+  d('Joker: Rolling a ' .. Util.formatNumber(((ceiling - floor) + 1)) .. '-sided die (' .. percentChance .. ') ... and ' .. Util.colorize(Util.formatNumber(random)) .. ' is rolled! ' .. Util.colorize(memo))
+
+  -- If we include our rolls in chat via settings, post to chatbox:
+  if Joker.saved.rolls.postToChat > 0 then
     StartChatInput('Rolling a ' .. Util.formatNumber(((ceiling - floor) + 1)) .. '-sided die (' .. percentChance .. ') ... and ' .. Util.formatNumber(random) .. ' is rolled! ' .. memo, CHAT_CHANNEL)
-  else
-    d('Joker: Rolling a ' .. Util.formatNumber(((ceiling - floor) + 1)) .. '-sided die (' .. percentChance .. ') ... and ' .. Util.colorize(Util.formatNumber(random)) .. ' is rolled! ' .. Util.colorize(memo))
-    StartChatInput('Joker: Rolling a ' .. Util.formatNumber(((ceiling - floor) + 1)) .. '-sided die (' .. percentChance .. ') ... and ' .. Util.formatNumber(random) .. ' is rolled! ' .. memo, CHAT_CHANNEL)
   end
 
 end

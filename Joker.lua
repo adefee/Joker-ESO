@@ -114,6 +114,17 @@ local function runtime_updates()
       Util.sortSet(Joker.saved.randomPool.blacklist)
       Joker.saved.internal.lastUpdate = 402000
     end
+
+    -- Update 4.3.0 updates settings to toggle rolls being posted to chat, adds new savedVar option
+    if oldVersion < 403000 then
+      if Joker.saved.internal.showDebug > 0 then
+        d('Joker: Housekeeping for update to version 4.3.0')
+      end
+
+      Joker.saved.rolls.postToChat = 0
+      Joker.saved.internal.lastUpdate = 403000
+    end
+
   end
 end
 

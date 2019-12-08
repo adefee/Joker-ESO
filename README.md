@@ -3,7 +3,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download live version here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Branch Release: **v4.0.0** (ESO-400000)
+#### Current Branch Release: **v4.3.0** (ESO-403000)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
 
@@ -26,8 +26,8 @@ The following libraries are presently required for Joker to function properly. O
 
 ## Commands
 - **/joker**: Shows Joker settings & help.
-- **/joke**: Picks a random joke and adds to your active chatbox. Random pool does not include Edgy jokes or pickup lines.
-- **/joke-eso**: Adds a random ESO-related joke to your active chatbox
+- **/joke *filter***: Picks a random joke and adds to your active chatbox - just hit enter to send. Type '/joke text' to pick a random joke related to your text (for example, /joke argonian would show a random joke related to Argonians).
+- **/joke-eso** (or **/eso**): Adds a random ESO-related joke to your active chatbox
 - **/joke-dad** (or **/dad**): Adds a random Dad joke to your active chatbox
 - **/joke-got**: Adds a random Game of Thrones joke to your active chatbox
 - **/joke-wisdom** (or **/wisdom**): Adds a random wisdom tidbit or shower thought to your active chatbox
@@ -42,6 +42,7 @@ The following libraries are presently required for Joker to function properly. O
 - **/8ball**: Undecided? Get advice from the sage 8ball.
 - **/twister**: Get a random tongue twister! Can you say it 3 times fast?
 - **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
+- **/curse**: Exasperated? Throw out a /curse (or '/curse Mark' because Mark deserves it!). Curses are meant to be more amusing than anything, and are SFW - all curses are pulled from Elder Scrolls, Star Wars & Trek, LotR, other nerdy series, and vintage pop culture.
 - **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
 - And other helpful utilities, like:
   - **/roll <floor>,<ceiling>,<prize>**: RNG roll. By default, rolls between 1 and 10. Including a single integer will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers. You may optionally also include a prize/memo (supports item links) - which will also post the roll in chat for you.
@@ -62,10 +63,10 @@ Always accepting requests, suggestions, etc. Here are a few things currently on 
 - **[Added v1.2.1]**: Magic 8 Ball,
 - **[Added v2.0.4]**: Fun & customizable burns,
 - **[Added v2.0.3]**: Cheesy, customizable pickup lines,
-- **[In Progress]**: Add GUI options in Addon settings
-- **[In Progress]**: Add filters to /joke (e.g. '/joke argonian' to pull a random joke about an Argonian)
+- **[Added v4.0.0]**: Add GUI options in Addon settings
+- **[Added v4.0.0]**: Add filters to /joke (e.g. '/joke argonian' to pull a random joke about an Argonian)
 - MOAR ESO jokes, quotes, & canon references (more always being added)
-- Add your own jokes (locally),
+- **[Added v4.0.0]**: Add your own jokes (locally),
 - Automated submission of jokes to be included in the addon for everyone,
 - **[Added v2.3.0]**: Raffle: Randomly pick from pool of users,
 - **[Added v2.2.0]**Popular TV show references & jokes (GoT, Billions, The Walking Dead, Grey's Anatomy, etc - always taking requests),
