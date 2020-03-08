@@ -3,7 +3,7 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 ### [Download live version here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
-#### Current Branch Release: **v4.3.0** (ESO-403000)
+#### Current Branch Release: **v4.3.1** (ESO-403010)
 
 > Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
 
