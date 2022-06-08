@@ -1,4 +1,4 @@
--- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
+-- * _JOKER_VERSION: 8.0.0 ** Please do not modify this line.
 --[[----------------------------------------------------------
 	Joker - Jokes, Riddles, Fun Facts, & Other Tomfoolery
   ----------------------------------------------------------
@@ -205,9 +205,9 @@ local function runtime_onload()
   SLASH_COMMANDS["/roll"] = Data.roll -- Add cmd: roll
 
   -- Add cmd: attribution
-  SLASH_COMMANDS["/joker-guild"] = function (context) 
-    d(L.Joker_Guild_A .. Joker.attribution.guildNameLink .. L.Joker_Guild_B .. Joker.attribution.guildDiscord .. L.Joker_Guild_C)
-  end
+  -- SLASH_COMMANDS["/joker-guild"] = function (context) 
+  --   d(L.Joker_Guild_A .. Joker.attribution.guildNameLink .. L.Joker_Guild_B .. Joker.attribution.guildDiscord .. L.Joker_Guild_C)
+  -- end
   SLASH_COMMANDS["/joker-author"] = function (context) 
     d(L.Joker_Author_A .. Joker.attribution.authorIGN .. L.Joker_Author_B .. Joker.attribution.authorDiscord .. ' :)')
   end

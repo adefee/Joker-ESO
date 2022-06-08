@@ -1,4 +1,4 @@
--- * _JOKER_VERSION: 0.0.1 ** Please do not modify this line.
+-- * _JOKER_VERSION: 8.0.0 ** Please do not modify this line.
 --[[----------------------------------------------------------
   Utility Functions
   - Frequent needs not specific to Joker (isEmpty, setContains, etc)

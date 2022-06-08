@@ -3,7 +3,7 @@ const fs = require('fs'),
       request = require('request'),
       axios = require('axios'),
       chalk = require('chalk'),
-      credentials = require('./credentials.js')
+      credentials = require('./credentials')
 
 const cmd = require('minimist')(process.argv.slice(2))
 
@@ -96,10 +96,10 @@ function updateEsoui(token, addonId, version, description, changelog, compatibil
 
 const token = credentials.esoui_update_token; //https://www.esoui.com/downloads/filecpl.php?action=apitokens
 let version = '1.0.0', // The version of your addon
-    description = 'This is the text that will show on your main page',
-    changelog = 'This is the text that will show on your changelog',
-    compatibility = '4.3', // The game version your addon supports.
-    updateFile = './my-addon.zip' // Optional: Location of the upload package
+  description = 'This is the text that will show on your main page',
+  changelog = 'This is the text that will show on your changelog',
+  compatibility = '4.3', // The game version your addon supports.
+  updateFile = './my-addon.zip' // Optional: Location of the upload package
 // esouiPublish(token, addonId, version, description, changelog, compatibility, updateFile);
 
 

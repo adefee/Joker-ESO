@@ -1,18 +1,48 @@
 {
-	"bookmarks": [
+	"files": [
 		{
-			"fsPath": "$ROOTPATH$\\Joker.lua",
+			"path": "Joker.lua",
 			"bookmarks": [
-				-1,
-				132,
-				260,
-				-1,
-				-1,
-				-1,
-				-1,
-				-1,
-				-1,
-				-1
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": 132,
+					"column": 0
+				},
+				{
+					"line": 260,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				},
+				{
+					"line": -1,
+					"column": 0
+				}
 			]
 		}
 	]
