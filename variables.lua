@@ -17,8 +17,8 @@ JokerL = JokerL or {} -- i18n
 
 Joker = {
   name = "Joker",
-  version = "8.0.0",
-  versionESO = 800000,
+  version = "8.1.0",
+  versionESO = 801000,
   author = "Lent (IGN @CallMeLent, Github @adefee)",
   color = "D66E4A",
   locale = JokerL:GetLanguage(),
@@ -92,6 +92,14 @@ Joker = {
       enableUpdates = 0,
       firstLoad = 1,
       showDebug = 0
+    },
+    newsPrefixes = {
+      "Today's top story: ",
+      "Our top story tonight: ",
+      "In the news today: ",
+      "Our top story today: ",
+      "Tonight at 6: ",
+      "This just in: "
     },
     periodic = {
       jokes_enable = 1,

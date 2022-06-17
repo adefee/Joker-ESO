@@ -29,15 +29,14 @@ JokerData.Config.ESO = {
 
 JokerData.ESO = {
   "What does a new Sentinel private learn first as a combat technique? How to retreat.",
-  "You know, you might be a Nord if it's impossible to see food stains on your armor",
+  "You know you might be a Nord if it's impossible to see food stains on your armor.",
   "A Nord decides to cut down a tree. What does he tell it? 'You will die where ya stand!'",
   "What do a Nords and a bottle of port have in common? They're both empty from the neck up!",
-  "What do you call a Bosmer everyone likes? Dead",
+  "What do you call a Bosmer everyone likes? Dead.",
   "What do you say to a Dunmer woman to convince her to go to bed with you? Have another ale!",
-  "I won't eat anything that has intelligent life, but I will happily eat a politician or a .",
   "Why did the shoe store go out of business? It was in Argonia.",
   "A Dark Elf woman was being shown around Daggerfall. When she was shown the magnificent Castle Daggerfall, she smiled sweetly to her guide and whispered, 'It reminds me of sex.' 'That's odd,' said her guide. 'Why does our Castle Daggerfall remind you of sex?' The Dark Elf sighed, 'Everything does.'",
-  "A Khajiit walks into a bar and the bar tender says, 'Why the long face?'",
+  "A Khajiit walks into a bar and the bartender says, 'Why the long face?'",
   "Did you hear there are a couple dyslexics at the Temple of the Divines? They're always arguing about the existence of Dog.",
   "What a Orc lacks in intelligence, he makes up for in stupidity.",
   "What do a smart Orc and an orcoblin have in common? They're both extinct!",
@@ -92,5 +91,6 @@ JokerData.ESO = {
   "'How is your wife,' asked Zalither. 'She's in bed with laryngitis,' replied Harlyth. 'Is that Argonian bastard back in town again?'",
   "Why does Fargoth smell? So blind people can hate him too.",
   "You know, it only takes one drink to get a Nord drunk. I can't remember if it's the thirteenth or the fourteenth.",
-  "Why shouldn't you piss off a dwarf? Because he's got a short temper."
+  "Why shouldn't you piss off a dwarf? Because he's got a short temper.",
+  "What do you call a Dark Elf that runs a trade guild? A Boss-mer!"
 }

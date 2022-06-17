@@ -56,9 +56,16 @@ function Data.GetMessage(mood)
 end
 
 -- getPrefix()
--- Data; Returns a prefix
-function Data.getPrefix()
-  return Joker.saved.activeIntros[(1 + math.floor((math.random() * #Joker.saved.activeIntros)))]
+-- Data; Returns a prefix based on jokeCategory
+function Data.getPrefix(category)
+  -- Custom prefixes for specific joke categorys.
+  if (category == 'News') then
+    return Joker.saved.newsPrefixes[(1 + math.floor((math.random() * #Joker.saved.newsPrefixes)))]
+  elseif (category == 'Burns') then
+    return Joker.saved.activeIntros[(1 + math.floor((math.random() * #Joker.saved.activeIntros)))]
+  end
+
+  return '';
 end
 
 -- getJoke()
@@ -83,6 +90,10 @@ function Data.GetJoke(jokeCategory, context)
     return ""
   end
 
+  if JokerData.Config[jokeCategory].usePrefix then
+    usePrefix = true
+  end
+
   if JokerData.Config[jokeCategory].useSuffix then
     useSuffix = true
   end
@@ -96,6 +107,7 @@ function Data.GetJoke(jokeCategory, context)
       searchFilter = Util.trim(context)
     end
   end
+
 
   -- Later: when tracking seen jokes, loop until we find a joke we haven't seen
   local loops = 0
@@ -137,7 +149,7 @@ function Data.GetJoke(jokeCategory, context)
   until (loops > 0 or loops >= loopLimit)
 
   if usePrefix then
-    joke = string.gsub(Data.getPrefix(), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
+    joke = string.gsub(Data.getPrefix(jokeCategory), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
   elseif useSuffix then
     if suffixTarget then
       joke = joke:sub(1,1) .. joke:sub(2) .. ', ' .. context .. '!'
@@ -156,14 +168,14 @@ function Data.GetJoke(jokeCategory, context)
 end
 
 -- getJoke()
--- Data; Returns random joke from given category
+-- Data; Returns random joke
 -- @param jokeCategory, string, Category to pull from
 -- @param searchFilter, string, Filter results by this text  
 -- @param console, bool, log to console instead of chat  
 function Data.GetRandomJoke(context)
-
   -- Defaults
   local jokes = {}
+  local jokeCategory = null
   local jokeCount = 0
   local joke = ""
   local index = 0
@@ -250,6 +262,26 @@ function Data.GetRandomJoke(context)
     until (not Data.getJokeSeen(randomCategory, randomJokeIndex) or loops >= loopLimit)
 
     Data.setJokeSeen(randomCategory, randomJokeIndex)
+
+    -- Add formatting for jokes that have prefixes
+    if JokerData.Config[randomCategory].usePrefix then
+      usePrefix = true
+    end
+
+    if JokerData.Config[randomCategory].useSuffix then
+      useSuffix = true
+    end
+
+    if usePrefix then
+      joke = string.gsub(Data.getPrefix(randomCategory), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
+    elseif useSuffix then
+      if suffixTarget then
+        joke = joke:sub(1,1) .. joke:sub(2) .. ', ' .. context .. '!'
+      else
+        joke = joke:sub(1,1) .. joke:sub(2) .. '!'
+      end
+      
+    end
 
     return joke
   end
@@ -572,7 +604,6 @@ function Data.choose(context)
     if Joker.saved.rolls.postToChat > 0 then
       StartChatInput(resultsMessage, CHAT_CHANNEL)
     end
-       
   else
     d('Joker chose ... you! Try adding some other options for Joker to choose from!')
   end

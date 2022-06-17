@@ -2,8 +2,8 @@
 ## Description: Best enjoyed with Skooma, |cFF9900Joker |cFFFFFFoffers a collection of various jokes, riddles, ready checks, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
 ## Author: |cFF9900Lent|cFFFFFF (IGN |cFF9900@CallMeLent|cFFFFFF)
 
-## Version: 8.0.0
-## AddOnVersion: 800000
+## Version: 8.1.0
+## AddOnVersion: 801000
 ## APIVersion: 101034
 ## SavedVariables: JokerSavedVars
 ## DependsOn: LibAddonMenu-2.0
@@ -28,6 +28,7 @@ jokes\ESO.lua
 jokes\GameOfThrones.lua
 jokes\HarryPotter.lua
 jokes\LordOfTheRings.lua
+jokes\News.lua
 jokes\Norris.lua
 jokes\PickupLines.lua
 jokes\ReadyChecks.lua

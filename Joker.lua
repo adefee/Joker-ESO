@@ -124,7 +124,6 @@ local function runtime_updates()
       Joker.saved.rolls.postToChat = 0
       Joker.saved.internal.lastUpdate = 403000
     end
-
   end
 end
 

@@ -229,6 +229,13 @@ function Joker.LoadSettings()
         },
         {
           type			  = "button",
+          name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeNews, -- Random News
+          tooltip			= L.Joker_Quick_Btn_JokeNews_Tip,
+          func			  = function (context) Joker.Joke('News') end,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
           name			  = optionIndent_Button .. L.Joker_Quick_Btn_JokeNorris, -- Random Norris
           tooltip			= L.Joker_Quick_Btn_JokeNorris_Tip,
           func			  = function (context) Joker.Joke('Norris') end,
