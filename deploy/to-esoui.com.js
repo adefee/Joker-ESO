@@ -1,3 +1,5 @@
+// Not currently used. Copied here for posterity.
+
 const fs = require('fs'),
       path = require('path'),
       request = require('request'),
