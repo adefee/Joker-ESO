@@ -149,8 +149,14 @@ function Data.GetJoke(jokeCategory, context)
   until (loops > 0 or loops >= loopLimit)
 
   if usePrefix then
-    joke = string.gsub(Data.getPrefix(jokeCategory), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
-  elseif useSuffix then
+    if (context) then
+      joke = string.gsub(Data.getPrefix(jokeCategory), "jTarget", context) .. joke:sub(1,1):lower() .. joke:sub(2)
+    else
+      joke = Data.getPrefix(jokeCategory) .. joke
+    end
+  end
+    
+  if useSuffix then
     if suffixTarget then
       joke = joke:sub(1,1) .. joke:sub(2) .. ', ' .. context .. '!'
     else
