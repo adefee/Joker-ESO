@@ -8,7 +8,7 @@
   ],
   "dependencies": {},
   "scripts": {
-    "build": "if not exist dist\\%npm_package_version% mkdir dist\\%npm_package_version% && tar -a -c -f dist\\%npm_package_version%\\Joker-%npm_package_version%.zip --exclude=node_modules --exclude=dist --exclude=.git --exclude=images --exclude=.vscode --exclude=deploy/credentials.js --exclude=.deploy-exclude * .*",
+    "build": "node build.js",
     "dev-copy": "xcopy \".\" \"%USERPROFILE%\\OneDrive\\Documents\\Elder Scrolls Online\\live\\Addons\\Joker\" /s /i /y /exclude:.deploy-exclude && echo Copied to live Addons folder.",
     "addon-list": "node deploy/to-esoui.com.js",
     "addon-info": "node deploy/to-esoui.com.js --addon 2329 --name Joker"
