@@ -1,16 +1,15 @@
 {
   "name": "joker-eso",
   "description": "Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!",
-  "version": "8.1.1",
+  "version": "8.3.0",
   "private": false,
   "contributors": [
     "Andrew Defee (@adefee)"
   ],
   "dependencies": {},
   "scripts": {
-    "build": "cd ../ && winrar a -r -y -afzip -x/Joker/node_modules -x/Joker/dist -x/Joker/.git -x/Joker/images -x/Joker/.vscode -x/Joker/deploy/credentials.js ./Joker/dist/%npm_package_version%/Joker-%npm_package_version%.zip ./Joker",
-    "build-new": "cd dist && mkdir %npm_package_version% && cd ../../ && winrar a -r -y -afzip -x/Joker/node_modules -x/Joker/dist -x/Joker/.git -x/Joker/images -x/Joker/.vscode -x/Joker/deploy/credentials.js ./Joker/dist/%npm_package_version%/Joker-%npm_package_version%.zip ./Joker",
-    "dev-copy": "xcopy \"../Joker\" \"../../../OneDrive/Documents/Elder Scrolls Online/live/Addons/Joker\" /s /i /y /exclude:.deploy-exclude && echo 'Copied to live Addons folder.' ",
+    "build": "node build.js",
+    "dev-copy": "xcopy \".\" \"%USERPROFILE%\\OneDrive\\Documents\\Elder Scrolls Online\\live\\Addons\\Joker\" /s /i /y /exclude:.deploy-exclude && echo Copied to live Addons folder.",
     "addon-list": "node deploy/to-esoui.com.js",
     "addon-info": "node deploy/to-esoui.com.js --addon 2329 --name Joker"
   },
@@ -19,7 +18,7 @@
     "chalk": "^2.4.2",
     "form-data": "^2.5.1",
     "git-last-commit": "^0.3.0",
-    "minimist": "^1.2.0",
-    "request": "^2.88.0"
+    "minimist": "^1.2.5",
+    "request": "^2.88.2"
   }
 }
