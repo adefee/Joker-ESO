@@ -1,7 +1,7 @@
 # Joker-ESO
 A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
-### [Download live version here](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
+### [Download live version on ESOUI](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
 
 #### Current Branch Release: **v4.3.2** (ESO-403020)
 
@@ -20,9 +20,11 @@ A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
 
 
 ## Dependencies
-The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO. Both are packaged within, but if you have newer versions installed those will be used instead. 
+The following libraries are presently required for Joker to function properly. Otherwise, Joker is compatible with all live versions of ESO.
 - `LibAddonMenu-2.0`
-- `LibStub`
+
+### 'Outdated Version' Warnings
+Depending on whether or not I'm actively playing at a given time, I may not have updated the addon to explicitly state it supports the latest version of the game. Joker should still be compatibile with newer versions of ESO, even if it shows outdated - functionally it's very simple and the APIs it's using are unlikely to change significantly or often. You should be able to safely use Joker and ignore the outdated version warnings, but if you run into issues, please let me know!
 
 ## Commands
 - **/joker**: Shows Joker settings & help.

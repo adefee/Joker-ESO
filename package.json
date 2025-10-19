@@ -1,7 +1,7 @@
 {
   "name": "joker-eso",
   "description": "Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!",
-  "version": "8.3.0",
+  "version": "8.3.1",
   "private": false,
   "contributors": [
     "Andrew Defee (@adefee)"
@@ -9,9 +9,7 @@
   "dependencies": {},
   "scripts": {
     "build": "node build.js",
-    "dev-copy": "xcopy \".\" \"%USERPROFILE%\\OneDrive\\Documents\\Elder Scrolls Online\\live\\Addons\\Joker\" /s /i /y /exclude:.deploy-exclude && echo Copied to live Addons folder.",
-    "addon-list": "node deploy/to-esoui.com.js",
-    "addon-info": "node deploy/to-esoui.com.js --addon 2329 --name Joker"
+    "dev-copy": "xcopy \".\" \"%USERPROFILE%\\OneDrive\\Documents\\Elder Scrolls Online\\live\\Addons\\Joker\" /s /i /y /exclude:.deploy-exclude && echo Copied to live Addons folder."
   },
   "devDependencies": {
     "axios": "^0.18.1",
