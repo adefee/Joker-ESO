@@ -47,32 +47,30 @@ function Joker.ToggleDebug()
   end
 end
 
+-- Joker.OutputJoke()
+-- Display; Output a joke to either console or chat based on settings
+local function OutputJoke(joke, logToConsole)
+  if joke and not Util.isEmpty(joke) then
+    if logToConsole or Joker.saved.enable.consoleOnly then
+      d(joke)
+    else
+      StartChatInput(joke, CHAT_CHANNEL)
+    end
+  end
+end
+
 -- Joker.Joke()
 -- Display; Retrieve and display a joke (either in chatbox or in console). We aren't allowed to send on user's behalf.
 function Joker.Joke(category, context, logToConsole)
   local joke = Data.GetJoke(category, context)
-  
-  if joke and not Util.isEmpty(joke) then
-    if logToConsole or Joker.saved.enable.consoleOnly then
-      d(joke)
-    else
-      StartChatInput(joke, CHAT_CHANNEL)
-    end
-  end  
+  OutputJoke(joke, logToConsole)
 end
 
--- Joker.Joke()
+-- Joker.AnyJoke()
 -- Display; Retrieve and display a random joke based on context
 function Joker.AnyJoke(context, logToConsole)
   local joke = Data.GetRandomJoke(context)
-  
-  if joke and not Util.isEmpty(joke) then
-    if logToConsole or Joker.saved.enable.consoleOnly then
-      d(joke)
-    else
-      StartChatInput(joke, CHAT_CHANNEL)
-    end
-  end  
+  OutputJoke(joke, logToConsole)
 end
 
 
@@ -127,6 +125,22 @@ local function runtime_updates()
   end
 end
 
+-- registerJokeCommand()
+-- Helper; Register slash commands for a joke category
+local function registerJokeCommand(category, config)
+  -- Register primary command: /joke-<command>
+  SLASH_COMMANDS["/joke-" .. config.command] = function(context) 
+    Joker.Joke(category, context) 
+  end
+  
+  -- Optionally register shorthand command: /<command>
+  if config.whitelistSlashCommand then
+    SLASH_COMMANDS["/" .. config.command] = function(context) 
+      Joker.Joke(category, context) 
+    end
+  end
+end
+
 -- Runs each load
 local function runtime_onload()
 
@@ -160,13 +174,8 @@ local function runtime_onload()
             -- Add joke to list of enabled
             table.insert(Joker.saved.randomPool.enabled, i);
 
-            -- Enable /joke-x slash command for this category
-            SLASH_COMMANDS["/joke-" .. JokerData.Config[i].command] = function (context) Joker.Joke(i, context) end
-
-            -- Optionally add an additional command for that joke (e.g. /dad instead of just /joke-dad)
-            if JokerData.Config[i].whitelistSlashCommand then
-              SLASH_COMMANDS["/" .. JokerData.Config[i].command] = function (context) Joker.Joke(i, context) end
-            end
+            -- Register slash commands for this category
+            registerJokeCommand(i, JokerData.Config[i])
           else
             d('Joker: The category "' .. i .. '" was enabled but contains no jokes. It has not been loaded (uhhh ... there\'s nothing to load!).')
           end
