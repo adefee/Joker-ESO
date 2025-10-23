@@ -20,7 +20,8 @@ function Data.getJokeSeen(category, index)
     return false
   end
 
-  return Util.setContainsValue(Joker.saved.seenJokes[category], index)
+  -- Force index to be a number for consistent comparison
+  return Util.setContainsValue(Joker.saved.seenJokes[category], tonumber(index))
 end
 
 -- setJokeSeen()
@@ -35,7 +36,8 @@ function Data.setJokeSeen(category, index)
     Joker.saved.seenJokes[category] = {}
   end
 
-  table.insert(Joker.saved.seenJokes[category], index)
+  -- Force index to be a number (in case it's passed as a string from string.match())
+  table.insert(Joker.saved.seenJokes[category], tonumber(index))
   Joker.saved.count.seen = tonumber(Joker.saved.count.seen) + 1
 end
 
