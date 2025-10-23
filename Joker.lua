@@ -273,8 +273,10 @@ end
   ** Addon Instantiation, Hook to Ingame Events
   *****************************
 ]]
+-- `EVENT_ADD_ON_LOADED` fires when the game has finished loading (or attempting to load) all of an add-on's files. This event will fire once for EACH of the enabled addons, whicis why we unregister it after we've done our thing.
+-- `EVENT_PLAYER_ACTIVATED` fires after the player has loaded (each time the player logs in or UI is reloaded). This runs after `EVENT_ADD_ON_LOADED`.
 
--- Only show the loading message on first load ever. Displays a random message
+
 function Joker.Activated(e)
   EVENT_MANAGER:UnregisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED)
 
@@ -286,7 +288,9 @@ function Joker.Activated(e)
     runtime_updates()
   end
 end
-EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED, Joker.Activated) -- When player is ready, only after everything is loaded.
+
+-- Attach to event: When player is ready, only after everything is loaded.
+EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED, Joker.Activated) 
 
 
 function Joker.OnAddOnLoaded(event, addonName)
