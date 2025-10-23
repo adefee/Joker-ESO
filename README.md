@@ -54,6 +54,68 @@ Depending on whether or not I'm actively playing at a given time, I may not have
 ## Build
 v8.3.0+: Run `npm install` and then `npm run build` to create a zip file of the addon in the `dist` folder.
 
+## Development
+
+### Code Structure
+
+The addon is organized into several key files:
+- **Joker.lua**: Main addon file with initialization, runtime, and core functions
+- **Joker-Util.lua**: Utility functions (isEmpty, setContains, colorize, etc.)
+- **Joker-Data.lua**: Data operations (joke retrieval, random selection, 8ball, ready checks, etc.)
+- **variables.lua**: Default values and configuration
+- **Settings.lua**: LibAddonMenu integration for settings UI
+- **Joker.txt**: Manifest file that defines load order
+
+### Adding Version Migrations
+
+When you need to add a migration for a new version (e.g., to update saved variables or migrate data):
+
+1. **Add version constant** at the top of `Joker.lua` in the Constants section:
+   ```lua
+   local VERSION_X_Y_Z = xyz000  -- e.g., VERSION_5_0_0 = 500000
+   ```
+
+2. **Create a migration function** in the "Version Migration Functions" section:
+   ```lua
+   -- migrate_to_X_Y_Z()
+   -- Migration; Description of what changed in version X.Y.Z
+   local function migrate_to_X_Y_Z()
+     debugLog('Housekeeping for update to version X.Y.Z')
+     -- ... your migration logic here ...
+     Joker.saved.internal.lastUpdate = VERSION_X_Y_Z
+   end
+   ```
+
+3. **Add the migration call** in `runtime_updates()`:
+   ```lua
+   if oldVersion < VERSION_X_Y_Z then
+     migrate_to_X_Y_Z()
+   end
+   ```
+
+**Notes:**
+- Migrations run in order from oldest to newest
+- Each migration should update `Joker.saved.internal.lastUpdate` to its version number
+- Use `debugLog()` for any debug messages (automatically checks if debug mode is enabled)
+- Migrations should be idempotent when possible
+
+### Code Conventions
+
+- **Function Naming**:
+  - `local function snake_case()` for local/private runtime functions
+  - `function Joker.PascalCase()` or `function Data.PascalCase()` for public API functions
+  
+- **Constants**: Define at the top of files using SCREAMING_SNAKE_CASE:
+  ```lua
+  local ENABLED = 1
+  local DISABLED = 0
+  ```
+
+- **Debug Output**: Use `debugLog(message)` instead of checking `showDebug` manually:
+  ```lua
+  debugLog('Your debug message here')  -- Automatically prefixes with "Joker: "
+  ```
+
 ## Update Roadmap
 Always accepting requests, suggestions, etc. Here are a few things currently on the roadmap:
 

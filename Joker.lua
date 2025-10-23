@@ -115,30 +115,46 @@ end
 
 
 -- Runs only the first time load
+-- Specifically snake_case because it's a runtime function
 local function runtime_maiden()
   d('Joker ' .. Joker.version .. ' is now active! Type /joker at any time to view and customize Joker commands & settings.')
   Joker.saved.internal.firstLoad = DISABLED
 end
 
+--[[----------------------------------------------------------
+  Version Migration Functions
+  ----------------------------------------------------------
+]]--
+
+-- migrate_to_4_2_0()
+-- Migration; Update 4.2.0 added curses, needs to not be default
+local function migrate_to_4_2_0()
+  debugLog('Housekeeping for update to version 4.2.0')
+  table.insert(Joker.saved.randomPool.blacklist, 'Curse')
+  Util.sortSet(Joker.saved.randomPool.blacklist)
+  Joker.saved.internal.lastUpdate = VERSION_4_2_0
+end
+
+-- migrate_to_4_3_0()
+-- Migration; Update 4.3.0 updates settings to toggle rolls being posted to chat, adds new savedVar option
+local function migrate_to_4_3_0()
+  debugLog('Housekeeping for update to version 4.3.0')
+  Joker.saved.rolls.postToChat = DISABLED
+  Joker.saved.internal.lastUpdate = VERSION_4_3_0
+end
+
 -- Run any updates needed if addon has been updated
 local function runtime_updates()
   if Joker.saved.internal.lastUpdate < Joker.versionESO then
-    local oldVersion = Joker.saved.internal.lastUpdate -- Shorter var to reference
-    -- Version has been updated, see if there any updates needed
-
-    -- Update 4.2.0 added curses, needs to not be default
+    local oldVersion = Joker.saved.internal.lastUpdate
+    
+    -- Run migrations in order
     if oldVersion < VERSION_4_2_0 then
-      debugLog('Housekeeping for update to version 4.2.0')
-      table.insert(Joker.saved.randomPool.blacklist, 'Curse')
-      Util.sortSet(Joker.saved.randomPool.blacklist)
-      Joker.saved.internal.lastUpdate = VERSION_4_2_0
+      migrate_to_4_2_0()
     end
 
-    -- Update 4.3.0 updates settings to toggle rolls being posted to chat, adds new savedVar option
     if oldVersion < VERSION_4_3_0 then
-      debugLog('Housekeeping for update to version 4.3.0')
-      Joker.saved.rolls.postToChat = DISABLED
-      Joker.saved.internal.lastUpdate = VERSION_4_3_0
+      migrate_to_4_3_0()
     end
   end
 end
@@ -200,6 +216,7 @@ local function loadJokeCategories()
 end
 
 -- Runs each load
+-- Specifically snake_case because it's a runtime function
 local function runtime_onload()
 
   -- Tell the user if debug mode is enabled, which may result in lots of chat spam.
