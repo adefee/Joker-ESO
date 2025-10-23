@@ -41,6 +41,16 @@ function Data.setJokeSeen(category, index)
   Joker.saved.count.seen = tonumber(Joker.saved.count.seen) + 1
 end
 
+-- resetSeenJokes()
+-- Data; Reset seen jokes for a category so they can be shown again
+function Data.resetSeenJokes(category)
+  if Util.setContains(Joker.saved.seenJokes, category) then
+    local previousCount = #Joker.saved.seenJokes[category]
+    Joker.saved.seenJokes[category] = {}
+    Joker.saved.count.seen = math.max(0, tonumber(Joker.saved.count.seen) - previousCount)
+  end
+end
+
 -- getMessage()
 -- Data; Returns mood message from Joker
 -- @param mood, string, happy|sad
@@ -117,9 +127,10 @@ function Data.GetJoke(jokeCategory, context)
 
   -- If we have a search keyword, iterate over that first
   if searchFilter and not usePrefix and not useSuffix and not Util.isEmpty(searchFilter) then
+    -- Store both joke content and original index for tracking seen jokes
     for i,v in pairs(JokerData[jokeCategory]) do
       if string.match(v, searchFilter) then
-        table.insert(jokes, v)
+        table.insert(jokes, {content = v, originalIndex = i})
       end
     end
   else
@@ -131,24 +142,49 @@ function Data.GetJoke(jokeCategory, context)
 
   if jokeCount < 1 and not Util.isEmpty(searchFilter) then
     d('Unable to find any jokes matching your search for "'.. searchFilter ..'". ' .. Data.GetMessage('sad'))
+    return ""
   elseif jokeCount > 0 and not Util.isEmpty(searchFilter) then
     d('Randomly choosing from ' .. jokeCount .. ' jokes, based on your search...')
   end
   
+  -- Guard: If no jokes available, return empty string
+  if jokeCount < 1 then
+    return ""
+  end
 
-  -- Before we loop, see if we need to reset seenJokes for this type
-  -- if Joker.savedVariables.categories[jokeCategory].seenCount > 0 and Joker.savedVariables.categories[jokeCategory].seenCount >= Joker.savedVariables.categories[jokeCategory].count then
-  --   Util.resetSeen(jokeCategory)
-  -- end
+  -- Before we loop, see if we need to reset seenJokes for this category
+  -- If we've seen all (or almost all) jokes in this category, reset so we can see them again
+  local totalJokesInCategory = Joker.saved.count.categories[jokeCategory] or #JokerData[jokeCategory]
+  local seenJokesInCategory = (Joker.saved.seenJokes[jokeCategory] and #Joker.saved.seenJokes[jokeCategory]) or 0
+  
+  if seenJokesInCategory > 0 and seenJokesInCategory >= totalJokesInCategory then
+    Data.resetSeenJokes(jokeCategory)
+  end
 
   -- Loop until we find a joke we haven't yet seen. If we hit loopLimit, we'll just use what we have 
   repeat
     local random = math.random() * jokeCount
     loops = loops + 1
     index = 1 + math.floor(random)
-    joke = jokes[index]
-  -- until (not Data.isSeen(jokeCategory, index) or loops >= loopLimit)
-  until (loops > 0 or loops >= loopLimit)
+    
+    -- Handle filtered results (table with originalIndex) vs direct array access
+    if searchFilter and not usePrefix and not useSuffix and not Util.isEmpty(searchFilter) then
+      local jokeData = jokes[index]
+      if jokeData and jokeData.content then
+        joke = jokeData.content
+        index = jokeData.originalIndex
+      else
+        joke = ""
+      end
+    else
+      joke = jokes[index] or ""
+    end
+  until (not Data.getJokeSeen(jokeCategory, index) or loops >= loopLimit)
+
+  -- Mark joke as seen (only if we got a valid joke)
+  if joke and not Util.isEmpty(joke) and index then
+    Data.setJokeSeen(jokeCategory, index)
+  end
 
   if usePrefix then
     if (context) then
@@ -215,35 +251,43 @@ function Data.GetRandomJoke(context)
       end
     end
 
-    -- Before we loop, see if we need to reset seenJokes for this type
-    -- if Joker.savedVariables.categories[jokeCategory].seenCount > 0 and Joker.savedVariables.categories[jokeCategory].seenCount >= Joker.savedVariables.categories[jokeCategory].count then
-    --   Util.resetSeen(jokeCategory)
-    -- end
-
+    -- Note: For search filters across multiple categories, we can't pre-reset since we don't know
+    -- which categories will be selected. The reset logic is handled per-category in GetJoke().
+    
     -- Update count
     jokeCount = Util.countSet(jokes)
 
-    -- Loop until we find a joke we haven't yet seen. If we hit loopLimit, we'll just use what we have 
-    if (jokeCount > 0) then
-      repeat
-        local random = math.random() * jokeCount
-        loops = loops + 1
-        index = 1 + math.floor(random)
-        joke = jokes[index]
-        thisJokeCategory, thisJokeIndex, thisJokeContent = joke:match("(.+):::(.+):::(.+)")
-        joke = thisJokeContent
-      until (not Data.getJokeSeen(thisJokeCategory, thisJokeIndex) or loops >= loopLimit)
-      -- until (loops > 0 or loops >= loopLimit)
-
-      -- Add to seenJokes so we don't pull again
-      Data.setJokeSeen(thisJokeCategory, thisJokeIndex)
-    end
-
-
     if jokeCount < 1 and not Util.isEmpty(searchFilter) then
       d('Unable to find any jokes matching your search for "'.. searchFilter ..'". ' .. Data.GetMessage('sad'))
+      return ""
     elseif jokeCount > 0 and not Util.isEmpty(searchFilter) then
       d('Randomly choosing from ' .. jokeCount .. ' jokes, based on your search...')
+    end
+
+    -- Guard: If no jokes available, return empty string
+    if jokeCount < 1 then
+      return ""
+    end
+
+    -- Loop until we find a joke we haven't yet seen. If we hit loopLimit, we'll just use what we have 
+    repeat
+      local random = math.random() * jokeCount
+      loops = loops + 1
+      index = 1 + math.floor(random)
+      joke = jokes[index] or ""
+      
+      -- Parse the joke string to extract category, index, and content
+      thisJokeCategory, thisJokeIndex, thisJokeContent = joke:match("(.+):::(.+):::(.+)")
+      if thisJokeContent then
+        joke = thisJokeContent
+      else
+        joke = ""
+      end
+    until (not Data.getJokeSeen(thisJokeCategory, thisJokeIndex) or loops >= loopLimit)
+
+    -- Add to seenJokes so we don't pull again (only if we got valid data)
+    if thisJokeCategory and thisJokeIndex and not Util.isEmpty(joke) then
+      Data.setJokeSeen(thisJokeCategory, thisJokeIndex)
     end
 
     -- Finally, return joke
@@ -263,21 +307,42 @@ function Data.GetRandomJoke(context)
     end
 
     repeat
+      loops = loops + 1
       randomCategoryIndex = 1 + math.floor(math.random() * #availableCategories)
       randomCategory = availableCategories[randomCategoryIndex]
-      randomJokeIndex = 1 + math.floor(math.random() * #JokerData[randomCategory])
-      joke = JokerData[randomCategory][randomJokeIndex]
+      
+      -- Ensure category exists and has jokes
+      if randomCategory and JokerData[randomCategory] and #JokerData[randomCategory] > 0 then
+        -- Check if we've seen all jokes in this category and reset if needed
+        local totalJokesInCategory = Joker.saved.count.categories[randomCategory] or #JokerData[randomCategory]
+        local seenJokesInCategory = (Joker.saved.seenJokes[randomCategory] and #Joker.saved.seenJokes[randomCategory]) or 0
+        
+        if seenJokesInCategory > 0 and seenJokesInCategory >= totalJokesInCategory then
+          Data.resetSeenJokes(randomCategory)
+        end
+        
+        randomJokeIndex = 1 + math.floor(math.random() * #JokerData[randomCategory])
+        joke = JokerData[randomCategory][randomJokeIndex] or ""
+      else
+        joke = ""
+        randomJokeIndex = nil
+      end
     until (not Data.getJokeSeen(randomCategory, randomJokeIndex) or loops >= loopLimit)
 
-    Data.setJokeSeen(randomCategory, randomJokeIndex)
-
-    -- Add formatting for jokes that have prefixes
-    if JokerData.Config[randomCategory].usePrefix then
-      usePrefix = true
+    -- Mark joke as seen (only if we got valid data)
+    if randomCategory and randomJokeIndex and not Util.isEmpty(joke) then
+      Data.setJokeSeen(randomCategory, randomJokeIndex)
     end
 
-    if JokerData.Config[randomCategory].useSuffix then
-      useSuffix = true
+    -- Add formatting for jokes that have prefixes (with safety checks)
+    if randomCategory and JokerData.Config[randomCategory] then
+      if JokerData.Config[randomCategory].usePrefix then
+        usePrefix = true
+      end
+
+      if JokerData.Config[randomCategory].useSuffix then
+        useSuffix = true
+      end
     end
 
     if usePrefix then
