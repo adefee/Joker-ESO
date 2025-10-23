@@ -141,20 +141,12 @@ local function registerJokeCommand(category, config)
   end
 end
 
--- Runs each load
-local function runtime_onload()
-
-  -- Tell the user if debug mode is enabled, which may result in lots of chat spam.
-  if Joker.saved.internal.showDebug > 0 then
-    d('Joker: debug mode enabled. Run /_joker-debug to toggle off.')
-  end
-
-  runtime_updates()
-
-  -- Iterate over jokes and enable as we need
-  local loadedJokes = {}
+-- loadJokeCategories()
+-- Helper; Load and register all joke categories, returns total joke count
+local function loadJokeCategories()
   local countAllJokes = 0
   Joker.saved.randomPool.enabled = {}
+  
   for i,v in pairs(JokerData) do
     if i == 'Config' then
       -- Metadata entries, ignore
@@ -187,6 +179,22 @@ local function runtime_onload()
       end
     end
   end
+  
+  return countAllJokes
+end
+
+-- Runs each load
+local function runtime_onload()
+
+  -- Tell the user if debug mode is enabled, which may result in lots of chat spam.
+  if Joker.saved.internal.showDebug > 0 then
+    d('Joker: debug mode enabled. Run /_joker-debug to toggle off.')
+  end
+
+  runtime_updates()
+
+  -- Load and register all joke categories
+  local countAllJokes = loadJokeCategories()
 
   -- Update savedVars
   Joker.saved.count.loaded = countAllJokes
