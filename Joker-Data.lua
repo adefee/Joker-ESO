@@ -202,12 +202,12 @@ function Data.GetRandomJoke(context)
     -- For each category, if it's not blacklisted, loop over and pull available jokes
     -- Joker.saved.activeJokes has all jokes
     -- Joker.saved.randomPool.blacklist has keys to avoid
-    for i,v in pairs(Joker.saved.randomPool.enabled) do
-      if not Util.setContainsValue(Joker.saved.randomPool.blacklist, v) then
-        for j,w in pairs(JokerData[v]) do
-          local jokeContent = string.lower(w) -- Convert both content and searchFilter to lowercase
-          if string.match(jokeContent, searchFilter) then
-            table.insert(jokes, v .. ':::' .. j .. ':::' .. w)
+    for _, categoryName in pairs(Joker.saved.randomPool.enabledCategories) do
+      if not Util.setContainsValue(Joker.saved.randomPool.blacklist, categoryName) then
+        for jokeIndex, jokeContent in pairs(JokerData[categoryName]) do
+          local jokeContentLower = string.lower(jokeContent) -- Convert both content and searchFilter to lowercase
+          if string.match(jokeContentLower, searchFilter) then
+            table.insert(jokes, categoryName .. ':::' .. jokeIndex .. ':::' .. jokeContent)
           end
         end
       end
@@ -250,9 +250,9 @@ function Data.GetRandomJoke(context)
   else
     -- Get a random joke from any available category
     availableCategories = {}
-    for i,v in pairs(Joker.saved.randomPool.enabled) do
-      if not Util.setContainsValue(Joker.saved.randomPool.blacklist, v) then
-        table.insert(availableCategories, v)
+    for _, categoryName in pairs(Joker.saved.randomPool.enabledCategories) do
+      if not Util.setContainsValue(Joker.saved.randomPool.blacklist, categoryName) then
+        table.insert(availableCategories, categoryName)
       end
     end
 
@@ -376,7 +376,7 @@ end
 -- randomPoolGet
 -- Data; Returns bool based on whether or not a [target] category is enabled and not blacklisted
 function Data.randomPoolGet(target)
-  return Util.setContainsValue(Joker.saved.randomPool.enabled, target) and not Util.setContainsValue(Joker.saved.randomPool.blacklist, target)
+  return Util.setContainsValue(Joker.saved.randomPool.enabledCategories, target) and not Util.setContainsValue(Joker.saved.randomPool.blacklist, target)
 end
 
 -- randomPoolSet

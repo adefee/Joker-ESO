@@ -111,7 +111,7 @@ Joker = {
     },
     randomPool = {
       blacklist = {"Burns", "Curse", "CustomJokes", "CustomReadyChecks", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},
-      enabled = {}
+      enabledCategories = {}
     },
     rolls = {
       syncWhenAble = 1,

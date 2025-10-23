@@ -99,20 +99,20 @@ function Data.settingsPanelPool()
   })
 
   -- Sort pool alphabetically
-  table.sort(Joker.saved.randomPool.enabled, function(a,b) return a < b end)
+  table.sort(Joker.saved.randomPool.enabledCategories, function(a,b) return a < b end)
 
-  for i,v in ipairs(Joker.saved.randomPool.enabled) do
+  for _, categoryName in ipairs(Joker.saved.randomPool.enabledCategories) do
     -- Don't add specific things
-    if v ~= 'ReadyChecks' and v ~= 'CustomReadyChecks' and v ~= 'CustomJokes' then
+    if categoryName ~= 'ReadyChecks' and categoryName ~= 'CustomReadyChecks' and categoryName ~= 'CustomJokes' then
       table.insert(thisPanelSettings, {
         type			  = "checkbox",
-        name			  = optionIndent .. Util.colorize((Joker.saved.activeJokes[v] or 'Unknown Category')) .. Data.isNSFW(v, true) .. ' (' .. Joker.saved.count.categories[v] ..' ' .. L.Joker_Items .. ')', -- Category name + number of items in category
-        tooltip			= L.Joker_Options_Categories_ItemTooltip .. JokerData.Config[v].command,
-        getFunc			= function() return Data.randomPoolGet(v) end,
-        setFunc			= function() Data.randomPoolSet(v) end,
+        name			  = optionIndent .. Util.colorize((Joker.saved.activeJokes[categoryName] or 'Unknown Category')) .. Data.isNSFW(categoryName, true) .. ' (' .. Joker.saved.count.categories[categoryName] ..' ' .. L.Joker_Items .. ')', -- Category name + number of items in category
+        tooltip			= L.Joker_Options_Categories_ItemTooltip .. JokerData.Config[categoryName].command,
+        getFunc			= function() return Data.randomPoolGet(categoryName) end,
+        setFunc			= function() Data.randomPoolSet(categoryName) end,
         width			  = "full",
-        default			= function() return Util.setContainsValue(Joker.defaults.randomPool.enabled, v) and not Util.setContainsValue(Joker.defaults.randomPool.blacklist, v) end,
-        disabled    = function() return not Joker.saved.activeJokes[v] end,
+        default			= function() return Util.setContainsValue(Joker.defaults.randomPool.enabledCategories, categoryName) and not Util.setContainsValue(Joker.defaults.randomPool.blacklist, categoryName) end,
+        disabled    = function() return not Joker.saved.activeJokes[categoryName] end,
       })
     end
     

@@ -45,6 +45,7 @@ local DISABLED = 0
 local SAVED_VARS_VERSION = 2
 local VERSION_4_2_0 = 402000
 local VERSION_4_3_0 = 403000
+local VERSION_8_4_0 = 804000
 
 --[[----------------------------------------------------------
   Helper Functions
@@ -143,6 +144,20 @@ local function migrate_to_4_3_0()
   Joker.saved.internal.lastUpdate = VERSION_4_3_0
 end
 
+-- migrate_to_8_4_0()
+-- Migration; Update 8.4.0 refactored code for better maintainability and clearer variable names
+local function migrate_to_8_4_0()
+  debugLog('Housekeeping for update to version 8.4.0')
+  
+  -- Rename randomPool.enabled to randomPool.enabledCategories for clarity
+  if Joker.saved.randomPool.enabled then
+    Joker.saved.randomPool.enabledCategories = Joker.saved.randomPool.enabled
+    Joker.saved.randomPool.enabled = nil -- Remove old key
+  end
+  
+  Joker.saved.internal.lastUpdate = VERSION_8_4_0
+end
+
 -- Run any updates needed if addon has been updated
 local function runtime_updates()
   if Joker.saved.internal.lastUpdate < Joker.versionESO then
@@ -155,6 +170,10 @@ local function runtime_updates()
 
     if oldVersion < VERSION_4_3_0 then
       migrate_to_4_3_0()
+    end
+
+    if oldVersion < VERSION_8_4_0 then
+      migrate_to_8_4_0()
     end
   end
 end
@@ -179,34 +198,34 @@ end
 -- Helper; Load and register all joke categories, returns total joke count
 local function loadJokeCategories()
   local countAllJokes = 0
-  Joker.saved.randomPool.enabled = {}
+  Joker.saved.randomPool.enabledCategories = {}
   
-  for i,v in pairs(JokerData) do
-    if i == 'Config' then
+  for categoryKey, categoryData in pairs(JokerData) do
+    if categoryKey == 'Config' then
       -- Metadata entries, ignore
     else
-      if Util.setContains(JokerData.Config, i) and JokerData.Config[i].label and JokerData.Config[i].command then
-        if not JokerData.Config[i].disable then
+      if Util.setContains(JokerData.Config, categoryKey) and JokerData.Config[categoryKey].label and JokerData.Config[categoryKey].command then
+        if not JokerData.Config[categoryKey].disable then
           -- Load & count all the jokes for this category
-          local categoryJokeCount = Util.countSet(JokerData[i])
+          local categoryJokeCount = Util.countSet(JokerData[categoryKey])
           countAllJokes = countAllJokes + categoryJokeCount
-          Joker.saved.count.categories[i] = categoryJokeCount
+          Joker.saved.count.categories[categoryKey] = categoryJokeCount
           Joker.saved.activeJokes = Joker.saved.activeJokes or {}
-          Joker.saved.activeJokes[i] = JokerData.Config[i].label
+          Joker.saved.activeJokes[categoryKey] = JokerData.Config[categoryKey].label
 
           -- If there are jokes (> 0), enable:
           if categoryJokeCount > 0 then
 
-            -- Add joke to list of enabled
-            table.insert(Joker.saved.randomPool.enabled, i);
+            -- Add joke to list of enabled categories
+            table.insert(Joker.saved.randomPool.enabledCategories, categoryKey);
 
             -- Register slash commands for this category
-            registerJokeCommand(i, JokerData.Config[i])
+            registerJokeCommand(categoryKey, JokerData.Config[categoryKey])
           else
-            d('Joker: The category "' .. i .. '" was enabled but contains no jokes. It has not been loaded (uhhh ... there\'s nothing to load!).')
+            d('Joker: The category "' .. categoryKey .. '" was enabled but contains no jokes. It has not been loaded (uhhh ... there\'s nothing to load!).')
           end
         else
-          debugLog('The category "' .. i .. '" is available, but is disabled. It has not been loaded.')
+          debugLog('The category "' .. categoryKey .. '" is available, but is disabled. It has not been loaded.')
         end
       end
     end
