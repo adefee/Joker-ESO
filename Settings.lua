@@ -149,7 +149,7 @@ function Joker.LoadSettings()
     ]]
     table.insert(panelOptions, {
       type = "description",
-      text = L.Joker_Intro_Status_Prefix .. " " .. Util.colorize(Util.formatNumber(Joker.saved.count.loaded)) .. " " .. L.Joker_Intro_Status_Suffix,
+      text = L.Joker_Intro_Status_Prefix .. Util.colorize(Util.formatNumber(Joker.saved.count.seenAllTime or 0)) .. " " .. L.Joker_Intro_Status_Middle .. " " .. Util.colorize(Util.formatNumber(Joker.saved.count.loaded)) .. " " .. L.Joker_Intro_Status_Suffix,
       width = "full",
     })
 

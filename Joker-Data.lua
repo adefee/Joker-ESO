@@ -39,6 +39,9 @@ function Data.setJokeSeen(category, index)
   -- Force index to be a number (in case it's passed as a string from string.match())
   table.insert(Joker.saved.seenJokes[category], tonumber(index))
   Joker.saved.count.seen = tonumber(Joker.saved.count.seen) + 1
+  
+  -- Increment permanent "seen all-time" counter (never decreases, even when categories reset)
+  Joker.saved.count.seenAllTime = tonumber(Joker.saved.count.seenAllTime or 0) + 1
 end
 
 -- resetSeenJokes()

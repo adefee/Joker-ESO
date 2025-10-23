@@ -24,8 +24,9 @@ local L = {}
 -- L.Joker_Author_B = " or via Discord: "
 
 -- -- Settings: Intro
--- L.Joker_Intro_Status_Prefix = "Joker has loaded over"
--- L.Joker_Intro_Status_Suffix	= "jokes, burns, wisdom, fun facts, & more!"
+-- L.Joker_Intro_Status_Prefix = "You've viewed ~"
+-- L.Joker_Intro_Status_Middle = "of"
+-- L.Joker_Intro_Status_Suffix	= "loaded jokes, burns, wisdom, fun facts, & more!"
 
 -- -- Settings: Quick Commands
 -- L.Joker_Quick_Title = "Quick Commands"

@@ -80,6 +80,7 @@ Joker = {
       loaded = 0,
       active = 0,
       seen = 0,
+      seenAllTime = 0, -- Total jokes viewed all-time (never decreases)
       categories = {}
     },
     enable = {
