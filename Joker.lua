@@ -36,14 +36,37 @@ local L = Joker.locale -- sets our locale
 local Util = JokerUtilityFn or {} -- utility functions used throughout
 local Data = JokerDataFn or {} -- data and content processing & display
 
+--[[----------------------------------------------------------
+  Constants
+  ----------------------------------------------------------
+]]--
+local ENABLED = 1
+local DISABLED = 0
+local SAVED_VARS_VERSION = 2
+local VERSION_4_2_0 = 402000
+local VERSION_4_3_0 = 403000
+
+--[[----------------------------------------------------------
+  Helper Functions
+  ----------------------------------------------------------
+]]--
+
+-- debugLog()
+-- Helper; Outputs debug message to console if debug mode is enabled
+local function debugLog(message)
+  if Joker.saved.internal.showDebug > DISABLED then
+    d('Joker: ' .. message)
+  end
+end
+
 -- Joker.ToggleDebug()
 function Joker.ToggleDebug()
-  if Joker.saved.internal.showDebug > 0 then
+  if Joker.saved.internal.showDebug > DISABLED then
     d('Disabling Joker debug mode.')
-    Joker.saved.internal.showDebug = 0
+    Joker.saved.internal.showDebug = DISABLED
   else
     d('Enabling Joker debug mode.')
-    Joker.saved.internal.showDebug = 1
+    Joker.saved.internal.showDebug = ENABLED
   end
 end
 
@@ -94,7 +117,7 @@ end
 -- Runs only the first time load
 local function runtime_maiden()
   d('Joker ' .. Joker.version .. ' is now active! Type /joker at any time to view and customize Joker commands & settings.')
-  Joker.saved.internal.firstLoad = 0
+  Joker.saved.internal.firstLoad = DISABLED
 end
 
 -- Run any updates needed if addon has been updated
@@ -104,23 +127,18 @@ local function runtime_updates()
     -- Version has been updated, see if there any updates needed
 
     -- Update 4.2.0 added curses, needs to not be default
-    if oldVersion < 402000 then
-      if Joker.saved.internal.showDebug > 0 then
-        d('Joker: Housekeeping for update to version 4.2.0')
-      end
+    if oldVersion < VERSION_4_2_0 then
+      debugLog('Housekeeping for update to version 4.2.0')
       table.insert(Joker.saved.randomPool.blacklist, 'Curse')
       Util.sortSet(Joker.saved.randomPool.blacklist)
-      Joker.saved.internal.lastUpdate = 402000
+      Joker.saved.internal.lastUpdate = VERSION_4_2_0
     end
 
     -- Update 4.3.0 updates settings to toggle rolls being posted to chat, adds new savedVar option
-    if oldVersion < 403000 then
-      if Joker.saved.internal.showDebug > 0 then
-        d('Joker: Housekeeping for update to version 4.3.0')
-      end
-
-      Joker.saved.rolls.postToChat = 0
-      Joker.saved.internal.lastUpdate = 403000
+    if oldVersion < VERSION_4_3_0 then
+      debugLog('Housekeeping for update to version 4.3.0')
+      Joker.saved.rolls.postToChat = DISABLED
+      Joker.saved.internal.lastUpdate = VERSION_4_3_0
     end
   end
 end
@@ -172,9 +190,7 @@ local function loadJokeCategories()
             d('Joker: The category "' .. i .. '" was enabled but contains no jokes. It has not been loaded (uhhh ... there\'s nothing to load!).')
           end
         else
-          if Joker.saved.internal.showDebug > 0 then
-            d('Joker: The category "' .. i .. '" is available, but is disabled. It has not been loaded.')
-          end
+          debugLog('The category "' .. i .. '" is available, but is disabled. It has not been loaded.')
         end
       end
     end
@@ -187,7 +203,7 @@ end
 local function runtime_onload()
 
   -- Tell the user if debug mode is enabled, which may result in lots of chat spam.
-  if Joker.saved.internal.showDebug > 0 then
+  if Joker.saved.internal.showDebug > DISABLED then
     d('Joker: debug mode enabled. Run /_joker-debug to toggle off.')
   end
 
@@ -246,7 +262,7 @@ function Joker.Activated(e)
   EVENT_MANAGER:UnregisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED)
 
   if Joker.saved then
-    if Joker.saved.internal.firstLoad > 0 then
+    if Joker.saved.internal.firstLoad > DISABLED then
       runtime_maiden()
     end
 
@@ -264,7 +280,7 @@ function Joker.OnAddOnLoaded(event, addonName)
   ZO_CreateStringId('SI_BINDING_NAME_JOKER_READYCHECK', L.Joker_Quick_Btn_JokeReady_Label)
 
   -- Load Saved Variables
-  Joker.saved = ZO_SavedVars:NewAccountWide('JokerSavedVars', 2, nil, Joker.defaults)
+  Joker.saved = ZO_SavedVars:NewAccountWide('JokerSavedVars', SAVED_VARS_VERSION, nil, Joker.defaults)
 
   -- Init our primary runtime (runs each load)
   runtime_onload()
