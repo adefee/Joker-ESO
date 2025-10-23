@@ -285,7 +285,7 @@ JokerData.PickupLinesXXX = {
 JokerData.PickupLinesHP = {
   "My name may not be Luna, but I sure know how to Lovegood.",
   "I can be your house elf. I'll do whatever you want and I don't need any clothes.",
-  "My name may not be Luna, but I sure know how to Lovegood.",
+  "Are you a Horcrux? Because you've got a piece of my soul.",
   "Your smile is like Expelliarmus. Simple, but disarming.",
   "I need to learn Occlumency, because I can't get you out of my thoughts.",
   "If I were going to produce a Patronus, you'd be my happy thought.",

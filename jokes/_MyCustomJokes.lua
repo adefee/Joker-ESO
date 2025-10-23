@@ -6,7 +6,7 @@
   * COMPILATION: Your Custom Jokes!
 	*
   * SOURCES:
-  * It's common practice & kindess to cite any non-original jokes:
+  * It's common practice & kindness to cite any non-original jokes:
   * e.g. https://icanhazdadjoke.com, 
   * Reddit Search, 
   * Reader's Digest,
