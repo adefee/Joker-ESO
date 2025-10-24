@@ -7,7 +7,7 @@ local L = {}
 --------------------------------------------------------------------------------------------------------------------
 
 -- Basic / General
-L.Joker_Title = "Joker - Best Enjoyed with Skooma!"
+L.Joker_Title = "Joker"
 L.Joker_Or = "or"
 L.Joker_And = "and"
 L.Joker_Of = "of"
