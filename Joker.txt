@@ -4,7 +4,7 @@
 
 ## Version: 8.4.0
 ## AddOnVersion: 804000
-## APIVersion: 101047 101048
+## APIVersion: 101048
 ## SavedVariables: JokerSavedVars
 ## DependsOn: LibAddonMenu-2.0>=38
 

@@ -54,6 +54,12 @@ Depending on whether or not I'm actively playing at a given time, I may not have
 ## Build
 v8.3.0+: Run `npm install` and then `npm run build` to create a zip file of the addon in the `dist` folder.
 
+When version is incremented, it needs to be updated in the following files:
+- `package.json`
+- `Joker.txt`
+- `variables.lua`
+- `README.md`
+
 ## Development
 
 ### Code Structure

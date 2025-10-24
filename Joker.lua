@@ -46,6 +46,7 @@ local SAVED_VARS_VERSION = 2
 local VERSION_4_2_0 = 402000
 local VERSION_4_3_0 = 403000
 local VERSION_8_4_0 = 804000
+local VERSION_999_999_0 = 999999000
 
 --[[----------------------------------------------------------
   Helper Functions
@@ -55,13 +56,18 @@ local VERSION_8_4_0 = 804000
 -- debugLog()
 -- Helper; Outputs debug message to console if debug mode is enabled
 local function debugLog(message)
-  if Joker.saved.internal.showDebug > DISABLED then
+  if Joker and Joker.saved and Joker.saved.internal and Joker.saved.internal.showDebug and Joker.saved.internal.showDebug > DISABLED then
     d('Joker: ' .. message)
   end
 end
 
 -- Joker.ToggleDebug()
 function Joker.ToggleDebug()
+  if not Joker.saved or not Joker.saved.internal then
+    d('Joker: Error - saved variables not initialized yet.')
+    return
+  end
+  
   if Joker.saved.internal.showDebug > DISABLED then
     d('Disabling Joker debug mode.')
     Joker.saved.internal.showDebug = DISABLED
@@ -118,6 +124,7 @@ end
 -- Runs only the first time load
 -- Specifically snake_case because it's a runtime function
 local function runtime_maiden()
+  debugLog('Running runtime_maiden()')
   d('Joker ' .. Joker.version .. ' is now active! Type /joker at any time to view and customize Joker commands & settings.')
   Joker.saved.internal.firstLoad = DISABLED
 end
@@ -158,11 +165,21 @@ local function migrate_to_8_4_0()
   Joker.saved.internal.lastUpdate = VERSION_8_4_0
 end
 
+-- migrate_to_999_998_0()
+-- Migration; This is a test migration only visible in debug mode.
+local function migrate_to_999_998_0()
+  debugLog('Housekeeping for update to version 999_999_0')
+  debugLog('(This is a test migration only visible in debug mode.)')
+  Joker.saved.internal.testMigration = Joker.saved.internal.lastUpdate
+end
+
 -- Run any updates needed if addon has been updated
 local function runtime_updates()
+  debugLog('Running runtime_updates()')
+  debugLog('Joker.saved.internal.lastUpdate: ' .. Joker.saved.internal.lastUpdate)
   if Joker.saved.internal.lastUpdate < Joker.versionESO then
     local oldVersion = Joker.saved.internal.lastUpdate
-    
+    debugLog('oldVersion: ' .. oldVersion)
     -- Run migrations in order
     if oldVersion < VERSION_4_2_0 then
       migrate_to_4_2_0()
@@ -174,6 +191,10 @@ local function runtime_updates()
 
     if oldVersion < VERSION_8_4_0 then
       migrate_to_8_4_0()
+    end
+
+    if oldVersion < VERSION_999_999_0 then
+      migrate_to_999_998_0()
     end
   end
 end
@@ -234,14 +255,10 @@ local function loadJokeCategories()
   return countAllJokes
 end
 
--- Runs each load
+-- Runs each time `EVENT_ADD_ON_LOADED` fires
 -- Specifically snake_case because it's a runtime function
 local function runtime_onload()
-
-  -- Tell the user if debug mode is enabled, which may result in lots of chat spam.
-  if Joker.saved.internal.showDebug > DISABLED then
-    d('Joker: debug mode enabled. Run /_joker-debug to toggle off.')
-  end
+  debugLog('Running runtime_onload()')
 
   runtime_updates()
 
@@ -250,7 +267,6 @@ local function runtime_onload()
 
   -- Update savedVars
   Joker.saved.count.loaded = countAllJokes
-
 
   --[[
     Periodic Events
@@ -286,6 +302,13 @@ local function runtime_onload()
 
 end
 
+-- Runs each time `EVENT_PLAYER_ACTIVATED` fires
+local function runtime_onactivated()
+  debugLog('Running runtime_onactivated()')
+
+  debugLog('Debug mode enabled. Run /_joker-debug to toggle off.')
+  debugLog('Version ' .. Joker.version .. ' is now active!') -- Log current version
+end
 
 --[[
   *****************************
@@ -297,14 +320,21 @@ end
 
 
 function Joker.Activated(e)
+  debugLog('Running Joker.Activated()')
+
   EVENT_MANAGER:UnregisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED)
 
   if Joker.saved then
+    debugLog('Joker.saved is available')
     if Joker.saved.internal.firstLoad > DISABLED then
       runtime_maiden()
     end
 
+    -- Run through any necessary updates
     runtime_updates()
+
+    -- Run any necessary functions that should run each EVENT_PLAYER_ACTIVATED event.
+    runtime_onactivated()
   end
 end
 
@@ -313,6 +343,8 @@ EVENT_MANAGER:RegisterForEvent(Joker.name, EVENT_PLAYER_ACTIVATED, Joker.Activat
 
 
 function Joker.OnAddOnLoaded(event, addonName)
+  debugLog('Running Joker.OnAddOnLoaded()')
+
   if addonName ~= Joker.name then return end
   EVENT_MANAGER:UnregisterForEvent(Joker.name, EVENT_ADD_ON_LOADED)
 

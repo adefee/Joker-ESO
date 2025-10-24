@@ -12,8 +12,12 @@ local optionIndent = "   " -- Spacer/indent for submenu options
 local optionIndent_Title = " " -- Spacer/indent for submenu titles
 local optionIndent_Button = "" -- Spacer/indent for buttons
 
--- Display NSFW
--- Data; Display NSFW
+-- Local debugging utility
+local function debugLog(message)
+  if Joker and Joker.saved and Joker.saved.internal and Joker.saved.internal.showDebug and Joker.saved.internal.showDebug > 0 then
+    d('Joker: ' .. message)
+  end
+end
 
 -- settingsPanelMain
 -- Data; Creates series of controls for main/basic options
@@ -131,6 +135,7 @@ end
 
 -- Compile Addon Settings menu.
 function Joker.LoadSettings()
+    debugLog('Running Joker.LoadSettings()')
     local LAM = LibAddonMenu2
 
     local panelData = {
