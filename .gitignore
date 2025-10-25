@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.vscode/
+deploy/credentials.js
+images/logo/
+build-temp.ps1
+*.zip

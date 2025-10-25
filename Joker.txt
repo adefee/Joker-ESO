@@ -1,0 +1,90 @@
+## Title: |cFF9900Joker
+## Description: Best enjoyed with Skooma, |cFF9900Joker |cFFFFFFoffers a collection of various jokes, riddles, ready checks, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
+## Author: |cFF9900Lent|cFFFFFF (IGN |cFF9900@CallMeLent|cFFFFFF)
+
+## Version: 8.6.1
+## AddOnVersion: 806100
+## APIVersion: 101048
+## SavedVariables: JokerSavedVars
+## DependsOn: LibAddonMenu-2.0>=38
+
+# Start Loading Joker Components
+Joker.xml
+
+## I18n & Locales (default: en)
+i18n\en.lua
+i18n\$(language).lua
+
+## Core
+variables.lua
+
+## Preset Jokes
+jokes\Burns.lua
+jokes\Curse.lua
+jokes\Cat.lua
+jokes\Dad.lua
+jokes\Edgy.lua
+jokes\ESO.lua
+jokes\GameOfThrones.lua
+jokes\HarryPotter.lua
+jokes\LordOfTheRings.lua
+jokes\News.lua
+jokes\Norris.lua
+jokes\PickupLines.lua
+jokes\ReadyChecks.lua
+jokes\Riddles.lua
+jokes\Pokemon.lua
+jokes\StarWars.lua
+jokes\Twisters.lua
+jokes\Wisdom.lua
+
+################################################################
+## ADD YOUR CUSTOM JOKE, RIDDLE, AND READY CHECK FILES BELOW! ##
+################################################################
+
+jokes\_MyCustomJokes.lua
+jokes\_MyCustomReadyChecks.lua
+
+################################################################
+## ADD YOUR CUSTOM JOKE, RIDDLE, AND READY CHECK FILES ABOVE! ##
+################################################################
+
+## Initialize Joker
+options\customize.lua
+Joker-Util.lua
+Joker-Data.lua
+Joker.lua
+bindings.xml
+
+## Addon Settings Window
+Settings.lua
+
+## LICENSE
+; Proprietary License - Personal Use Only
+; Copyright (c) 2019-2025 Totem Group, Inc. All rights reserved.
+;
+; This software is licensed for PERSONAL USE ONLY.
+; - You may download and use this addon for your own private, non-commercial purposes
+; - You may NOT distribute, republish, or share this addon or modified versions
+; - You may NOT use this addon for any commercial purpose
+; - You may NOT create and distribute derivative works
+;
+; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+; THE SOFTWARE.
+;
+; For complete license terms, see the LICENSE file.
+
+; DISCLAIMER:
+;
+; This Add-on is not created by, affiliated with or sponsored by ZeniMax
+; Media Inc. or its affiliates. The Elder Scrolls® and related logos are
+; registered trademarks or trademarks of ZeniMax Media Inc. in the United
+; States and/or other countries. All rights reserved.
+;
+; You can read the full terms at:
+; https://account.elderscrollsonline.com/add-on-terms
