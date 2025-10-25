@@ -24,10 +24,13 @@ Joker can send you messages periodically (such as every few zones), or you can r
 
 - [Dependencies](#dependencies)
 - [Commands](#commands)
+- [Build](#build)
+- [Development](#development)
 - [Update Roadmap](#update-roadmap)
 - [Contributing](#contributing)
-- [Sourcing](#sourcing)
+- [Sourcing & Citations](#sourcing)
 - [License](#license)
+- [Disclaimer](#disclaimer)
 
 
 ## Dependencies
