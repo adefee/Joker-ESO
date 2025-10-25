@@ -29,7 +29,10 @@ const excludePatterns = [
   '.deploy-exclude',
   'build.js',
   '.gitignore',
-  '.gitattributes'
+  '.gitattributes',
+  'package.json',
+  'package-lock.json',
+  'build-temp.ps1'
 ];
 
 // Build PowerShell command to create zip
