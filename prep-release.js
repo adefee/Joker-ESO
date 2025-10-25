@@ -225,11 +225,11 @@ function updateReadme(version) {
   let content = fs.readFileSync(readmePath, 'utf8');
   
   // Update Current Branch Release line
-  const oldVersionMatch = content.match(/#### Current Branch Release: \*\*v([\d.]+)\*\*/);
+  const oldVersionMatch = content.match(/#### Current Release: \*\*v([\d.]+)\*\*/);
   const oldVersion = oldVersionMatch ? oldVersionMatch[1] : 'unknown';
   content = content.replace(
-    /#### Current Branch Release: \*\*v[\d.]+\*\*/,
-    `#### Current Branch Release: **v${version}**`
+    /#### Current Release: \*\*v[\d.]+\*\*/,
+    `#### Current Release: **v${version}**`
   );
   
   fs.writeFileSync(readmePath, content);

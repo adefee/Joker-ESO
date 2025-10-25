@@ -1,14 +1,24 @@
-# Joker-ESO
-A community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com)
+# Joker - Jokes, Trivia, Rolls, Custom Ready, Burns, Pickup Lines, & More in ESO!
+Joker is a free community addon for [Elder Scrolls Online](https://www.elderscrollsonline.com), currently available for PC/Mac. A console port of Joker is planned for the future (WIP).
 
-### [Download live version on ESOUI](https://www.esoui.com/downloads/info2329-Joker-JokesandOtherLeisurelyTomfoo....html) (also available via Minion)
-### or, download the latest build from the [Releases page](../../releases)
+## Download
+You can download Joker from the Releases page (for manual installation), or via ESOUI (also searchable via Minion). ESOUI also provides a manual download option.
 
-#### Current Branch Release: **v8.6.1** (ESO-101048)
+- ESOUI: [Download Joker](https://www.esoui.com/downloads/info2329-Joker-JokesTriviaRollsCustomReadyBurnsPickupLinesampMore.html)
+- Releases: [Download Joker](../../releases)
 
-> Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure! 
+#### Current Release: **v8.6.1** (ESO-101048)
 
-> Version 4.X.X is a major milestone release, with the purpose of offering a simpler and more aesthetically pleasing settings UI, greater customization and control (including a simplified manner with which to add your own jokes, riddles, and more!), removal of extra dependencies (where possible), and possibly an auto-update mechanism!
+## About
+Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
+
+Joker can send you messages periodically (such as every few zones), or you can run commands directly to get a joke, trivia, roll, custom ready check, burn, pickup line, and much more!
+
+--
+
+> **24 Oct 2025**: There is a known issue with how Minion 3 and 4 handle the installation of Joker 8.4.0. I'm working on adjustments to work around this issue (hopefully this weekend), but in the meantime installing manually or via other addon managers is recommended. This is not an issue with the addon itself, but specifically with how Minion attempts to unpack the zip archives.
+
+> **Latest Feature Release: v8.2.1**: Try out the new `/trivia` command, which includes ~75 various Q&A and 'did you know'-style tidbits about ESO. Grill your friends or learn something new :)
 
 ## Table of Contents
 
@@ -28,29 +38,59 @@ The following libraries are presently required for Joker to function properly. O
 Depending on whether or not I'm actively playing at a given time, I may not have updated the addon to explicitly state it supports the latest version of the game. Joker should still be compatibile with newer versions of ESO, even if it shows outdated - functionally it's very simple and the APIs it's using are unlikely to change significantly or often. You should be able to safely use Joker and ignore the outdated version warnings, but if you run into issues, please let me know!
 
 ## Commands
+> *Note*: Due to ESO's UI and ToS restrictions, addons are not allowed to send chat messages on your behalf. As a result, when you run a command, Joker generates the jokes/messages and puts them in your active chatbox - just hit enter to send!
+
+### Settings UI/Help
 - **/joker**: Shows Joker settings & help.
-- **/joke *filter***: Picks a random joke and adds to your active chatbox - just hit enter to send. Type '/joke text' to pick a random joke related to your text (for example, /joke argonian would show a random joke related to Argonians).
-- **/joke-eso** (or **/eso**): Adds a random ESO-related joke to your active chatbox
-- **/joke-dad** (or **/dad**): Adds a random Dad joke to your active chatbox
-- **/joke-got**: Adds a random Game of Thrones joke to your active chatbox
-- **/joke-wisdom** (or **/wisdom**): Adds a random wisdom tidbit or shower thought to your active chatbox
-- **/joke-pokemon** (or **/pokemon**): Adds a random Pokemon joke to your active chatbox
+
+### Jokes
+- **/joke *filter***: Picks a random joke and adds  - just hit enter to send. Type '/joke text' to pick a random joke related to your text (for example, /joke argonian would show a random joke related to Argonians).
+- **/joke-eso** (or **/eso**): Adds a random ESO-related joke 
+- **/joke-dad** (or **/dad**): Adds a random Dad joke 
+- **/joke-lotr** (or **/lotr**): Adds a random Lord of the Rings-related joke 
+- **/joke-got**: Adds a random Game of Thrones joke 
+- **/joke-pokemon** (or **/pokemon**): Adds a random Pokemon joke 
 - **/joke-edgy**: adds a random edgy joke to your chatbox (added by popular request). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.
-- **/joke-norris** (or **/norris**): Add a random Chuck Norris joke to your active chatbox.
-- **/joke-pickup *target*** (or /pickup): Add a random cheesy/cute pickup line to your chatbox. If you include a name (target), it will address it to them for you!
-- **/pickup-hp *target***: Add a random Harry Potter pickup line to your chatbox. If you include a name (target), it will address it to them for you!
-- **/pickup-poke *target***: Add a random Pokemon pickup line to your chatbox. If you include a name (target), it will address it to them for you!
-- **/pickup-xxx *target***: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. If you include a name (target), it will address it to them for you!
-- **/joke-burn *target*** (or **/burn**): Add a random burn to your chatbox. If you include a name (target), it will address it to them for you!
+- **/joke-norris** (or **/norris**): Add a random Chuck Norris joke .
+- **/joke-pickup *target*** (or /pickup): Add a random cheesy/cute pickup line to your chatbox. 
+
+### ESO Trivia, Shower Thoughts, and Cat Facts
+- **/trivia**: Get a random tidbit of ESO trivia! Grill you friends or learn something new!
+- **/joke-wisdom** (or **/wisdom**): Adds a random tidbit of wisdom or shower thought (though sometimes a bit sarcastic)
+- **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
+
+### Pickup Lines
+> *Note*: Pickup lines are not always appropriate for all audiences and were intended primarily for use among friends. Please be considerate with your usage.
+
+> **Pro Tip**: Include a target (like a name) to have Joker automatically make them the subject of the pickup line!
+
+- **/pickup-hp *target***: Add a random Harry Potter pickup line to your chatbox. 
+- **/pickup-poke *target***: Add a random Pokemon pickup line to your chatbox. 
+- **/pickup-xxx *target***: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. 
+- **/joke-burn *target*** (or **/burn**): Add a random burn to your chatbox.
+
+### Custom Ready Checks (and Votes)!
+A crowd-favorite and something many players didn't know you could do! With Joker, run /ready to trigger a random meme-y ready check for your group, or specify your own!
+
+- **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
+
+> Pro Tip: Add 'unan', 'simple', or 'super' right before your prompt to specify the type of ready check you want!
+> Example: `/ready unan Are you ready?`
+> Example: `/ready simple Are you ready?`
+> Example: `/ready super Are you ready?`
+
+### Rolls, Choose, & Raffles
+- **/roll <floor>,<ceiling>,<prize>**: RNG roll. By default, rolls between 1 and 10. Including a single integer will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers. You may optionally also include a prize/memo (supports item links) - which will also post the roll in chat for you.
+- **/choose <options>** (or **/choose party <prize>**): Similar to /roll, chooses randomly among given options (separated by space). You may instead use "/choose party" to randomly choose a winner from your party (up to 24 members) - with the option to assign a prize (supports item links).
+
+### Other Fun Commands
 - **/8ball**: Undecided? Get advice from the sage 8ball.
 - **/twister**: Get a random tongue twister! Can you say it 3 times fast?
-- **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 - **/curse**: Exasperated? Throw out a /curse (or '/curse Mark' because Mark deserves it!). Curses are meant to be more amusing than anything, and are SFW - all curses are pulled from Elder Scrolls, Star Wars & Trek, LotR, other nerdy series, and vintage pop culture.
-- **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
-- And other helpful utilities, like:
-  - **/roll <floor>,<ceiling>,<prize>**: RNG roll. By default, rolls between 1 and 10. Including a single integer will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers. You may optionally also include a prize/memo (supports item links) - which will also post the roll in chat for you.
-  - **/choose <options>** (or **/choose party <prize>**): Similar to /roll, chooses randomly among given options (separated by space). You may instead use "/choose party" to randomly choose a winner from your party (up to 24 members) - with the option to assign a prize (supports item links).
-  - **/rl**: Shorthand for /reloadui
+
+### Utility Commands
+These are some other helpful utilities that can be useful in various situations (but that don't really deserve their own addon)
+- **/rl**: Shorthand for /reloadui. It ... reloads the UI.
 
 ## Build
 
