@@ -52,13 +52,52 @@ Depending on whether or not I'm actively playing at a given time, I may not have
   - **/rl**: Shorthand for /reloadui
 
 ## Build
-v8.3.0+: Run `npm install` and then `npm run build` to create a zip file of the addon in the `dist` folder.
 
-When version is incremented, it needs to be updated in the following files:
-- `package.json`
-- `Joker.txt`
-- `variables.lua`
-- `README.md`
+### Local Building
+
+The build process uses a cross-platform Node.js script that creates standard-compliant zip files compatible with all addon managers (including Minion):
+
+```bash
+# Install dependencies
+npm install
+
+# Build the addon
+npm run build
+```
+
+This creates a zip file at `dist/<version>/joker-<version>.zip` with the proper folder structure (`Joker/*`) required by ESO addon managers.
+
+**Key features:**
+- ✅ Cross-platform compatible (Windows, macOS, Linux)
+- ✅ Uses standard deflate compression for maximum compatibility
+- ✅ Works with Minion and other ESO addon managers
+- ✅ No PowerShell or Windows-specific dependencies
+
+### Automated Releases (GitHub Actions)
+
+Releases are automatically built and published via GitHub Actions when a version tag is pushed:
+
+```bash
+# Create and push a new version tag
+git tag v8.4.0
+git push origin v8.4.0
+```
+
+The CI workflow will:
+1. Build the addon using the Node.js script on Ubuntu runners
+2. Create a GitHub release with the version from `package.json`
+3. Attach the build artifact to the release
+4. Generate release notes with installation instructions
+
+You can also manually trigger a release from the [Actions tab](../../actions/workflows/release.yml) in GitHub.
+
+### Version Management
+
+When incrementing the version, update it in the following files:
+- `package.json` - Main version source
+- `Joker.txt` - Both `Version` and `AddOnVersion` fields
+- `variables.lua` - `addonVersion` constant
+- `README.md` - Current branch release badge
 
 ## Development
 

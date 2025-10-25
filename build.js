@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const archiver = require('archiver');
 
 // Get version from package.json
 const packageJson = require('./package.json');
@@ -12,7 +12,7 @@ if (!fs.existsSync('dist')) {
   fs.mkdirSync('dist');
 }
 if (!fs.existsSync(distDir)) {
-  fs.mkdirSync(distDir);
+  fs.mkdirSync(distDir, { recursive: true });
 }
 
 // Output file path
@@ -23,6 +23,7 @@ const excludePatterns = [
   'node_modules',
   'dist',
   '.git',
+  '.github',
   'images',
   '.vscode',
   'deploy',
@@ -35,22 +36,21 @@ const excludePatterns = [
   'build-temp.ps1'
 ];
 
-// Build PowerShell command to create zip
-const excludeFilter = excludePatterns.map(ex => `$_.Name -ne '${ex}'`).join(' -and ');
+/**
+ * Check if a file/folder should be included in the build
+ */
+function shouldInclude(itemPath) {
+  const itemName = path.basename(itemPath);
+  return !excludePatterns.includes(itemName);
+}
 
-const psCommand = `
-$ProgressPreference = 'SilentlyContinue';
-$source = Get-Location;
-$tempDir = Join-Path $env:TEMP "Joker-build-$(Get-Random)";
-$destFolder = Join-Path $tempDir "Joker";
-New-Item -ItemType Directory -Path $destFolder -Force | Out-Null;
-Get-ChildItem -Path $source | Where-Object { ${excludeFilter} } | Copy-Item -Destination $destFolder -Recurse -Force;
-Compress-Archive -Path $destFolder -DestinationPath (Join-Path $source "${outputZip.replace(/\\/g, '\\\\')}") -Force;
-Remove-Item -Path $tempDir -Recurse -Force;
-`.trim();
-
-try {
+/**
+ * Build the addon archive using archiver library
+ * This creates a standard zip file compatible with all platforms and tools like Minion
+ */
+async function buildArchive() {
   console.log('Building archive...');
+  console.log(`Version: ${version}`);
   console.log(`Output: ${outputZip}`);
   
   // Remove existing zip if it exists
@@ -58,31 +58,81 @@ try {
     fs.unlinkSync(outputZip);
   }
   
-  // Write PowerShell script to temp file for easier debugging
-  const tempScript = path.join(__dirname, 'build-temp.ps1');
-  fs.writeFileSync(tempScript, psCommand);
-  
-  console.log('Running PowerShell script...');
-  try {
-    execSync(`powershell -ExecutionPolicy Bypass -File "${tempScript}"`, { 
-      stdio: 'inherit',
-      shell: 'cmd.exe'
+  return new Promise((resolve, reject) => {
+    // Create a write stream for the output file
+    const output = fs.createWriteStream(outputZip);
+    
+    // Create archiver instance with standard deflate compression
+    // Using level 9 for maximum compatibility and compression
+    const archive = archiver('zip', {
+      zlib: { level: 9 }
     });
-  } finally {
-    // Clean up temp script
-    if (fs.existsSync(tempScript)) {
-      fs.unlinkSync(tempScript);
+    
+    // Handle completion
+    output.on('close', () => {
+      const stats = fs.statSync(outputZip);
+      const sizeKB = (stats.size / 1024).toFixed(2);
+      const sizeMB = (stats.size / 1024 / 1024).toFixed(2);
+      console.log(`\n✓ Successfully created ${path.basename(outputZip)}`);
+      console.log(`  Size: ${sizeKB} KB (${sizeMB} MB)`);
+      console.log(`  Total bytes: ${archive.pointer()}`);
+      resolve();
+    });
+    
+    // Handle warnings
+    archive.on('warning', (err) => {
+      if (err.code === 'ENOENT') {
+        console.warn('Warning:', err);
+      } else {
+        reject(err);
+      }
+    });
+    
+    // Handle errors
+    archive.on('error', (err) => {
+      reject(err);
+    });
+    
+    // Pipe archive data to the output file
+    archive.pipe(output);
+    
+    // Get all items in the current directory
+    const items = fs.readdirSync('.');
+    
+    console.log('\nAdding files to archive:');
+    
+    // Add each item to the archive under the "Joker" directory
+    for (const item of items) {
+      if (shouldInclude(item)) {
+        const itemPath = path.join('.', item);
+        const stats = fs.statSync(itemPath);
+        
+        if (stats.isDirectory()) {
+          console.log(`  + ${item}/ (directory)`);
+          archive.directory(itemPath, path.join('Joker', item));
+        } else {
+          console.log(`  + ${item}`);
+          archive.file(itemPath, { name: path.join('Joker', item) });
+        }
+      } else {
+        console.log(`  - ${item} (excluded)`);
+      }
     }
-  }
-  
-  // Verify the zip was created
-  if (fs.existsSync(outputZip)) {
-    const stats = fs.statSync(outputZip);
-    console.log(`\n✓ Successfully created ${path.basename(outputZip)} (${(stats.size / 1024).toFixed(2)} KB)`);
-  } else {
-    throw new Error('Zip file was not created');
-  }
-} catch (error) {
-  console.error('Build failed:', error.message);
-  process.exit(1);
+    
+    // Finalize the archive
+    console.log('\nFinalizing archive...');
+    archive.finalize();
+  });
 }
+
+// Main execution
+(async () => {
+  try {
+    await buildArchive();
+    console.log('\n🎉 Build completed successfully!\n');
+  } catch (error) {
+    console.error('\n❌ Build failed:', error.message);
+    console.error(error);
+    process.exit(1);
+  }
+})();

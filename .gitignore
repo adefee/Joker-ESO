@@ -1,5 +1,7 @@
 dist/
-node_modules
+node_modules/
 .vscode/
 deploy/credentials.js
-images/logo
+images/logo/
+build-temp.ps1
+*.zip
