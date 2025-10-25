@@ -17,8 +17,8 @@ JokerL = JokerL or {} -- i18n
 
 Joker = {
   name = "Joker",
-  version = "8.6.2",
-  versionESO = 806200,
+  version = "8.6.3",
+  versionESO = 806300,
   author = "Lent (IGN @CallMeLent, Github @adefee)",
   color = "D66E4A",
   locale = JokerL:GetLanguage(),
