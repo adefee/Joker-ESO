@@ -59,7 +59,7 @@ Depending on whether or not I'm actively playing at a given time, I may not have
 - **/joke-wisdom** (or **/wisdom**): Adds a random tidbit of wisdom or shower thought (though sometimes a bit sarcastic)
 - **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 
-### Pickup Lines
+### Pickup Lines and Burns
 > *Note*: Pickup lines are not always appropriate for all audiences and were intended primarily for use among friends. Please be considerate with your usage.
 
 > **Pro Tip**: Include a target (like a name) to have Joker automatically make them the subject of the pickup line!
@@ -74,10 +74,10 @@ A crowd-favorite and something many players didn't know you could do! With Joker
 
 - **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
 
-> Pro Tip: Add 'unan', 'simple', or 'super' right before your prompt to specify the type of ready check you want!
-> Example: `/ready unan Are you ready?`
-> Example: `/ready simple Are you ready?`
-> Example: `/ready super Are you ready?`
+> Pro Tip: Add 'unan', 'simple', or 'super' right before your prompt to specify the type of ready check you want. This will change the required percentage of players to pass the ready check, effectively giving you a party-based voting system!
+> Example: `/ready unan Is the cake a lie?` (100% required to pass)
+> Example: `/ready simple Should we blame the healers?` (51% required to pass)
+> Example: `/ready super Should we take a 5 min break?` (67% required to pass)
 
 ### Rolls, Choose, & Raffles
 - **/roll <floor>,<ceiling>,<prize>**: RNG roll. By default, rolls between 1 and 10. Including a single integer will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers. You may optionally also include a prize/memo (supports item links) - which will also post the roll in chat for you.
