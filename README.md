@@ -7,7 +7,7 @@ You can download Joker from the Releases page (for manual installation), or via 
 - ESOUI: [Download Joker](https://www.esoui.com/downloads/info2329-Joker-JokesTriviaRollsCustomReadyBurnsPickupLinesampMore.html)
 - Releases: [Download Joker](../../releases)
 
-#### Current Release: **v8.6.1** (ESO-101048)
+#### Current Release: **v8.6.2** (ESO-101048)
 
 ## About
 Best enjoyed with Skooma, Joker offers a collection of various jokes, riddles, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
