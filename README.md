@@ -294,7 +294,7 @@ Always accepting requests, suggestions, etc. Here are a few things currently on 
 - **[Added v4.0.0]**: Add your own jokes (locally),
 - Automated submission of jokes to be included in the addon for everyone,
 - **[Added v2.3.0]**: Raffle: Randomly pick from pool of users,
-- **[Added v2.2.0]**Popular TV show references & jokes (GoT, Billions, The Walking Dead, Grey's Anatomy, etc - always taking requests),
+- **[Added v2.2.0]** Popular TV show references & jokes (GoT, Billions, The Walking Dead, Grey's Anatomy, etc - always taking requests),
 - **[In Progress, Partially Added v2.0.3]**: Fun riddles and mindtwisters (including interactive)
 - Other fun (and maybe a little useful) utility commands,
 - ... and lots of other stuff even further in the future (plus any requests from users)
