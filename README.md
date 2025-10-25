@@ -44,52 +44,78 @@ Depending on whether or not I'm actively playing at a given time, I may not have
 > *Note*: Due to ESO's UI and ToS restrictions, addons are not allowed to send chat messages on your behalf. As a result, when you run a command, Joker generates the jokes/messages and puts them in your active chatbox - just hit enter to send!
 
 ### Settings UI/Help
-- **/joker**: Shows Joker settings & help.
+- `/joker`: Shows Joker settings & help.
 
 ### Jokes
-- **/joke *filter***: Picks a random joke and adds  - just hit enter to send. Type '/joke text' to pick a random joke related to your text (for example, /joke argonian would show a random joke related to Argonians).
-- **/joke-eso** (or **/eso**): Adds a random ESO-related joke 
-- **/joke-dad** (or **/dad**): Adds a random Dad joke 
-- **/joke-lotr** (or **/lotr**): Adds a random Lord of the Rings-related joke 
-- **/joke-got**: Adds a random Game of Thrones joke 
-- **/joke-pokemon** (or **/pokemon**): Adds a random Pokemon joke 
-- **/joke-edgy**: adds a random edgy joke to your chatbox (added by popular request). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.
-- **/joke-norris** (or **/norris**): Add a random Chuck Norris joke .
-- **/joke-pickup *target*** (or /pickup): Add a random cheesy/cute pickup line to your chatbox. 
+- `/joke [filter]`: Picks a random joke and adds  - just hit enter to send. Type `/joke text` to pick a random joke related to your text (for example, `/joke argonian` would show a random joke related to Argonians).
+- `/joke-eso` (or `/eso`): Adds a random ESO-related joke 
+- `/joke-dad` (or `/dad`): Adds a random Dad joke 
+- `/joke-lotr` (or `/lotr`): Adds a random Lord of the Rings-related joke 
+- `/joke-got`: Adds a random Game of Thrones joke 
+- `/joke-pokemon` (or `/pokemon`): Adds a random Pokemon joke 
+- `/joke-edgy`: adds a random edgy joke to your chatbox (added by popular request). Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. Please be considerate with your usage.
+- `/joke-norris` (or `/norris`): Add a random Chuck Norris joke .
+- `/joke-pickup [target]` (or `/pickup`): Add a random cheesy/cute pickup line to your chatbox. 
 
 ### ESO Trivia, Shower Thoughts, and Cat Facts
-- **/trivia**: Get a random tidbit of ESO trivia! Grill you friends or learn something new!
-- **/joke-wisdom** (or **/wisdom**): Adds a random tidbit of wisdom or shower thought (though sometimes a bit sarcastic)
-- **/catfact**: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
+- `/trivia`: Get a random tidbit of ESO trivia! Grill you friends or learn something new!
+- `/joke-wisdom` (or `/wisdom`): Adds a random tidbit of wisdom or shower thought (though sometimes a bit sarcastic)
+- `/catfact`: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 
 ### Pickup Lines and Burns
 > *Note*: Pickup lines are not always appropriate for all audiences and were intended primarily for use among friends. Please be considerate with your usage.
 
 > **Pro Tip**: Include a target (like a name) to have Joker automatically make them the subject of the pickup line!
 
-- **/pickup-hp *target***: Add a random Harry Potter pickup line to your chatbox. 
-- **/pickup-poke *target***: Add a random Pokemon pickup line to your chatbox. 
-- **/pickup-xxx *target***: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. 
-- **/joke-burn *target*** (or **/burn**): Add a random burn to your chatbox.
+- `/pickup-hp [target]`: Add a random Harry Potter pickup line to your chatbox. 
+- `/pickup-poke [target]`: Add a random Pokemon pickup line to your chatbox. 
+- `/pickup-xxx [target]`: Add a random adult/r-rated pickup line to your chatbox. Note that these jokes have been flagged as particularly inappropriate or explicit and likely are not suitable for all audiences. 
+- `/joke-burn [target]` (or `/burn`): Add a random burn to your chatbox.
 
 ### Custom Ready Checks (and Votes)!
-A crowd-favorite and something many players didn't know you could do! With Joker, run /ready to trigger a random meme-y ready check for your group, or specify your own!
+A crowd-favorite and something many players didn't know you could do! With Joker, run `/ready` to trigger a random meme-y ready check for your group, or specify your own!
 
-- **/ready <text>**: Ready checks, but funnier & faster to type! Optionally add your own custom prompt instead of a random witty one!
+#### Basic Usage
+- `/ready`: Picks a random Joker-curated ready check prompt, visible to your group. They'll see a prompt (for example: "Do a barrel roll?") and be able to mark 'Yes' or 'No'.
+- `/ready [text]`: Send a custom ready check with your own message! Users can then respond with 'Yes' or 'No'.
+- Example: `/ready Is the cake a lie?` (Users will see a prompt on their screen/chat with "Is the cake a lie?", and be able to mark 'Yes' or 'No')
 
-> Pro Tip: Add 'unan', 'simple', or 'super' right before your prompt to specify the type of ready check you want. This will change the required percentage of players to pass the ready check, effectively giving you a party-based voting system!
-> Example: `/ready unan Is the cake a lie?` (100% required to pass)
-> Example: `/ready simple Should we blame the healers?` (51% required to pass)
-> Example: `/ready super Should we take a 5 min break?` (67% required to pass)
+#### Advanced Usage (Voting!)
+Add 'unan', 'simple', or 'super' right before your prompt to specify the type of ready check you want. This will change the required percentage of players to pass the ready check, effectively giving you a party-based voting system!
+
+- Example: `/ready unan Is the cake a lie?` (100% required to pass)
+- Example: `/ready simple Should we blame the healers?` (51% required to pass)
+- Example: `/ready super Should we take a 5 min break?` (67% required to pass)
 
 ### Rolls, Choose, & Raffles
-- **/roll <floor>,<ceiling>,<prize>**: RNG roll. By default, rolls between 1 and 10. Including a single integer will roll between 0 and the int. Including two ints (comma-delim) will roll between the two numbers. You may optionally also include a prize/memo (supports item links) - which will also post the roll in chat for you.
-- **/choose <options>** (or **/choose party <prize>**): Similar to /roll, chooses randomly among given options (separated by space). You may instead use "/choose party" to randomly choose a winner from your party (up to 24 members) - with the option to assign a prize (supports item links).
+As noted above, chat commands can't send messages to others on your behalf. The commands below show in your chat to you, and go to your chatbox - just hit enter to send!
+
+#### Roll: Basic Usage
+- `/roll` RNG roll. By default, rolls between 0 and 10, and posts the result in chat
+- `/roll 100` Same as above, but adjusts the ceiling. This example would roll between 0 and 100, and post the result to your chatbox.
+
+#### Roll: Advanced Usage
+- `/roll [floor],[ceiling],[prize]`: Including a single integer will roll between 0 and the int. Including two ints (comma-delimited) will roll between the two numbers. You may optionally also include a prize/memo (supports item links) - which will also post the roll in chat for you.
+
+- Constrain floor & ceiling: `/roll 5,100` (rolls between 5 and 100, and posts the result in chat)
+- Constrain and add a memo: `/roll 5,100,A nice sword` (rolls between 5 and 100, and posts the result in chat)
+
+#### Choose
+Similar to /roll, chooses randomly among given options (separated by space) - this can be useful for choosing players (without having to track everyone's numbers like you would with a roll), or RNG choosing among various options/items.
+
+Basic Usage: `/choose [options]` (separated by space)
+Example: `/choose red green blue` (chooses randomly among the three colors)
+
+For even more efficiency, you can use `/choose party` to randomly choose a winner from your party (up to 24 members)! When using `/choose party`, you can optionally add a prize (supports item links) - which will also post the winner and prize in your chatbox - just hit enter to send!
+
+Examples:
+- `/choose party` Read your list of party members and choose a "winner" from them.
+- `/choose party [prize]` Read your list of party members and choose a winner, attaching the prize or memo to the winner in chat.
 
 ### Other Fun Commands
-- **/8ball**: Undecided? Get advice from the sage 8ball.
-- **/twister**: Get a random tongue twister! Can you say it 3 times fast?
-- **/curse**: Exasperated? Throw out a /curse (or '/curse Mark' because Mark deserves it!). Curses are meant to be more amusing than anything, and are SFW - all curses are pulled from Elder Scrolls, Star Wars & Trek, LotR, other nerdy series, and vintage pop culture.
+- `/8ball`: Undecided? Get advice from the sage 8ball.
+- `/twister`: Get a random tongue twister! Can you say it 3 times fast?
+- `/curse`: Exasperated? Throw out a /curse (or '/curse Mark' because Mark deserves it!). Curses are meant to be more amusing than anything, and are SFW - all curses are pulled from Elder Scrolls, Star Wars & Trek, LotR, other nerdy series, and vintage pop culture.
 
 ### Utility Commands
 These are some other helpful utilities that can be useful in various situations (but that don't really deserve their own addon)
