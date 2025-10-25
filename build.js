@@ -29,6 +29,7 @@ const excludePatterns = [
   'deploy',
   '.deploy-exclude',
   'build.js',
+  'prep-release.js',
   '.gitignore',
   '.gitattributes',
   'package.json',

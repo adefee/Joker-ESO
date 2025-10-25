@@ -73,31 +73,70 @@ This creates a zip file at `dist/<version>/joker-<version>.zip` with the proper 
 - ✅ Works with Minion and other ESO addon managers
 - ✅ No PowerShell or Windows-specific dependencies
 
-### Automated Releases (GitHub Actions)
+### Automated Releases
 
-Releases are automatically built and published via GitHub Actions when a version tag is pushed:
+#### Quick Release (Recommended)
+
+Use the `prep-release` script to automate the entire release process:
 
 ```bash
-# Create and push a new version tag
-git tag v8.4.0
-git push origin v8.4.0
+# One command to update version, commit, tag, and push
+npm run prep-release 8.5.0 --push
 ```
 
-The CI workflow will:
-1. Build the addon using the Node.js script on Ubuntu runners
-2. Create a GitHub release with the version from `package.json`
-3. Attach the build artifact to the release
-4. Generate release notes with installation instructions
+This will:
+1. Update version in all required files
+2. Commit changes with "Bump version to 8.5.0"
+3. Create and push git tag `v8.5.0`
+4. Trigger GitHub Actions to build and release
+
+#### Step-by-Step Release
+
+For more control, use the script in stages:
+
+```bash
+# Update version files only (review first)
+npm run prep-release 8.5.0
+
+# Commit the changes
+npm run prep-release 8.5.0 --commit
+
+# Create tag and push (triggers release)
+npm run prep-release 8.5.0 --push
+```
+
+#### prep-release Options
+
+```bash
+npm run prep-release <version> [options]
+
+Options:
+  --commit    Commit the version changes
+  --tag       Create git tag (implies --commit)
+  --push      Push to remote (implies --tag and --commit)
+  --help      Show help message
+```
+
+#### GitHub Actions Workflow
+
+Once a version tag is pushed, GitHub Actions automatically:
+- Builds the addon on Ubuntu runners
+- Creates a GitHub release
+- Attaches the zip file as a release asset
+- Generates release notes with installation instructions
 
 You can also manually trigger a release from the [Actions tab](../../actions/workflows/release.yml) in GitHub.
 
 ### Version Management
 
-When incrementing the version, update it in the following files:
-- `package.json` - Main version source
+The `prep-release` script automatically updates all version files. If you need to update manually, change these files:
+- `package.json` - Main version source (e.g., `"version": "8.5.0"`)
 - `Joker.txt` - Both `Version` and `AddOnVersion` fields
-- `variables.lua` - `addonVersion` constant
+- `variables.lua` - `version` and `versionESO` constants
 - `README.md` - Current branch release badge
+
+**Note:** `AddOnVersion` / `versionESO` is calculated as: `MAJOR*100000 + MINOR*1000 + PATCH*100`
+- Example: Version `8.4.0` → `804000`
 
 ## Development
 

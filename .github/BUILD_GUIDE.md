@@ -18,10 +18,43 @@ The build output will be at: `dist/<version>/joker-<version>.zip`
 
 ### Creating a Release
 
+The release process is now automated with the `prep-release` script!
+
+#### Option 1: Automated Release (Recommended)
+
+```bash
+# Update version, commit, tag, and push in one command
+npm run prep-release 8.5.0 --push
+```
+
+This will:
+1. Update version in all required files (package.json, Joker.txt, variables.lua, README.md)
+2. Commit the changes with message "Bump version to 8.5.0"
+3. Create git tag `v8.5.0`
+4. Push commit and tag to remote
+5. Trigger GitHub Actions to build and release
+
+#### Option 2: Step-by-Step Release
+
+```bash
+# Step 1: Update version files only (review changes first)
+npm run prep-release 8.5.0
+
+# Step 2: Commit the changes
+npm run prep-release 8.5.0 --commit
+
+# Step 3: Create and push tag (triggers release)
+npm run prep-release 8.5.0 --push
+```
+
+#### Option 3: Manual Release (Old Way)
+
+If you prefer manual control:
+
 1. **Update the version** in all required files:
    - `package.json` - Main version number
    - `Joker.txt` - Both `Version:` and `AddOnVersion:` fields
-   - `variables.lua` - `addonVersion` constant
+   - `variables.lua` - `version` and `versionESO` constants
    - `README.md` - Current branch release badge
 
 2. **Commit your changes:**
@@ -37,11 +70,31 @@ The build output will be at: `dist/<version>/joker-<version>.zip`
    git push origin vX.Y.Z
    ```
 
-4. **GitHub Actions will automatically:**
-   - Build the addon on Ubuntu runners
-   - Create a GitHub release
-   - Attach the zip file as a release asset
-   - Generate release notes
+#### GitHub Actions
+
+Once a tag is pushed, GitHub Actions will automatically:
+- Build the addon on Ubuntu runners
+- Create a GitHub release
+- Attach the zip file as a release asset
+- Generate release notes with installation instructions
+
+#### prep-release Script Options
+
+```bash
+npm run prep-release <version> [options]
+
+Options:
+  -h, --help      Show help message
+  -c, --commit    Commit the version changes
+  -t, --tag       Create git tag (implies --commit)
+  -p, --push      Push commit and tag (implies --tag and --commit)
+
+Examples:
+  npm run prep-release 8.5.0           # Update files only
+  npm run prep-release 8.5.0 --commit  # Update and commit
+  npm run prep-release 8.5.0 --tag     # Update, commit, and tag
+  npm run prep-release 8.5.0 --push    # Complete release (recommended)
+```
 
 ## Build System Details
 

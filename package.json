@@ -9,6 +9,7 @@
   "dependencies": {},
   "scripts": {
     "build": "node build.js",
+    "prep-release": "node prep-release.js",
     "dev-copy": "xcopy \".\" \"%USERPROFILE%\\OneDrive\\Documents\\Elder Scrolls Online\\live\\Addons\\Joker\" /s /i /y /exclude:.deploy-exclude && echo Copied to live Addons folder."
   },
   "devDependencies": {
