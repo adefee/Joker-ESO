@@ -119,7 +119,7 @@ Examples:
 
 ### Utility Commands
 These are some other helpful utilities that can be useful in various situations (but that don't really deserve their own addon)
-- **/rl**: Shorthand for /reloadui. It ... reloads the UI.
+- `/rl`: Shorthand for /reloadui. It ... reloads the UI.
 
 ## Build
 
