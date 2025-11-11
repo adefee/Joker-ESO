@@ -60,31 +60,4 @@ bindings.xml
 Settings.lua
 
 ## LICENSE
-; Proprietary License - Personal Use Only
-; Copyright (c) 2019-2025 Totem Group, Inc. All rights reserved.
-;
-; This software is licensed for PERSONAL USE ONLY.
-; - You may download and use this addon for your own private, non-commercial purposes
-; - You may NOT distribute, republish, or share this addon or modified versions
-; - You may NOT use this addon for any commercial purpose
-; - You may NOT create and distribute derivative works
-;
-; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-; THE SOFTWARE.
-;
-; For complete license terms, see the LICENSE file.
-
-; DISCLAIMER:
-;
-; This Add-on is not created by, affiliated with or sponsored by ZeniMax
-; Media Inc. or its affiliates. The Elder Scrolls® and related logos are
-; registered trademarks or trademarks of ZeniMax Media Inc. in the United
-; States and/or other countries. All rights reserved.
-;
-; You can read the full terms at:
-; https://account.elderscrollsonline.com/add-on-terms
+; See LICENSE in this addon directory.
