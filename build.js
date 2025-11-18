@@ -75,6 +75,7 @@ function shouldInclude(itemPath) {
  * - LICENSE (license file)
  * - i18n/ (translations)
  * - jokes/ (joke content)
+ * - trivia/ (trivia content)
  * - options/ (settings)
  */
 async function buildArchive() {

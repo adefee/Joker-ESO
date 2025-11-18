@@ -103,6 +103,20 @@ function Joker.AnyJoke(context, logToConsole)
   OutputJoke(joke, logToConsole)
 end
 
+-- Joker.Trivia()
+-- Display; Retrieve and display a trivia (either in chatbox or in console). We aren't allowed to send on user's behalf.
+function Joker.Trivia(category, context, logToConsole)
+  local trivia = Data.GetTrivia(category, context)
+  OutputJoke(trivia, logToConsole)
+end
+
+-- Joker.AnyTrivia()
+-- Display; Retrieve and display a random trivia based on context
+function Joker.AnyTrivia(context, logToConsole)
+  local trivia = Data.GetRandomTrivia(context)
+  OutputJoke(trivia, logToConsole)
+end
+
 
 
 --[[----------------------------------------------------------
@@ -215,6 +229,21 @@ local function registerJokeCommand(category, config)
   end
 end
 
+-- registerTriviaCommand()
+-- Helper; Register slash commands for a trivia category
+local function registerTriviaCommand(category, config)
+  -- Register primary command: /<command> (e.g., /trivia-eso)
+  SLASH_COMMANDS["/" .. config.command] = function(context) 
+    Joker.Trivia(category, context) 
+  end
+  
+  -- Optionally register shorthand command (if whitelistSlashCommand is true)
+  -- This is less common for trivia since the command names are already unique
+  if config.whitelistSlashCommand then
+    -- Already registered above, no need to duplicate
+  end
+end
+
 -- loadJokeCategories()
 -- Helper; Load and register all joke categories, returns total joke count
 local function loadJokeCategories()
@@ -226,7 +255,7 @@ local function loadJokeCategories()
       -- Metadata entries, ignore
     else
       if Util.setContains(JokerData.Config, categoryKey) and JokerData.Config[categoryKey].label and JokerData.Config[categoryKey].command then
-        if not JokerData.Config[categoryKey].disable then
+        if not JokerData.Config[categoryKey].disable and not JokerData.Config[categoryKey].trivia then
           -- Load & count all the jokes for this category
           local categoryJokeCount = Util.countSet(JokerData[categoryKey])
           countAllJokes = countAllJokes + categoryJokeCount
@@ -255,6 +284,44 @@ local function loadJokeCategories()
   return countAllJokes
 end
 
+-- loadTriviaCategories()
+-- Helper; Load and register all trivia categories, returns total trivia count
+local function loadTriviaCategories()
+  local countAllTrivia = 0
+  Joker.saved.randomPoolTrivia.enabledCategories = {}
+  
+  for categoryKey, categoryData in pairs(JokerData) do
+    if categoryKey == 'Config' then
+      -- Metadata entries, ignore
+    else
+      if Util.setContains(JokerData.Config, categoryKey) and JokerData.Config[categoryKey].label and JokerData.Config[categoryKey].command then
+        if JokerData.Config[categoryKey].trivia and not JokerData.Config[categoryKey].disable then
+          -- Load & count all the trivia for this category
+          local categoryTriviaCount = Util.countSet(JokerData[categoryKey])
+          countAllTrivia = countAllTrivia + categoryTriviaCount
+          Joker.saved.count.triviaCategories[categoryKey] = categoryTriviaCount
+          Joker.saved.activeTrivia = Joker.saved.activeTrivia or {}
+          Joker.saved.activeTrivia[categoryKey] = JokerData.Config[categoryKey].label
+
+          -- If there is trivia (> 0), enable:
+          if categoryTriviaCount > 0 then
+
+            -- Add trivia to list of enabled categories
+            table.insert(Joker.saved.randomPoolTrivia.enabledCategories, categoryKey);
+
+            -- Register slash commands for this category
+            registerTriviaCommand(categoryKey, JokerData.Config[categoryKey])
+          else
+            d('Joker: The trivia category "' .. categoryKey .. '" was enabled but contains no trivia. It has not been loaded.')
+          end
+        end
+      end
+    end
+  end
+  
+  return countAllTrivia
+end
+
 -- Runs each time `EVENT_ADD_ON_LOADED` fires
 -- Specifically snake_case because it's a runtime function
 local function runtime_onload()
@@ -265,8 +332,12 @@ local function runtime_onload()
   -- Load and register all joke categories
   local countAllJokes = loadJokeCategories()
 
+  -- Load and register all trivia categories
+  local countAllTrivia = loadTriviaCategories()
+
   -- Update savedVars
   Joker.saved.count.loaded = countAllJokes
+  Joker.saved.count.triviaLoaded = countAllTrivia
 
   --[[
     Periodic Events
@@ -283,6 +354,7 @@ local function runtime_onload()
   ]]
 
   SLASH_COMMANDS["/joke"] = Joker.AnyJoke -- Add cmd: random joke
+  SLASH_COMMANDS["/trivia"] = Joker.AnyTrivia -- Add cmd: random trivia
   SLASH_COMMANDS["/8ball"] = Data.eightBall -- Add cmd: 8ball
   SLASH_COMMANDS["/ready"] = Data.readyCheck -- Add cmd: ready checks
   SLASH_COMMANDS["/choose"] = Data.choose -- Add cmd: choose

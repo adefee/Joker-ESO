@@ -1,5 +1,5 @@
 ## Title: |cFF9900Joker
-## Description: Best enjoyed with Skooma, |cFF9900Joker |cFFFFFFoffers a collection of various jokes, riddles, ready checks, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
+## Description: Best enjoyed with Skooma, |cFF9900Joker |cFFFFFFoffers a collection of various jokes, riddles, trivia, ready checks, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
 ## Author: |cFF9900Lent|cFFFFFF (IGN |cFF9900@CallMeLent|cFFFFFF)
 
 ## Version: 8.6.5
@@ -38,6 +38,12 @@ jokes\StarWars.lua
 jokes\Twisters.lua
 jokes\Wisdom.lua
 
+## Preset Trivia
+trivia\ESO.lua
+trivia\Celebrity.lua
+trivia\Geography.lua
+trivia\Math.lua
+
 ################################################################
 ## ADD YOUR CUSTOM JOKE, RIDDLE, AND READY CHECK FILES BELOW! ##
 ################################################################
@@ -47,6 +53,16 @@ jokes\_MyCustomReadyChecks.lua
 
 ################################################################
 ## ADD YOUR CUSTOM JOKE, RIDDLE, AND READY CHECK FILES ABOVE! ##
+################################################################
+
+################################################################
+## ADD YOUR CUSTOM TRIVIA FILES BELOW! ##########################
+################################################################
+
+trivia\_MyCustomTrivia.lua
+
+################################################################
+## ADD YOUR CUSTOM TRIVIA FILES ABOVE! ##########################
 ################################################################
 
 ## Initialize Joker

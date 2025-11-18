@@ -81,7 +81,12 @@ Joker = {
       active = 0,
       seen = 0,
       seenAllTime = 0, -- Total jokes viewed all-time (never decreases)
-      categories = {}
+      categories = {},
+      triviaLoaded = 0,
+      triviaActive = 0,
+      triviaSeen = 0,
+      triviaSeenAllTime = 0, -- Total trivia viewed all-time (never decreases)
+      triviaCategories = {}
     },
     enable = {
       jokeIntros = 1, -- Replace intros (like in burns/pickup lines). Default 1
@@ -114,11 +119,17 @@ Joker = {
       blacklist = {"Burns", "Curse", "CustomJokes", "CustomReadyChecks", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},
       enabledCategories = {}
     },
+    randomPoolTrivia = {
+      blacklist = {},
+      enabledCategories = {}
+    },
     rolls = {
       syncWhenAble = 1,
       postToChat = 0
     },
     seenJokes = {
+    },
+    seenTrivia = {
     }
   }
 }

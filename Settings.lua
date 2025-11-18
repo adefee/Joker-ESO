@@ -132,6 +132,63 @@ function Data.settingsPanelPool()
   return thisPanelSettings
 end
 
+-- generateRandomPoolTriviaOptions
+-- Data; Creates series of controls for trivia random pool (auto-gens based on available options)
+function Data.settingsPanelPoolTrivia()
+  
+  local thisPanelSettings = {
+  }
+
+  -- Description Part A
+  table.insert(thisPanelSettings, {
+    type = "description",
+    text = "Choose which trivia categories can appear when using /trivia (without specifying a category).",
+    width = "full",
+  })
+
+  -- Divider
+  table.insert(thisPanelSettings, {
+    type = "divider",
+    width = "full",
+  })
+
+  -- Description Part B
+  table.insert(thisPanelSettings, {
+    type = "description",
+    text = "You can still use category-specific commands (like /trivia-eso) even if a category is disabled here.",
+    width = "full",
+  })
+
+  -- Sort pool alphabetically
+  table.sort(Joker.saved.randomPoolTrivia.enabledCategories, function(a,b) return a < b end)
+
+  for _, categoryName in ipairs(Joker.saved.randomPoolTrivia.enabledCategories) do
+    -- Add all trivia categories
+    if categoryName ~= 'CustomTrivia' then
+      table.insert(thisPanelSettings, {
+        type			  = "checkbox",
+        name			  = optionIndent .. Util.colorize((Joker.saved.activeTrivia[categoryName] or 'Unknown Category')) .. ' (' .. Joker.saved.count.triviaCategories[categoryName] ..' items)', -- Category name + number of items in category
+        tooltip			= "Use /" .. JokerData.Config[categoryName].command .. " to get trivia from this category",
+        getFunc			= function() return Data.randomPoolTriviaGet(categoryName) end,
+        setFunc			= function() Data.randomPoolTriviaSet(categoryName) end,
+        width			  = "full",
+        default			= function() return Util.setContainsValue(Joker.defaults.randomPoolTrivia.enabledCategories, categoryName) and not Util.setContainsValue(Joker.defaults.randomPoolTrivia.blacklist, categoryName) end,
+        disabled    = function() return not Joker.saved.activeTrivia[categoryName] end,
+      })
+    end
+    
+  end
+
+  table.insert(thisPanelSettings, {
+    type			  = "button",
+    name			  = optionIndent_Button .. "Reset to defaults", -- Reset random pool blacklist to default
+    func			  = function () Data.randomPoolTriviaSetDefault() end,
+    width			  = "half",
+  })
+
+  return thisPanelSettings
+end
+
 
 -- Compile Addon Settings menu.
 function Joker.LoadSettings()
@@ -181,6 +238,16 @@ function Joker.LoadSettings()
       controls = settingsPanelPool
     })
 
+    --[[
+      Trivia Random Pool Settings
+    ]]
+    local settingsPanelPoolTrivia = Data.settingsPanelPoolTrivia()
+    table.insert(panelOptions, {
+      type = "submenu",
+      name = optionIndent_Title .. "Trivia Categories",
+      controls = settingsPanelPoolTrivia
+    })
+
     -- Quick Commands Submenu
     table.insert(panelOptions, {
       type = "submenu",
@@ -202,6 +269,13 @@ function Joker.LoadSettings()
           name			  = optionIndent_Button .. L.Joker_Quick_Btn_Joke, -- Random /joke
           tooltip			= L.Joker_Quick_Btn_Joke_Tip,
           func			  = function (context) Joker.AnyJoke() end,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. "Random Trivia", -- Random /trivia
+          tooltip			= "Get a random trivia question from any enabled category",
+          func			  = function (context) Joker.AnyTrivia() end,
           width			  = "half",
         },
         {

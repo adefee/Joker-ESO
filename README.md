@@ -57,8 +57,17 @@ Depending on whether or not I'm actively playing at a given time, I may not have
 - `/joke-norris` (or `/norris`): Add a random Chuck Norris joke .
 - `/joke-pickup [target]` (or `/pickup`): Add a random cheesy/cute pickup line to your chatbox. 
 
-### ESO Trivia, Shower Thoughts, and Cat Facts
-- `/trivia`: Get a random tidbit of ESO trivia! Grill you friends or learn something new!
+### Trivia
+Test your knowledge with trivia questions! Just like jokes, you can get random trivia from any enabled category, search for specific topics, or pick a specific category.
+
+- `/trivia [filter]`: Get a random trivia question from any enabled category. Add a search term to filter (e.g., `/trivia dragon`)
+- `/trivia-eso`: Get a random ESO-related trivia question
+- `/trivia-celebrity`: Get a random celebrity trivia question
+- `/trivia-geography`: Get a random geography trivia question
+- `/trivia-math`: Get a random math & science trivia question
+- `/trivia-custom`: Get trivia from your custom trivia file
+
+### Shower Thoughts and Cat Facts
 - `/joke-wisdom` (or `/wisdom`): Adds a random tidbit of wisdom or shower thought (though sometimes a bit sarcastic)
 - `/catfact`: Get a random Khaji--err, cat fact in your chatbox. Sometimes they're true!
 
@@ -141,7 +150,7 @@ This creates a zip file at `dist/<version>/joker-<version>.zip` with the proper 
 - ✅ Cross-platform compatible (Windows, macOS, Linux) without solely depending on OS-specific archiving tools
 - ✅ Works with Minion and other ESO addon managers
 
-**What's included:** Only the files ESO needs to run the addon - `.lua` files, `.xml` files, `Joker.txt` manifest, translations (`i18n/`), joke content (`jokes/`), and settings (`options/`) are intended to be included in the built package. Documentation, build scripts, and development files are excluded.
+**What's included:** Only the files ESO needs to run the addon - `.lua` files, `.xml` files, `Joker.txt` manifest, translations (`i18n/`), joke content (`jokes/`), trivia content (`trivia/`), and settings (`options/`) are intended to be included in the built package. Documentation, build scripts, and development files are excluded.
 
 ### Automated Releases
 
