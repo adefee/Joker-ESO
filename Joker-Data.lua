@@ -24,9 +24,9 @@ function Data.getJokeSeen(category, index)
   return Util.setContainsValue(Joker.saved.seenJokes[category], tonumber(index))
 end
 
--- getTriviaSeenFunctions()
+-- getTriviaSeen()
 -- Data; Determines if trivia is seen
-function Data.getTriviaSeenfunctions(category, index)
+function Data.getTriviaSeen(category, index)
   if not Util.setContains(Joker.saved.seenTrivia, category) then
     return false
   end
@@ -488,7 +488,7 @@ function Data.GetTrivia(triviaCategory, context)
     else
       triviaItem = triviaItems[index]
     end
-  until (not Data.getTriviaSeenfunctions(triviaCategory, index) or loops >= loopLimit)
+  until (not Data.getTriviaSeen(triviaCategory, index) or loops >= loopLimit)
 
   -- Mark trivia as seen (only if we got a valid trivia)
   if triviaItem and index then
@@ -571,7 +571,7 @@ function Data.GetRandomTrivia(context)
       else
         triviaItem = ""
       end
-    until (not Data.getTriviaSeenfunctions(thisTriviaCategory, thisTriviaIndex) or loops >= loopLimit)
+    until (not Data.getTriviaSeen(thisTriviaCategory, thisTriviaIndex) or loops >= loopLimit)
 
     -- Mark as seen (only if we got valid data)
     if thisTriviaCategory and thisTriviaIndex and not Util.isEmpty(triviaItem) then
@@ -620,7 +620,7 @@ function Data.GetRandomTrivia(context)
         triviaItem = ""
         randomTriviaIndex = nil
       end
-    until (not Data.getTriviaSeenfunctions(randomCategory, randomTriviaIndex) or loops >= loopLimit)
+    until (not Data.getTriviaSeen(randomCategory, randomTriviaIndex) or loops >= loopLimit)
 
     -- Mark trivia as seen (only if we got valid data)
     if randomCategory and randomTriviaIndex and not Util.isEmpty(triviaItem) then
