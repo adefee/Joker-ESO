@@ -95,3 +95,4 @@ JokerData.TriviaScience = {
   { q = "What is the term for animals that are active at night?", a = "Nocturnal" },
   { q = "What is the term for animals that are active during the day?", a = "Diurnal" },
 }
+

@@ -117,7 +117,7 @@ function Data.getPrefix(category)
   -- Custom prefixes for specific joke categorys.
   if (category == 'News') then
     return Joker.saved.newsPrefixes[(1 + math.floor((math.random() * #Joker.saved.newsPrefixes)))]
-  elseif (category == 'Burns') then
+  elseif (category == 'Burns') or (category == 'PickupLines') or (category == 'PickupLinesXXX') or (category == 'PickupLinesHP') or (category == 'PickupLinesPokemon') then
     return Joker.saved.activeIntros[(1 + math.floor((math.random() * #Joker.saved.activeIntros)))]
   end
 

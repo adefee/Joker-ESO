@@ -324,9 +324,9 @@ function Joker.LoadSettings()
         },
         {
           type			  = "button",
-          name			  = optionIndent_Button .. "Math Trivia",
-          tooltip			= "Get math and number trivia",
-          func			  = function (context) Joker.Trivia('TriviaMath') end,
+          name			  = optionIndent_Button .. "Science Trivia",
+          tooltip			= "Get science trivia (chemistry, biology, physics, astronomy, and more)",
+          func			  = function (context) Joker.Trivia('TriviaScience') end,
           width			  = "half",
         },
         {

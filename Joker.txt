@@ -42,7 +42,7 @@ jokes\Wisdom.lua
 trivia\ESO.lua
 trivia\Celebrity.lua
 trivia\Geography.lua
-trivia\Math.lua
+trivia\Science.lua
 
 ################################################################
 ## ADD YOUR CUSTOM JOKE, RIDDLE, AND READY CHECK FILES BELOW! ##
