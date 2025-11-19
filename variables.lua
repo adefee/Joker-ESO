@@ -91,7 +91,8 @@ Joker = {
     enable = {
       jokeIntros = 1, -- Replace intros (like in burns/pickup lines). Default 1
       contentFilter = 0, -- Enable content filter. Default 0
-      consoleOnly = false -- Show jokes only in console/log, never post to chatbox. Default 0
+      consoleOnly = false, -- Show jokes only in console/log, never post to chatbox. Default 0
+      triviaPrefixes = 1 -- Show "Q:" and "A:" prefixes in trivia output. Default 1
     },
     internal = {
       lastUpdate = 0,

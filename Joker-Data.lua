@@ -497,7 +497,11 @@ function Data.GetTrivia(triviaCategory, context)
 
   -- Format trivia output
   if triviaItem then
-    return "Q: " .. triviaItem.q .. " || A: " .. triviaItem.a
+    if Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 then
+      return "Q: " .. triviaItem.q .. " || A: " .. triviaItem.a
+    else
+      return triviaItem.q .. " || " .. triviaItem.a
+    end
   end
 
   return ""
@@ -564,7 +568,11 @@ function Data.GetRandomTrivia(context)
       if thisTriviaQA then
         local qaParts = Util.split(thisTriviaQA, "|||")
         if qaParts[1] and qaParts[2] then
-          triviaItem = "Q: " .. qaParts[1] .. " || A: " .. qaParts[2]
+          if Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 then
+            triviaItem = "Q: " .. qaParts[1] .. " || A: " .. qaParts[2]
+          else
+            triviaItem = qaParts[1] .. " || " .. qaParts[2]
+          end
         else
           triviaItem = ""
         end
@@ -612,7 +620,11 @@ function Data.GetRandomTrivia(context)
         randomTriviaIndex = 1 + math.floor(math.random() * #JokerData[randomCategory])
         local triviaData = JokerData[randomCategory][randomTriviaIndex]
         if triviaData and triviaData.q and triviaData.a then
-          triviaItem = "Q: " .. triviaData.q .. " || A: " .. triviaData.a
+          if Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 then
+            triviaItem = "Q: " .. triviaData.q .. " || A: " .. triviaData.a
+          else
+            triviaItem = triviaData.q .. " || " .. triviaData.a
+          end
         else
           triviaItem = ""
         end
