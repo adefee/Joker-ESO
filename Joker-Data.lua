@@ -24,6 +24,17 @@ function Data.getJokeSeen(category, index)
   return Util.setContainsValue(Joker.saved.seenJokes[category], tonumber(index))
 end
 
+-- getTriviaSeen()
+-- Data; Determines if trivia is seen
+function Data.getTriviaSeen(category, index)
+  if not Util.setContains(Joker.saved.seenTrivia, category) then
+    return false
+  end
+
+  -- Force index to be a number for consistent comparison
+  return Util.setContainsValue(Joker.saved.seenTrivia[category], tonumber(index))
+end
+
 -- setJokeSeen()
 -- Data; Set joke as seen
 function Data.setJokeSeen(category, index)
@@ -44,6 +55,26 @@ function Data.setJokeSeen(category, index)
   Joker.saved.count.seenAllTime = tonumber(Joker.saved.count.seenAllTime or 0) + 1
 end
 
+-- setTriviaSeen()
+-- Data; Set trivia as seen
+function Data.setTriviaSeen(category, index)
+
+  if not Util.setContains(Joker.saved, 'seenTrivia') then
+    Joker.saved.seenTrivia = {}
+  end
+
+  if not Util.setContains(Joker.saved.seenTrivia, category) then
+    Joker.saved.seenTrivia[category] = {}
+  end
+
+  -- Force index to be a number (in case it's passed as a string from string.match())
+  table.insert(Joker.saved.seenTrivia[category], tonumber(index))
+  Joker.saved.count.triviaSeen = tonumber(Joker.saved.count.triviaSeen or 0) + 1
+  
+  -- Increment permanent "seen all-time" counter (never decreases, even when categories reset)
+  Joker.saved.count.triviaSeenAllTime = tonumber(Joker.saved.count.triviaSeenAllTime or 0) + 1
+end
+
 -- resetSeenJokes()
 -- Data; Reset seen jokes for a category so they can be shown again
 function Data.resetSeenJokes(category)
@@ -51,6 +82,16 @@ function Data.resetSeenJokes(category)
     local previousCount = #Joker.saved.seenJokes[category]
     Joker.saved.seenJokes[category] = {}
     Joker.saved.count.seen = math.max(0, tonumber(Joker.saved.count.seen) - previousCount)
+  end
+end
+
+-- resetSeenTrivia()
+-- Data; Reset seen trivia for a category so they can be shown again
+function Data.resetSeenTrivia(category)
+  if Util.setContains(Joker.saved.seenTrivia, category) then
+    local previousCount = #Joker.saved.seenTrivia[category]
+    Joker.saved.seenTrivia[category] = {}
+    Joker.saved.count.triviaSeen = math.max(0, tonumber(Joker.saved.count.triviaSeen or 0) - previousCount)
   end
 end
 
@@ -76,7 +117,7 @@ function Data.getPrefix(category)
   -- Custom prefixes for specific joke categorys.
   if (category == 'News') then
     return Joker.saved.newsPrefixes[(1 + math.floor((math.random() * #Joker.saved.newsPrefixes)))]
-  elseif (category == 'Burns') then
+  elseif (category == 'Burns') or (category == 'PickupLines') or (category == 'PickupLinesXXX') or (category == 'PickupLinesHP') or (category == 'PickupLinesPokemon') then
     return Joker.saved.activeIntros[(1 + math.floor((math.random() * #Joker.saved.activeIntros)))]
   end
 
@@ -365,6 +406,245 @@ function Data.GetRandomJoke(context)
 end
 
 
+-- GetTrivia()
+-- Data; Returns random trivia from given category
+-- @param triviaCategory, string, Category to pull from
+-- @param searchFilter, string, Filter results by this text  
+-- @param console, bool, log to console instead of chat  
+function Data.GetTrivia(triviaCategory, context)
+
+  -- Defaults
+  local triviaCategory = triviaCategory or "TriviaESO" -- Set ESO as default category
+  local triviaItems = {}
+  local triviaCount = 0
+  local triviaItem = nil
+  local index = 0
+  local searchFilter = ""
+
+  if not JokerData[triviaCategory] then
+    return ""
+  end
+
+  if context and not Util.isEmpty(context) then
+    searchFilter = Util.trim(context)
+  end
+
+  -- Loop limit to prevent infinite loops
+  local loops = 0
+  local loopLimit = 1500
+
+  -- If we have a search keyword, iterate over that first
+  if searchFilter and not Util.isEmpty(searchFilter) then
+    -- Store both trivia content and original index for tracking seen trivia
+    for i,v in pairs(JokerData[triviaCategory]) do
+      local searchText = string.lower(v.q .. " " .. v.a)
+      if string.match(searchText, string.lower(searchFilter)) then
+        table.insert(triviaItems, {content = v, originalIndex = i})
+      end
+    end
+  else
+    triviaItems = JokerData[triviaCategory]
+  end
+
+  -- Update count
+  triviaCount = Util.countSet(triviaItems)
+
+  if triviaCount < 1 and not Util.isEmpty(searchFilter) then
+    d('Unable to find any trivia matching your search for "'.. searchFilter ..'". ' .. Data.GetMessage('sad'))
+    return ""
+  elseif triviaCount > 0 and not Util.isEmpty(searchFilter) then
+    d('Randomly choosing from ' .. triviaCount .. ' trivia items, based on your search...')
+  end
+  
+  -- Guard: If no trivia available, return empty string
+  if triviaCount < 1 then
+    return ""
+  end
+
+  -- Before we loop, see if we need to reset seenTrivia for this category
+  -- If we've seen all (or almost all) trivia in this category, reset so we can see them again
+  local totalTriviaInCategory = Joker.saved.count.triviaCategories[triviaCategory] or #JokerData[triviaCategory]
+  local seenTriviaInCategory = (Joker.saved.seenTrivia[triviaCategory] and #Joker.saved.seenTrivia[triviaCategory]) or 0
+  
+  if seenTriviaInCategory > 0 and seenTriviaInCategory >= totalTriviaInCategory then
+    Data.resetSeenTrivia(triviaCategory)
+  end
+
+  -- Loop until we find a trivia we haven't yet seen. If we hit loopLimit, we'll just use what we have 
+  repeat
+    local random = math.random() * triviaCount
+    loops = loops + 1
+    index = 1 + math.floor(random)
+    
+    -- Handle filtered results (table with originalIndex) vs direct array access
+    if searchFilter and not Util.isEmpty(searchFilter) then
+      local triviaData = triviaItems[index]
+      if triviaData and triviaData.content then
+        triviaItem = triviaData.content
+        index = triviaData.originalIndex
+      else
+        triviaItem = nil
+      end
+    else
+      triviaItem = triviaItems[index]
+    end
+  until (not Data.getTriviaSeen(triviaCategory, index) or loops >= loopLimit)
+
+  -- Mark trivia as seen (only if we got a valid trivia)
+  if triviaItem and index then
+    Data.setTriviaSeen(triviaCategory, index)
+  end
+
+  -- Format trivia output
+  if triviaItem then
+    if Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 then
+      return "Q: " .. triviaItem.q .. " || A: " .. triviaItem.a
+    else
+      return triviaItem.q .. " || " .. triviaItem.a
+    end
+  end
+
+  return ""
+end
+
+-- GetRandomTrivia()
+-- Data; Returns random trivia from any enabled category
+-- @param context, string, Filter results by this text  
+function Data.GetRandomTrivia(context)
+  -- Defaults
+  local triviaItems = {}
+  local triviaCategory = nil
+  local triviaCount = 0
+  local triviaItem = nil
+  local index = 0
+  local searchFilter = ""
+
+  if context and not Util.isEmpty(context) then
+    searchFilter = string.lower(Util.trim(context)) -- Convert to lowercase for search
+  end
+
+  -- Loop limit to prevent infinite loops
+  local loops = 0
+  local loopLimit = 1500
+
+  -- If we have a search keyword, iterate over that first
+  if searchFilter and not Util.isEmpty(searchFilter) then
+    -- For each category, if it's not blacklisted, loop over and pull available trivia
+    for _, categoryName in pairs(Joker.saved.randomPoolTrivia.enabledCategories) do
+      if not Util.setContainsValue(Joker.saved.randomPoolTrivia.blacklist, categoryName) then
+        for triviaIndex, triviaContent in pairs(JokerData[categoryName]) do
+          local searchText = string.lower(triviaContent.q .. " " .. triviaContent.a)
+          if string.match(searchText, searchFilter) then
+            table.insert(triviaItems, categoryName .. ':::' .. triviaIndex .. ':::' .. triviaContent.q .. '|||' .. triviaContent.a)
+          end
+        end
+      end
+    end
+
+    -- Update count
+    triviaCount = Util.countSet(triviaItems)
+
+    if triviaCount < 1 and not Util.isEmpty(searchFilter) then
+      d('Unable to find any trivia matching your search for "'.. searchFilter ..'". ' .. Data.GetMessage('sad'))
+      return ""
+    elseif triviaCount > 0 and not Util.isEmpty(searchFilter) then
+      d('Randomly choosing from ' .. triviaCount .. ' trivia items, based on your search...')
+    end
+
+    -- Guard: If no trivia available, return empty string
+    if triviaCount < 1 then
+      return ""
+    end
+
+    -- Loop until we find a trivia we haven't yet seen
+    repeat
+      local random = math.random() * triviaCount
+      loops = loops + 1
+      index = 1 + math.floor(random)
+      local triviaString = triviaItems[index] or ""
+      
+      -- Parse the trivia string to extract category, index, and content
+      thisTriviaCategory, thisTriviaIndex, thisTriviaQA = triviaString:match("(.+):::(.+):::(.+)")
+      if thisTriviaQA then
+        local qaParts = Util.split(thisTriviaQA, "|||")
+        if qaParts[1] and qaParts[2] then
+          if Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 then
+            triviaItem = "Q: " .. qaParts[1] .. " || A: " .. qaParts[2]
+          else
+            triviaItem = qaParts[1] .. " || " .. qaParts[2]
+          end
+        else
+          triviaItem = ""
+        end
+      else
+        triviaItem = ""
+      end
+    until (not Data.getTriviaSeen(thisTriviaCategory, thisTriviaIndex) or loops >= loopLimit)
+
+    -- Mark as seen (only if we got valid data)
+    if thisTriviaCategory and thisTriviaIndex and not Util.isEmpty(triviaItem) then
+      Data.setTriviaSeen(thisTriviaCategory, thisTriviaIndex)
+    end
+
+    -- Finally, return trivia
+    return triviaItem
+
+  else
+    -- Get a random trivia from any available category
+    availableCategories = {}
+    for _, categoryName in pairs(Joker.saved.randomPoolTrivia.enabledCategories) do
+      if not Util.setContainsValue(Joker.saved.randomPoolTrivia.blacklist, categoryName) then
+        table.insert(availableCategories, categoryName)
+      end
+    end
+
+    if Util.isSetEmpty(availableCategories) then
+      table.insert(availableCategories, 'TriviaESO')
+    end
+
+    repeat
+      loops = loops + 1
+      randomCategoryIndex = 1 + math.floor(math.random() * #availableCategories)
+      randomCategory = availableCategories[randomCategoryIndex]
+      
+      -- Ensure category exists and has trivia
+      if randomCategory and JokerData[randomCategory] and #JokerData[randomCategory] > 0 then
+        -- Check if we've seen all trivia in this category and reset if needed
+        local totalTriviaInCategory = Joker.saved.count.triviaCategories[randomCategory] or #JokerData[randomCategory]
+        local seenTriviaInCategory = (Joker.saved.seenTrivia[randomCategory] and #Joker.saved.seenTrivia[randomCategory]) or 0
+        
+        if seenTriviaInCategory > 0 and seenTriviaInCategory >= totalTriviaInCategory then
+          Data.resetSeenTrivia(randomCategory)
+        end
+        
+        randomTriviaIndex = 1 + math.floor(math.random() * #JokerData[randomCategory])
+        local triviaData = JokerData[randomCategory][randomTriviaIndex]
+        if triviaData and triviaData.q and triviaData.a then
+          if Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 then
+            triviaItem = "Q: " .. triviaData.q .. " || A: " .. triviaData.a
+          else
+            triviaItem = triviaData.q .. " || " .. triviaData.a
+          end
+        else
+          triviaItem = ""
+        end
+      else
+        triviaItem = ""
+        randomTriviaIndex = nil
+      end
+    until (not Data.getTriviaSeen(randomCategory, randomTriviaIndex) or loops >= loopLimit)
+
+    -- Mark trivia as seen (only if we got valid data)
+    if randomCategory and randomTriviaIndex and not Util.isEmpty(triviaItem) then
+      Data.setTriviaSeen(randomCategory, randomTriviaIndex)
+    end
+
+    return triviaItem
+  end
+
+end
+
+
 -- runPeriodicEvents()
 -- Data; Determines if a specific periodic event is due to occur
 function Data.runPeriodicEvents(target, callbacks, skipIncrement)
@@ -486,6 +766,51 @@ end
 -- Data; Return randomPool blacklist to default settings
 function Data.randomPoolSetDefault()
   Joker.saved.randomPool.blacklist = Joker.defaults.randomPool.blacklist
+end
+
+-- randomPoolTriviaGet
+-- Data; Returns bool based on whether or not a [target] trivia category is enabled and not blacklisted
+function Data.randomPoolTriviaGet(target)
+  return Util.setContainsValue(Joker.saved.randomPoolTrivia.enabledCategories, target) and not Util.setContainsValue(Joker.saved.randomPoolTrivia.blacklist, target)
+end
+
+-- randomPoolTriviaSet
+-- Data; Toggles a [target] trivia category in randomPool based on its current status
+function Data.randomPoolTriviaSet(target)
+
+  if Data.randomPoolTriviaGet(target) then
+    -- Target category is enabled, disable it
+    if Joker.saved.internal.showDebug > 0 then
+      d('Joker: The trivia category "' .. target .. '" is being toggled off.')
+    end
+    table.insert(Joker.saved.randomPoolTrivia.blacklist, target)
+    Util.sortSet(Joker.saved.randomPoolTrivia.blacklist)
+  else
+    if Joker.saved.internal.showDebug > 0 then
+      d('Joker: The trivia category "' .. target .. '" is being toggled ON.')
+    end
+    -- Target category is disabled (should have an entry in blacklist), enable it by removing from blacklist
+    local indexToRemove = 0
+    for i,v in ipairs(Joker.saved.randomPoolTrivia.blacklist, target) do
+      if v == target then
+        indexToRemove = i
+      end
+    end
+    
+    if indexToRemove > 0 then
+      if Joker.saved.internal.showDebug > 0 then
+        d('Joker: Found index, removing index ' .. indexToRemove)
+      end
+      table.remove(Joker.saved.randomPoolTrivia.blacklist, indexToRemove)
+      Util.sortSet(Joker.saved.randomPoolTrivia.blacklist)
+    end
+  end
+end
+
+-- randomPoolTriviaSetDefault()
+-- Data; Return randomPoolTrivia blacklist to default settings
+function Data.randomPoolTriviaSetDefault()
+  Joker.saved.randomPoolTrivia.blacklist = Joker.defaults.randomPoolTrivia.blacklist
 end
 
 -- EightBall()

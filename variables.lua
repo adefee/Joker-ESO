@@ -17,8 +17,8 @@ JokerL = JokerL or {} -- i18n
 
 Joker = {
   name = "Joker",
-  version = "8.6.5",
-  versionESO = 806500,
+  version = "8.7.0",
+  versionESO = 807000,
   author = "Lent (IGN @CallMeLent, Github @adefee)",
   color = "D66E4A",
   locale = JokerL:GetLanguage(),
@@ -64,6 +64,19 @@ Joker = {
       "jTarget, ",
       "jTarget! ",
       "jTarget - ",
+      "Listen up, jTarget, ",
+      "Check it out, jTarget, ",
+      "Guess what, jTarget? ",
+      "Oh, jTarget... ",
+      "So, jTarget, ",
+      "Alright, jTarget, ",
+      "Look here, jTarget, ",
+      "Hey there, jTarget, ",
+      "Psst, jTarget, ",
+      "You know what, jTarget? ",
+      "Listen here, jTarget, ",
+      "Attention, jTarget! ",
+      "My dear jTarget, ",
     },
     contentFilter = {
       nsfw_enable = 1,
@@ -81,12 +94,18 @@ Joker = {
       active = 0,
       seen = 0,
       seenAllTime = 0, -- Total jokes viewed all-time (never decreases)
-      categories = {}
+      categories = {},
+      triviaLoaded = 0,
+      triviaActive = 0,
+      triviaSeen = 0,
+      triviaSeenAllTime = 0, -- Total trivia viewed all-time (never decreases)
+      triviaCategories = {}
     },
     enable = {
       jokeIntros = 1, -- Replace intros (like in burns/pickup lines). Default 1
       contentFilter = 0, -- Enable content filter. Default 0
-      consoleOnly = false -- Show jokes only in console/log, never post to chatbox. Default 0
+      consoleOnly = false, -- Show jokes only in console/log, never post to chatbox. Default 0
+      triviaPrefixes = 1 -- Show "Q:" and "A:" prefixes in trivia output. Default 1
     },
     internal = {
       lastUpdate = 0,
@@ -100,7 +119,26 @@ Joker = {
       "In the news today: ",
       "Our top story today: ",
       "Tonight at 6: ",
-      "This just in: "
+      "This just in: ",
+      "Breaking news: ",
+      "News flash: ",
+      "In other news: ",
+      "According to sources: ",
+      "We're getting reports that ",
+      "Eyewitnesses claim that ",
+      "Developing story: ",
+      "Live from the scene: ",
+      "An anonymous tip reveals that ",
+      "Our correspondent reports that ",
+      "Unconfirmed reports suggest that ",
+      "In a shocking turn of events, ",
+      "Exclusive coverage: ",
+      "We interrupt this program to report that ",
+      "Sources close to the matter say ",
+      "Late breaking news: ",
+      "Tonight's headline: ",
+      "Coming up next: ",
+      "Stay tuned, because ",
     },
     periodic = {
       jokes_enable = 1,
@@ -114,11 +152,17 @@ Joker = {
       blacklist = {"Burns", "Curse", "CustomJokes", "CustomReadyChecks", "Edgy", "PickupLines", "PickupLinesXXX", "PickupLinesHP", "PickupLinesPokemon", "ReadyChecks", "Riddles"},
       enabledCategories = {}
     },
+    randomPoolTrivia = {
+      blacklist = {},
+      enabledCategories = {}
+    },
     rolls = {
       syncWhenAble = 1,
       postToChat = 0
     },
     seenJokes = {
+    },
+    seenTrivia = {
     }
   }
 }

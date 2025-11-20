@@ -69,6 +69,21 @@ function Data.settingsPanelMain()
       setFunc			= function() Data.toggleRollsToChat() end,
       width			  = "full",
       default			= Joker.saved.rolls.postToChat
+    },
+    {
+      type			  = "checkbox",
+      name			  = optionIndent .. "Show Q/A Prefixes in Trivia", -- Toggles Q: and A: prefixes in trivia
+      tooltip			= "When enabled, trivia will show 'Q:' and 'A:' prefixes. When disabled, shows just the question and answer.",
+      getFunc			= function() return Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 end,
+      setFunc			= function(value) 
+                      if Joker.saved.enable.triviaPrefixes and Joker.saved.enable.triviaPrefixes > 0 then
+                        Joker.saved.enable.triviaPrefixes = 0
+                      else
+                        Joker.saved.enable.triviaPrefixes = 1
+                      end
+                    end,
+      width			  = "full",
+      default			= function() return Joker.defaults.enable.triviaPrefixes > 0 end
     }
   }
 
@@ -132,6 +147,63 @@ function Data.settingsPanelPool()
   return thisPanelSettings
 end
 
+-- generateRandomPoolTriviaOptions
+-- Data; Creates series of controls for trivia random pool (auto-gens based on available options)
+function Data.settingsPanelPoolTrivia()
+  
+  local thisPanelSettings = {
+  }
+
+  -- Description Part A
+  table.insert(thisPanelSettings, {
+    type = "description",
+    text = "Choose which trivia categories can appear when using /trivia (without specifying a category).",
+    width = "full",
+  })
+
+  -- Divider
+  table.insert(thisPanelSettings, {
+    type = "divider",
+    width = "full",
+  })
+
+  -- Description Part B
+  table.insert(thisPanelSettings, {
+    type = "description",
+    text = "You can still use category-specific commands (like /trivia-eso) even if a category is disabled here.",
+    width = "full",
+  })
+
+  -- Sort pool alphabetically
+  table.sort(Joker.saved.randomPoolTrivia.enabledCategories, function(a,b) return a < b end)
+
+  for _, categoryName in ipairs(Joker.saved.randomPoolTrivia.enabledCategories) do
+    -- Add all trivia categories
+    if categoryName ~= 'CustomTrivia' then
+      table.insert(thisPanelSettings, {
+        type			  = "checkbox",
+        name			  = optionIndent .. Util.colorize((Joker.saved.activeTrivia[categoryName] or 'Unknown Category')) .. ' (' .. Joker.saved.count.triviaCategories[categoryName] ..' items)', -- Category name + number of items in category
+        tooltip			= "Use /" .. JokerData.Config[categoryName].command .. " to get trivia from this category",
+        getFunc			= function() return Data.randomPoolTriviaGet(categoryName) end,
+        setFunc			= function() Data.randomPoolTriviaSet(categoryName) end,
+        width			  = "full",
+        default			= function() return Util.setContainsValue(Joker.defaults.randomPoolTrivia.enabledCategories, categoryName) and not Util.setContainsValue(Joker.defaults.randomPoolTrivia.blacklist, categoryName) end,
+        disabled    = function() return not Joker.saved.activeTrivia[categoryName] end,
+      })
+    end
+    
+  end
+
+  table.insert(thisPanelSettings, {
+    type			  = "button",
+    name			  = optionIndent_Button .. "Reset to defaults", -- Reset random pool blacklist to default
+    func			  = function () Data.randomPoolTriviaSetDefault() end,
+    width			  = "half",
+  })
+
+  return thisPanelSettings
+end
+
 
 -- Compile Addon Settings menu.
 function Joker.LoadSettings()
@@ -181,6 +253,16 @@ function Joker.LoadSettings()
       controls = settingsPanelPool
     })
 
+    --[[
+      Trivia Random Pool Settings
+    ]]
+    local settingsPanelPoolTrivia = Data.settingsPanelPoolTrivia()
+    table.insert(panelOptions, {
+      type = "submenu",
+      name = optionIndent_Title .. "Trivia Categories",
+      controls = settingsPanelPoolTrivia
+    })
+
     -- Quick Commands Submenu
     table.insert(panelOptions, {
       type = "submenu",
@@ -203,6 +285,57 @@ function Joker.LoadSettings()
           tooltip			= L.Joker_Quick_Btn_Joke_Tip,
           func			  = function (context) Joker.AnyJoke() end,
           width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. "Random Trivia", -- Random /trivia
+          tooltip			= "Get a random trivia question from any enabled category",
+          func			  = function (context) Joker.AnyTrivia() end,
+          width			  = "half",
+        },
+        {
+          type = "divider"
+        },
+        {
+          type			  = "header",
+          name			  = optionIndent .. "Trivia Categories",
+          width			  = "full",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. "ESO Trivia",
+          tooltip			= "Get Elder Scrolls trivia (ESO, Skyrim, Oblivion, Morrowind, and more)",
+          func			  = function (context) Joker.Trivia('TriviaESO') end,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. "Celebrity Trivia",
+          tooltip			= "Get celebrity, movies, TV, music, and pop culture trivia",
+          func			  = function (context) Joker.Trivia('TriviaCelebrity') end,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. "Geography Trivia",
+          tooltip			= "Get geography and world trivia",
+          func			  = function (context) Joker.Trivia('TriviaGeography') end,
+          width			  = "half",
+        },
+        {
+          type			  = "button",
+          name			  = optionIndent_Button .. "Science Trivia",
+          tooltip			= "Get science trivia (chemistry, biology, physics, astronomy, and more)",
+          func			  = function (context) Joker.Trivia('TriviaScience') end,
+          width			  = "half",
+        },
+        {
+          type = "divider"
+        },
+        {
+          type			  = "header",
+          name			  = optionIndent .. "Joke Categories",
+          width			  = "full",
         },
         {
           type			  = "button",
