@@ -2,8 +2,8 @@
 ## Description: Best enjoyed with Skooma, |cFF9900Joker |cFFFFFFoffers a collection of various jokes, riddles, trivia, ready checks, fun utilities & other amusing pop-culture references - all readily available ingame for your leisurely chatting pleasure!
 ## Author: |cFF9900Lent|cFFFFFF (IGN |cFF9900@CallMeLent|cFFFFFF)
 
-## Version: 8.7.0
-## AddOnVersion: 807000
+## Version: 8.7.1
+## AddOnVersion: 807100
 ## APIVersion: 101048
 ## SavedVariables: JokerSavedVars
 ## DependsOn: LibAddonMenu-2.0>=38
