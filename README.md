@@ -64,7 +64,7 @@ Test your knowledge with trivia questions! Just like jokes, you can get random t
 - `/trivia-eso`: Get a random ESO-related trivia question
 - `/trivia-celebrity`: Get a random celebrity trivia question
 - `/trivia-geography`: Get a random geography trivia question
-- `/trivia-math`: Get a random math & science trivia question
+- `/trivia-science`: Get a random science trivia question
 - `/trivia-custom`: Get trivia from your custom trivia file
 
 ### Shower Thoughts and Cat Facts
